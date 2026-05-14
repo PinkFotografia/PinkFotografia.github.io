@@ -103,7 +103,7 @@
     <h2 class="section-title" data-es="¿Qué sesión estás buscando?" data-en="What session are you looking for?">¿Qué sesión estás buscando?</h2>
   </div>
   <div class="servicios-grid">
-    <div class="srv-card reveal reveal-delay-1">
+    <div class="srv-card reveal reveal-delay-1" onclick="location.href='paquetes/estudio.html'" style="cursor:pointer;">
       <div class="srv-img" style="background-image:url('assets/img/srv-estudio.jpg');"></div>
       <div class="srv-overlay"></div>
       <div class="srv-content">
@@ -112,7 +112,7 @@
         <div class="srv-cta"><span data-es="Ver paquetes" data-en="View packages">Ver paquetes</span> →</div>
       </div>
     </div>
-    <div class="srv-card reveal reveal-delay-2">
+    <div class="srv-card reveal reveal-delay-2" onclick="location.href='paquetes/exterior.html'" style="cursor:pointer;">
       <div class="srv-img" style="background-image:url('assets/img/srv-exterior.jpg');background-position:center center;"></div>
       <div class="srv-overlay"></div>
       <div class="srv-content">
@@ -121,7 +121,7 @@
         <div class="srv-cta"><span data-es="Ver paquetes" data-en="View packages">Ver paquetes</span> →</div>
       </div>
     </div>
-    <div class="srv-card reveal reveal-delay-3">
+    <div class="srv-card reveal reveal-delay-3" onclick="location.href='paquetes/embarazadas.html'" style="cursor:pointer;">
       <div class="srv-img" style="background-image:url('assets/img/srv-embarazo.jpg');background-position:center top;"></div>
       <div class="srv-overlay"></div>
       <div class="srv-content">
@@ -130,7 +130,7 @@
         <div class="srv-cta"><span data-es="Ver paquetes" data-en="View packages">Ver paquetes</span> →</div>
       </div>
     </div>
-    <div class="srv-card reveal reveal-delay-1">
+    <div class="srv-card reveal reveal-delay-1" onclick="location.href='paquetes/pelotero.html'" style="cursor:pointer;">
       <div class="srv-img" style="background-image:url('assets/img/srv-pelotero.jpg');background-position:center center;"></div>
       <div class="srv-overlay"></div>
       <div class="srv-content">
@@ -139,7 +139,7 @@
         <div class="srv-cta"><span data-es="Ver paquetes" data-en="View packages">Ver paquetes</span> →</div>
       </div>
     </div>
-    <div class="srv-card reveal reveal-delay-2">
+    <div class="srv-card reveal reveal-delay-2" onclick="location.href='paquetes/casamientos.html'" style="cursor:pointer;">
       <div class="srv-img" style="background-image:url('assets/img/srv-casamiento.jpg');background-position:center center;"></div>
       <div class="srv-overlay"></div>
       <div class="srv-content">
@@ -148,7 +148,7 @@
         <div class="srv-cta"><span data-es="Ver paquetes" data-en="View packages">Ver paquetes</span> →</div>
       </div>
     </div>
-    <div class="srv-card reveal reveal-delay-3">
+    <div class="srv-card reveal reveal-delay-3" onclick="location.href='paquetes/comuniones.html'" style="cursor:pointer;">
       <div class="srv-img" style="background-image:url('assets/img/srv-comunion.jpg');background-position:center top;"></div>
       <div class="srv-overlay"></div>
       <div class="srv-content">
@@ -166,8 +166,62 @@
     <div class="section-kicker" data-es="Portafolio" data-en="Portfolio">Portafolio</div>
     <h2 class="section-title" data-es="Momentos que guardamos juntos" data-en="Moments we preserve together">Momentos que guardamos juntos</h2>
   </div>
-  <div class="port-filters reveal" id="port-filters"></div>
-  <div class="port-grid" id="port-grid"></div>
+  <div class="srv-grid reveal" id="port-cats-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+    <a href="portafolio/estudio.html" class="srv-card" style="text-decoration:none;height:280px;">
+      <div class="srv-img" style="background-image:url('assets/img/srv-estudio.jpg');"></div>
+      <div class="srv-overlay"></div>
+      <div class="srv-content">
+        <div class="srv-tag" data-es="Estudio" data-en="Studio">Estudio</div>
+        <div class="srv-name" data-es="Sesiones de estudio" data-en="Studio sessions">Sesiones de estudio</div>
+        <div class="srv-cta"><span data-es="Ver álbumes" data-en="View albums">Ver álbumes</span> →</div>
+      </div>
+    </a>
+    <a href="portafolio/exterior.html" class="srv-card" style="text-decoration:none;height:280px;">
+      <div class="srv-img" style="background-image:url('assets/img/srv-exterior.jpg');background-position:center;"></div>
+      <div class="srv-overlay"></div>
+      <div class="srv-content">
+        <div class="srv-tag" data-es="Exterior" data-en="Outdoor">Exterior</div>
+        <div class="srv-name" data-es="Sesiones al aire libre" data-en="Outdoor sessions">Sesiones al aire libre</div>
+        <div class="srv-cta"><span data-es="Ver álbumes" data-en="View albums">Ver álbumes</span> →</div>
+      </div>
+    </a>
+    <a href="portafolio/embarazadas.html" class="srv-card" style="text-decoration:none;height:280px;">
+      <div class="srv-img" style="background-image:url('assets/img/srv-embarazo.jpg');background-position:center top;"></div>
+      <div class="srv-overlay"></div>
+      <div class="srv-content">
+        <div class="srv-tag" data-es="Maternidad" data-en="Maternity">Maternidad</div>
+        <div class="srv-name" data-es="Embarazadas" data-en="Maternity">Embarazadas</div>
+        <div class="srv-cta"><span data-es="Ver álbumes" data-en="View albums">Ver álbumes</span> →</div>
+      </div>
+    </a>
+    <a href="portafolio/pelotero.html" class="srv-card" style="text-decoration:none;height:280px;">
+      <div class="srv-img" style="background-image:url('assets/img/srv-pelotero.jpg');background-position:center;"></div>
+      <div class="srv-overlay"></div>
+      <div class="srv-content">
+        <div class="srv-tag" data-es="Cumpleaños" data-en="Birthday">Cumpleaños</div>
+        <div class="srv-name" data-es="Pelotero y fiestas" data-en="Kids parties">Pelotero y fiestas</div>
+        <div class="srv-cta"><span data-es="Ver álbumes" data-en="View albums">Ver álbumes</span> →</div>
+      </div>
+    </a>
+    <a href="portafolio/casamientos.html" class="srv-card" style="text-decoration:none;height:280px;">
+      <div class="srv-img" style="background-image:url('assets/img/srv-casamiento.jpg');background-position:center;"></div>
+      <div class="srv-overlay"></div>
+      <div class="srv-content">
+        <div class="srv-tag" data-es="Eventos" data-en="Events">Eventos</div>
+        <div class="srv-name" data-es="Casamientos y 15 años" data-en="Weddings & Quinceañera">Casamientos y 15 años</div>
+        <div class="srv-cta"><span data-es="Ver álbumes" data-en="View albums">Ver álbumes</span> →</div>
+      </div>
+    </a>
+    <a href="portafolio/comuniones.html" class="srv-card" style="text-decoration:none;height:280px;">
+      <div class="srv-img" style="background-image:url('assets/img/srv-comunion.jpg');background-position:center top;"></div>
+      <div class="srv-overlay"></div>
+      <div class="srv-content">
+        <div class="srv-tag" data-es="Religioso" data-en="Religious">Religioso</div>
+        <div class="srv-name" data-es="Comuniones y Confirmaciones" data-en="Communions">Comuniones y Confirmaciones</div>
+        <div class="srv-cta"><span data-es="Ver álbumes" data-en="View albums">Ver álbumes</span> →</div>
+      </div>
+    </a>
+  </div>
 </section>
 
 <!-- SOBRE MI -->
@@ -175,12 +229,7 @@
   <div class="sobre-mi-inner">
     <div class="sobre-mi-foto-wrap reveal">
       <img class="sobre-mi-foto" src="assets/img/sobre-mi.jpg" alt="Fernanda Randazzo — Pink Fotografía">
-      <div class="polaroid-deco pol-d1">
-        <img src="assets/img/pol-1.jpg" alt="Sesión exterior">
-      </div>
-      <div class="polaroid-deco pol-d2">
-        <img src="assets/img/pol-2.jpg" alt="Sesión niños">
-      </div>
+
     </div>
     <div class="reveal reveal-delay-2">
       <div class="section-kicker" data-es="Sobre mí" data-en="About me">Sobre mí</div>
@@ -312,7 +361,11 @@
 </footer>
 
 <!-- WhatsApp flotante -->
-<a href="https://wa.me/5492974197787?text=Hola%20Fernanda!%20Me%20gustar%C3%ADa%20consultar%20sobre%20una%20sesi%C3%B3n" target="_blank" class="wa-float" title="Escribinos por WhatsApp">💬</a>
+<a href="https://wa.me/5492974197787?text=Hola%20Fernanda%21%20Me%20gustar%C3%ADa%20consultar%20sobre%20una%20sesi%C3%B3n" target="_blank" class="wa-float" title="Escribinos por WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">

@@ -165,3 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   renderPortfolio();
 });
+
+// ===== TOGGLE LANG (también usado en index) =====
+window.toggleLang = function() {
+  isES = !isES;
+  document.getElementById('lang-btn').textContent = isES ? 'EN' : 'ES';
+  document.querySelectorAll('[data-es]').forEach(el => {
+    el.innerHTML = isES ? el.dataset.es : el.dataset.en;
+  });
+};
