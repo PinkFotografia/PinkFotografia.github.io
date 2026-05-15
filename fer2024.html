@@ -479,10 +479,10 @@ const H = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Be
 
 // ===== LOGIN =====
 function checkLogin() {
-  const val = document.getElementById('login-input').value;
+  const val = document.getElementById('login-input').value.trim();
   if (val === PWD) {
     document.getElementById('login-screen').classList.add('hide');
-    sessionStorage.setItem('pink-auth','1');
+    try { sessionStorage.setItem('pink-auth','1'); } catch(e) {}
     initPanel();
   } else {
     document.getElementById('login-error').classList.add('show');
@@ -761,8 +761,8 @@ async function addPaquete() {
   const itemsRaw = document.getElementById('p-items').value.trim();
   const featured = document.getElementById('p-featured').checked;
   if(!nombre || !itemsRaw) { alert('Completá nombre e items.'); return; }
-  const items = itemsRaw.split('
-').map(i=>i.trim()).filter(Boolean);
+  const items = itemsRaw.split(/[\r\n]+/).map(i=>i.trim()).filter(Boolean);
+?
   const btn = document.getElementById('p-btn');
   btn.disabled=true; btn.textContent='Guardando...';
   try {
@@ -815,8 +815,8 @@ async function addAlbum() {
   const fecha = document.getElementById('a-fecha').value.trim();
   const fotosRaw = document.getElementById('a-fotos').value.trim();
   if(!nombre) { alert('Completá el nombre del álbum.'); return; }
-  const fotos = fotosRaw.split('
-').map(f=>f.trim()).filter(Boolean);
+  const fotos = fotosRaw.split(/[\r\n]+/).map(f=>f.trim()).filter(Boolean);
+?
   const btn = document.getElementById('a-btn');
   btn.disabled=true; btn.textContent='Guardando...';
   try {
@@ -874,7 +874,7 @@ async function saveTextos() {
 }
 
 // Cargar paquetes al entrar a la pestaña editar
-const origShowTab = window.showTab || function(){};
+
 function showTab(tab, el) {
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
@@ -885,10 +885,14 @@ function showTab(tab, el) {
 
 // Auto-login si ya ingresó en esta sesión
 document.addEventListener('DOMContentLoaded',()=>{
-  if(sessionStorage.getItem('pink-auth')==='1'){
-    document.getElementById('login-screen').classList.add('hide');
-    initPanel();
-  }
+  try {
+    if(sessionStorage.getItem('pink-auth')==='1'){
+      document.getElementById('login-screen').classList.add('hide');
+      initPanel();
+    }
+  } catch(e) {}
+  // Focus en el input de contraseña
+  document.getElementById('login-input').focus();
 });
 </script>
 </body>
