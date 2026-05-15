@@ -217,6 +217,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <button class="nav-tab" onclick="showTab('sesiones',this)">Sesiones</button>
   <button class="nav-tab" onclick="showTab('gastos',this)">Gastos</button>
   <button class="nav-tab" onclick="showTab('pendientes',this)">Pendientes</button>
+  <button class="nav-tab" onclick="showTab('editar',this)">✏️ Web</button>
 </nav>
 
 <div class="main">
@@ -361,6 +362,110 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="section" id="tab-pendientes">
     <div class="alert alert-amber">⚠️ Saldos que todavía no fueron cobrados — se cobran el día de la sesión</div>
     <div class="card"><div id="pen-list"></div></div>
+  </div>
+
+
+  <!-- EDITAR WEB -->
+  <div class="section" id="tab-editar">
+
+    <div style="display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap;">
+      <button class="view-btn active" id="et-paquetes" onclick="setEditTab('paquetes',this)">📦 Paquetes</button>
+      <button class="view-btn" id="et-albumes" onclick="setEditTab('albumes',this)">🖼️ Álbumes</button>
+      <button class="view-btn" id="et-textos" onclick="setEditTab('textos',this)">📝 Textos</button>
+    </div>
+
+    <!-- PAQUETES -->
+    <div id="edit-paquetes">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Nuevo paquete</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Categoría</label>
+                <select class="form-select" id="p-cat">
+                  <option value="estudio">Estudio</option><option value="exterior">Exterior</option>
+                  <option value="embarazadas">Embarazadas</option><option value="pelotero">Pelotero</option>
+                  <option value="casamientos">Casamientos / 15 años</option><option value="comuniones">Comuniones</option>
+                </select>
+              </div>
+              <div class="form-group"><label class="form-label">Nombre del paquete</label>
+                <input class="form-input" id="p-nombre" type="text" placeholder="Ej: Básico, Completo, Premium">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Items (uno por línea)</label>
+              <textarea class="form-textarea" id="p-items" placeholder="1 hora de sesión&#10;15 fotos editadas&#10;Galería digital" style="min-height:120px;"></textarea>
+            </div>
+            <div class="toggle-wrap">
+              <label for="p-featured">⭐ Marcar como "Más popular"</label>
+              <label class="toggle"><input type="checkbox" id="p-featured"><span class="toggle-slider"></span></label>
+            </div>
+            <button class="btn btn-primary" id="p-btn" onclick="addPaquete()">Guardar paquete</button>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="card-header"><div class="card-title">Paquetes cargados</div></div><div id="paquetes-list"></div></div>
+    </div>
+
+    <!-- ÁLBUMES -->
+    <div id="edit-albumes" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Nuevo álbum</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Categoría</label>
+                <select class="form-select" id="a-cat">
+                  <option value="estudio">Estudio</option><option value="exterior">Exterior</option>
+                  <option value="embarazadas">Embarazadas</option><option value="pelotero">Pelotero</option>
+                  <option value="casamientos">Casamientos / 15 años</option><option value="comuniones">Comuniones</option>
+                </select>
+              </div>
+              <div class="form-group"><label class="form-label">Nombre del álbum</label>
+                <input class="form-input" id="a-nombre" type="text" placeholder="Ej: Familia García · 2025">
+              </div>
+            </div>
+            <div class="form-group"><label class="form-label">Año / fecha</label>
+              <input class="form-input" id="a-fecha" type="text" placeholder="Ej: 2025">
+            </div>
+            <div class="form-group">
+              <label class="form-label">URLs de fotos (una por línea)</label>
+              <textarea class="form-textarea" id="a-fotos" placeholder="https://..." style="min-height:100px;"></textarea>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Links directos de fotos subidas a GitHub</div>
+            </div>
+            <button class="btn btn-primary" id="a-btn" onclick="addAlbum()">Guardar álbum</button>
+          </div>
+        </div>
+      </div>
+      <div class="card"><div class="card-header"><div class="card-title">Álbumes cargados</div></div><div id="albumes-list"></div></div>
+    </div>
+
+    <!-- TEXTOS -->
+    <div id="edit-textos" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Textos de la web</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-group"><label class="form-label">Texto de bienvenida (español)</label>
+              <textarea class="form-textarea" id="t-bienvenida-es" style="min-height:100px;"></textarea>
+            </div>
+            <div class="form-group"><label class="form-label">Texto de bienvenida (inglés)</label>
+              <textarea class="form-textarea" id="t-bienvenida-en" style="min-height:100px;"></textarea>
+            </div>
+            <div class="divider"></div>
+            <div class="form-group"><label class="form-label">Sobre mí (español)</label>
+              <textarea class="form-textarea" id="t-sobremi-es" style="min-height:120px;"></textarea>
+            </div>
+            <div class="form-group"><label class="form-label">Sobre mí (inglés)</label>
+              <textarea class="form-textarea" id="t-sobremi-en" style="min-height:120px;"></textarea>
+            </div>
+            <div id="t-status"></div>
+            <button class="btn btn-primary" id="t-btn" onclick="saveTextos()">Guardar textos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -608,6 +713,174 @@ function initPanel(){
   document.getElementById('s-fecha-sena').valueAsDate=now;
   document.getElementById('g-fecha').valueAsDate=now;
   loadAll();
+}
+
+
+// ===== EDICIÓN WEB =====
+let paquetesDB = [], albumesDB = [], textosDB = [];
+
+function setEditTab(tab, el) {
+  ['paquetes','albumes','textos'].forEach(t => {
+    document.getElementById('edit-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('#tab-editar .view-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if(tab==='paquetes') loadPaquetesDB();
+  if(tab==='albumes') loadAlbumesDB();
+  if(tab==='textos') loadTextosDB();
+}
+
+// PAQUETES
+async function loadPaquetesDB() {
+  try {
+    paquetesDB = await sbGet('paquetes');
+    renderPaquetesDB();
+  } catch(e) { console.error(e); }
+}
+
+function renderPaquetesDB() {
+  const list = document.getElementById('paquetes-list');
+  if(!paquetesDB.length) { list.innerHTML='<div class="empty"><div class="empty-icon">📦</div>No hay paquetes cargados aún</div>'; return; }
+  list.innerHTML = paquetesDB.map(p => {
+    const items = Array.isArray(p.items) ? p.items : [];
+    return `<div class="list-item">
+      <div class="li-left">
+        <div class="li-name">${p.nombre} <span style="font-size:11px;color:var(--text-muted);font-weight:400;">· ${p.categoria}</span>${p.featured?'<span class="badge badge-pink" style="margin-left:6px;">Popular</span>':''}</div>
+        <div class="li-sub">${items.slice(0,3).join(' · ')}${items.length>3?'...':''}</div>
+      </div>
+      <div class="li-right">
+        <button class="btn btn-danger btn-sm" onclick="delPaquete(${p.id})">Eliminar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function addPaquete() {
+  const nombre = document.getElementById('p-nombre').value.trim();
+  const cat = document.getElementById('p-cat').value;
+  const itemsRaw = document.getElementById('p-items').value.trim();
+  const featured = document.getElementById('p-featured').checked;
+  if(!nombre || !itemsRaw) { alert('Completá nombre e items.'); return; }
+  const items = itemsRaw.split('
+').map(i=>i.trim()).filter(Boolean);
+  const btn = document.getElementById('p-btn');
+  btn.disabled=true; btn.textContent='Guardando...';
+  try {
+    setStatus('loading','Guardando...');
+    const res = await sbInsert('paquetes', {categoria:cat, nombre, items, featured, activo:true});
+    paquetesDB.unshift(res[0]);
+    setStatus('ok','Guardado');
+    document.getElementById('p-nombre').value='';
+    document.getElementById('p-items').value='';
+    document.getElementById('p-featured').checked=false;
+    renderPaquetesDB();
+  } catch(e) { setStatus('err','Error'); alert('Error al guardar.'); }
+  btn.disabled=false; btn.textContent='Guardar paquete';
+}
+
+async function delPaquete(id) {
+  if(!confirm('¿Eliminar este paquete?')) return;
+  try { setStatus('loading','...'); await sbDelete('paquetes',id); paquetesDB=paquetesDB.filter(p=>p.id!==id); setStatus('ok','Eliminado'); renderPaquetesDB(); }
+  catch(e) { setStatus('err','Error'); }
+}
+
+// ÁLBUMES
+async function loadAlbumesDB() {
+  try {
+    albumesDB = await sbGet('albumes');
+    renderAlbumesDB();
+  } catch(e) { console.error(e); }
+}
+
+function renderAlbumesDB() {
+  const list = document.getElementById('albumes-list');
+  if(!albumesDB.length) { list.innerHTML='<div class="empty"><div class="empty-icon">🖼️</div>No hay álbumes cargados aún</div>'; return; }
+  list.innerHTML = albumesDB.map(a => {
+    const fotos = Array.isArray(a.fotos) ? a.fotos : [];
+    return `<div class="list-item">
+      <div class="li-left">
+        <div class="li-name">${a.nombre} <span style="font-size:11px;color:var(--text-muted);font-weight:400;">· ${a.categoria}</span></div>
+        <div class="li-sub">${fotos.length} fotos · ${a.fecha||''}</div>
+      </div>
+      <div class="li-right">
+        <button class="btn btn-danger btn-sm" onclick="delAlbum(${a.id})">Eliminar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function addAlbum() {
+  const nombre = document.getElementById('a-nombre').value.trim();
+  const cat = document.getElementById('a-cat').value;
+  const fecha = document.getElementById('a-fecha').value.trim();
+  const fotosRaw = document.getElementById('a-fotos').value.trim();
+  if(!nombre) { alert('Completá el nombre del álbum.'); return; }
+  const fotos = fotosRaw.split('
+').map(f=>f.trim()).filter(Boolean);
+  const btn = document.getElementById('a-btn');
+  btn.disabled=true; btn.textContent='Guardando...';
+  try {
+    setStatus('loading','Guardando...');
+    const res = await sbInsert('albumes', {categoria:cat, nombre, fecha, fotos, activo:true});
+    albumesDB.unshift(res[0]);
+    setStatus('ok','Guardado');
+    document.getElementById('a-nombre').value='';
+    document.getElementById('a-fecha').value='';
+    document.getElementById('a-fotos').value='';
+    renderAlbumesDB();
+  } catch(e) { setStatus('err','Error'); alert('Error al guardar.'); }
+  btn.disabled=false; btn.textContent='Guardar álbum';
+}
+
+async function delAlbum(id) {
+  if(!confirm('¿Eliminar este álbum?')) return;
+  try { setStatus('loading','...'); await sbDelete('albumes',id); albumesDB=albumesDB.filter(a=>a.id!==id); setStatus('ok','Eliminado'); renderAlbumesDB(); }
+  catch(e) { setStatus('err','Error'); }
+}
+
+// TEXTOS
+async function loadTextosDB() {
+  try {
+    textosDB = await sbGet('textos');
+    const bienves = textosDB.find(t=>t.clave==='bienvenida');
+    const sobremi = textosDB.find(t=>t.clave==='sobre_mi');
+    if(bienves) { document.getElementById('t-bienvenida-es').value=bienves.valor_es||''; document.getElementById('t-bienvenida-en').value=bienves.valor_en||''; }
+    if(sobremi) { document.getElementById('t-sobremi-es').value=sobremi.valor_es||''; document.getElementById('t-sobremi-en').value=sobremi.valor_en||''; }
+  } catch(e) { console.error(e); }
+}
+
+async function saveTextos() {
+  const btn = document.getElementById('t-btn');
+  btn.disabled=true; btn.textContent='Guardando...';
+  try {
+    setStatus('loading','Guardando...');
+    const updates = [
+      {clave:'bienvenida', valor_es:document.getElementById('t-bienvenida-es').value, valor_en:document.getElementById('t-bienvenida-en').value},
+      {clave:'sobre_mi', valor_es:document.getElementById('t-sobremi-es').value, valor_en:document.getElementById('t-sobremi-en').value},
+    ];
+    for(const u of updates) {
+      const existing = textosDB.find(t=>t.clave===u.clave);
+      if(existing) {
+        await fetch(`${SB_URL}/rest/v1/textos?clave=eq.${u.clave}`,{method:'PATCH',headers:H,body:JSON.stringify({valor_es:u.valor_es,valor_en:u.valor_en,updated_at:new Date().toISOString()})});
+      } else {
+        await sbInsert('textos',u);
+      }
+    }
+    setStatus('ok','Textos guardados');
+    document.getElementById('t-status').innerHTML='<div class="alert alert-amber" style="margin-top:.5rem;">✅ Guardado — los cambios se verán en la web en segundos</div>';
+    setTimeout(()=>{ const s=document.getElementById('t-status'); if(s) s.innerHTML=''; }, 4000);
+  } catch(e) { setStatus('err','Error'); alert('Error al guardar.'); }
+  btn.disabled=false; btn.textContent='Guardar textos';
+}
+
+// Cargar paquetes al entrar a la pestaña editar
+const origShowTab = window.showTab || function(){};
+function showTab(tab, el) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(el) el.classList.add('active');
+  if(tab==='editar') loadPaquetesDB();
 }
 
 // Auto-login si ya ingresó en esta sesión
