@@ -815,7 +815,6 @@ async function addAlbum() {
   const fotosRaw = document.getElementById('a-fotos').value.trim();
   if(!nombre) { alert('Completá el nombre del álbum.'); return; }
   const fotos = fotosRaw.split(/[\r\n]+/).map(f=>f.trim()).filter(Boolean);
-?
   const btn = document.getElementById('a-btn');
   btn.disabled=true; btn.textContent='Guardando...';
   try {
