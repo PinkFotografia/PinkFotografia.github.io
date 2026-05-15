@@ -762,7 +762,6 @@ async function addPaquete() {
   const featured = document.getElementById('p-featured').checked;
   if(!nombre || !itemsRaw) { alert('Completá nombre e items.'); return; }
   const items = itemsRaw.split(/[\r\n]+/).map(i=>i.trim()).filter(Boolean);
-?
   const btn = document.getElementById('p-btn');
   btn.disabled=true; btn.textContent='Guardando...';
   try {
