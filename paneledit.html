@@ -648,26 +648,32 @@ async function sbDelete(t,id){const r=await fetch(`${SB_URL}/rest/v1/${t}?id=eq.
 async function uploadFile(path, file, onProgress) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
+
     xhr.open('POST', `${STORAGE_UPLOAD}/${path}`);
+
     xhr.setRequestHeader('apikey', SB_KEY);
     xhr.setRequestHeader('Authorization', 'Bearer ' + SB_KEY);
     xhr.setRequestHeader('x-upsert', 'true');
-    xhr.upload.onprogress = (e) => { 
-      if(e.lengthComputable && onProgress) 
-        onProgress(Math.round(e.loaded/e.total*100)); 
+    xhr.setRequestHeader('Content-Type', file.type);
+
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable && onProgress) {
+        onProgress(Math.round((e.loaded / e.total) * 100));
+      }
     };
-    xhr.onload = () => { 
-      if(xhr.status===200||xhr.status===201) 
-        resolve(`${STORAGE_URL}/${path}`); 
-      else 
-        reject(new Error('Upload failed: '+xhr.status)); 
+
+    xhr.onload = () => {
+      if (xhr.status === 200 || xhr.status === 201) {
+        resolve(`${STORAGE_URL}/${path}`);
+      } else {
+        console.error(xhr.responseText);
+        reject(new Error('Upload failed: ' + xhr.status));
+      }
     };
+
     xhr.onerror = () => reject(new Error('Network error'));
 
-    const fd = new FormData();
-    fd.append('', file, file.name);
-
-    xhr.send(fd);
+    xhr.send(file);
   });
 }
 
