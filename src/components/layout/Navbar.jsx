@@ -81,7 +81,7 @@ export default function Navbar() {
 
           <button
             onClick={() => scrollToSection('reservas')}
-            className="hidden md:block text-[11px] tracking-[0.1em] uppercase px-6 py-[0.55rem] rounded-[20px] bg-pink text-white hover:bg-pink-dark transition-all duration-[250ms] hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(212,83,126,0.35)] border-none cursor-pointer font-sans"
+            className="text-[11px] tracking-[0.1em] uppercase px-5 py-[0.5rem] rounded-[20px] bg-pink text-white hover:bg-pink-dark transition-all duration-[250ms] border-none cursor-pointer font-sans"
           >
             {t('Reservar', 'Book now')}
           </button>
