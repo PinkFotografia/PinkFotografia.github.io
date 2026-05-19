@@ -39,8 +39,8 @@ export default function SobreMi() {
   }, [])
 
   return (
-    <section id="sobre-mi" className="bg-cream-dark py-24 px-12">
-      <div className="max-w-[1200px] mx-auto grid grid-cols-2 gap-20 items-center">
+    <section id="sobre-mi" className="bg-cream-dark py-16 md:py-24 px-6 md:px-12">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center">
 
         {/* Fotos alternando */}
         <Reveal>

@@ -82,7 +82,7 @@ export default function PortfolioPreview() {
   const { config } = useConfiguracion()
 
   return (
-    <section id="portafolio" className="bg-cream py-24 px-12" style={{ overflow: 'visible' }}>
+    <section id="portafolio" className="bg-cream py-16 md:py-24 px-6 md:px-12" style={{ overflowX: 'hidden', overflowY: 'visible' }}>
 
       <Reveal className="text-center mb-20">
         <SectionKicker centered>{t('Portafolio', 'Portfolio')}</SectionKicker>
@@ -92,7 +92,7 @@ export default function PortfolioPreview() {
       </Reveal>
 
       <div
-        className="max-w-[1100px] mx-auto grid grid-cols-3 gap-x-10"
+        className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-3 gap-x-6 md:gap-x-10"
         style={{ paddingBottom: '3rem' }}
       >
         {PHOTOS.map((p, i) => (

@@ -10,7 +10,7 @@ export default function Reservas() {
   const { t } = useLang()
 
   return (
-    <section id="reservas" className="bg-[#111] py-24 px-12">
+    <section id="reservas" className="bg-[#111] py-16 md:py-24 px-4 md:px-12">
       <div className="max-w-[900px] mx-auto">
 
         <Reveal className="text-center mb-12">

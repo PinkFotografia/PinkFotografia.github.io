@@ -24,8 +24,8 @@ export default function Bienvenida() {
     : FALLBACK[lang]
 
   return (
-    <section id="bienvenida" className="bg-cream py-28 px-12">
-      <div className="max-w-[1200px] mx-auto grid grid-cols-[1.1fr_1fr] gap-20 items-center">
+    <section id="bienvenida" className="bg-cream py-16 md:py-28 px-6 md:px-12">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[1.1fr_1fr] gap-10 md:gap-20 items-center">
 
         {/* Texto */}
         <Reveal>

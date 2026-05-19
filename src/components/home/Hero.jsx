@@ -45,7 +45,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/65 pointer-events-none" />
 
       {/* Contenido centrado */}
-      <div className="animate-fade-in-up absolute top-1/2 left-1/2 text-center w-[90%] max-w-[700px]">
+      <div className="animate-fade-in-up absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-[90%] max-w-[700px]">
         <div className="flex items-center justify-center gap-3 text-[10px] tracking-[0.22em] uppercase text-white/55 mb-5">
           <span className="block w-9 h-px bg-white/30 flex-shrink-0" />
           {t('Fotografía profesional · Comodoro Rivadavia', 'Professional photography · Comodoro Rivadavia')}
@@ -70,7 +70,7 @@ export default function Hero() {
       </div>
 
       {/* Wordmark */}
-      <div className="absolute bottom-10 left-12 pointer-events-none select-none">
+      <div className="absolute bottom-10 left-6 md:left-12 pointer-events-none select-none">
         <div className="font-serif text-[clamp(2.5rem,5vw,4rem)] italic font-light text-white/[0.18] leading-none">
           Pink
         </div>
@@ -80,7 +80,7 @@ export default function Hero() {
       </div>
 
       {/* Indicadores */}
-      <div className="absolute bottom-11 right-12 flex gap-[6px] z-10">
+      <div className="absolute bottom-11 right-6 md:right-12 flex gap-[6px] z-10">
         {slides.map((_, i) => (
           <button
             key={i}

@@ -20,16 +20,16 @@ export default function Servicios() {
   const { config } = useConfiguracion()
 
   return (
-    <section id="servicios" className="bg-cream-dark py-24 px-12">
+    <section id="servicios" className="bg-cream-dark py-16 md:py-24 px-6 md:px-12">
 
-      <Reveal className="text-center mb-16">
+      <Reveal className="text-center mb-12 md:mb-16">
         <SectionKicker centered>{t('Servicios', 'Services')}</SectionKicker>
         <h2 className="font-serif text-[clamp(1.8rem,2.8vw,2.6rem)] italic font-normal text-ink mt-2">
           {t('¿Qué sesión estás buscando?', 'What session are you looking for?')}
         </h2>
       </Reveal>
 
-      <div className="max-w-[1200px] mx-auto grid grid-cols-3 gap-6">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {SERVICES.map((s, i) => (
           <Reveal key={s.cat} delay={(i % 3) + 1}>
             <CategoryCard

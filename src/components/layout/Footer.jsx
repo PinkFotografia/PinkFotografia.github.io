@@ -21,10 +21,10 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#111] text-white pt-16 pb-8">
-      <div className="max-w-[1200px] mx-auto px-12">
+      <div className="max-w-[1200px] mx-auto px-6 md:px-12">
 
         {/* Top grid */}
-        <div className="grid grid-cols-3 gap-12 mb-12 pb-12 border-b border-white/[0.06]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12 pb-12 border-b border-white/[0.06]">
 
           {/* Marca */}
           <div>
@@ -80,7 +80,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="flex justify-between items-center text-[11px] text-white/25">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-[11px] text-white/25 text-center">
           <span>© 2025 Pink Fotografía · Comodoro Rivadavia, Chubut</span>
           <span>Fernanda Randazzo · Fotografía profesional</span>
         </div>

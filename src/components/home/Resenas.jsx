@@ -15,16 +15,16 @@ export default function Resenas() {
   const { t } = useLang()
 
   return (
-    <section id="resenas" className="bg-cream py-24 px-12">
+    <section id="resenas" className="bg-cream py-16 md:py-24 px-6 md:px-12">
 
-      <Reveal className="text-center mb-16">
+      <Reveal className="text-center mb-12 md:mb-16">
         <SectionKicker centered>{t('Reseñas', 'Reviews')}</SectionKicker>
         <h2 className="font-serif text-[clamp(1.8rem,2.8vw,2.6rem)] italic font-normal text-ink mt-2">
           {t('Lo que dicen las familias', 'What families say')}
         </h2>
       </Reveal>
 
-      <div className="max-w-[1200px] mx-auto grid grid-cols-3 gap-6 mb-12">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {REVIEWS.map((r, i) => (
           <Reveal key={i} delay={(i % 3) + 1}>
             <div className="bg-white rounded-[12px] p-6 border border-black/[0.06] flex flex-col gap-3">
