@@ -19,10 +19,16 @@ const SOBREMI_SLOTS = [
   { key: 'sobremi5', label: 'Foto 5', path: 'sobremi/sobremi5' },
 ]
 
-const SERVICIO_SLOTS = Object.entries(CATEGORIES).map(([, cat]) => ({
+const SERVICIO_SLOTS = Object.entries(CATEGORIES).map(([key, cat]) => ({
   key: cat.imgKey,
   label: cat.es,
   path: `servicios/${cat.imgKey}`,
+}))
+
+const PORTFOLIO_SLOTS = Object.entries(CATEGORIES).map(([key, cat]) => ({
+  key: `port-${key}`,
+  label: cat.es,
+  path: `portfolio/${key}`,
 }))
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -123,6 +129,7 @@ function TabFotos({ config, onConfigChange }) {
   const sections = [
     { id: 'hero',      label: 'Hero (inicio)' },
     { id: 'servicios', label: 'Tarjetas de servicios' },
+    { id: 'portfolio', label: 'Tarjetas de portafolio' },
     { id: 'sobremi',   label: 'Sobre mí' },
   ]
 
@@ -133,6 +140,7 @@ function TabFotos({ config, onConfigChange }) {
   const slots =
     section === 'hero'      ? HERO_SLOTS :
     section === 'servicios' ? SERVICIO_SLOTS :
+    section === 'portfolio' ? PORTFOLIO_SLOTS :
     SOBREMI_SLOTS
 
   return (
@@ -157,10 +165,11 @@ function TabFotos({ config, onConfigChange }) {
       <p className="text-[12px] text-white/25 font-sans mb-5">
         {section === 'hero' && 'Las 5 fotos que rotan en el inicio. Hacé clic en cualquiera para reemplazarla.'}
         {section === 'servicios' && 'Fotos de fondo de cada tarjeta de servicio en el inicio.'}
+        {section === 'portfolio' && 'Fotos de las tarjetas polaroid en la sección Portafolio del inicio. Si no se carga ninguna, usa las fotos de servicios como fallback.'}
         {section === 'sobremi' && 'Las 5 fotos que alternan en la sección "Sobre mí". Hacé clic para reemplazar.'}
       </p>
 
-      <div className={`grid gap-4 ${section === 'sobremi' ? 'grid-cols-5' : section === 'hero' ? 'grid-cols-5' : 'grid-cols-3'}`}>
+      <div className={`grid gap-4 ${section === 'sobremi' || section === 'hero' ? 'grid-cols-5' : 'grid-cols-3'}`}>
         {slots.map(slot => (
           <ImageSlot
             key={slot.key}
