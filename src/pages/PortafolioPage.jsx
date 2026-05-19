@@ -52,7 +52,7 @@ export default function PortafolioPage() {
       <CategoryHero categoria={categoria} type="portafolio" />
       <CategoryTabs basePath="/portafolio" />
 
-      <div className="bg-cream py-20 px-12">
+      <div className="bg-cream py-14 md:py-20 px-6 md:px-12">
         <div className="max-w-[1200px] mx-auto">
 
           {/* ── ALBUMS VIEW ── */}

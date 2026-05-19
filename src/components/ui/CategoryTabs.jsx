@@ -7,7 +7,7 @@ export default function CategoryTabs({ basePath }) {
   const { t } = useLang()
 
   return (
-    <div className="flex gap-2 justify-center flex-wrap px-12 py-8 bg-[#1A1A1A] border-b border-white/[0.05]">
+    <div className="flex gap-2 justify-center flex-wrap px-4 md:px-12 py-6 md:py-8 bg-[#1A1A1A] border-b border-white/[0.05]">
       {Object.entries(CATEGORIES).map(([key, cat]) => {
         const isActive = key === categoria
         return (

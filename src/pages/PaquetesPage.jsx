@@ -31,11 +31,11 @@ export default function PaquetesPage() {
       <CategoryHero categoria={categoria} type="paquetes" />
       <CategoryTabs basePath="/paquetes" />
 
-      <div className="bg-cream py-20 px-12">
+      <div className="bg-cream py-14 md:py-20 px-6 md:px-12">
         <div className="max-w-[1000px] mx-auto">
 
           {/* Encabezado */}
-          <Reveal className="text-center mb-14">
+          <Reveal className="text-center mb-10 md:mb-14">
             <SectionKicker centered>{t('Nuestros paquetes', 'Our packages')}</SectionKicker>
             <p className="text-[14px] text-ink-muted mt-3">
               {t(
@@ -45,8 +45,8 @@ export default function PaquetesPage() {
             </p>
           </Reveal>
 
-          {/* Grid de paquetes — 2 o 3 columnas según cantidad */}
-          <div className={`grid gap-6 ${paquetes.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+          {/* Grid de paquetes — 1 col mobile, 2 o 3 en desktop */}
+          <div className={`grid gap-6 grid-cols-1 ${paquetes.length === 2 ? 'md:grid-cols-2' : 'sm:grid-cols-2 md:grid-cols-3'}`}>
             {paquetes.map((p, i) => (
               <PaqueteCard
                 key={p.id}
