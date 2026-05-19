@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ken Burns zoom para el hero */
+@keyframes heroZoom {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1); }
+}
+
+/* Fade-in inicial del hero center */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate(-50%, -44%); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.animate-hero-zoom {
+  animation: heroZoom 7s ease forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease 0.3s both;
+}
+
+/* Reveal con IntersectionObserver */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Indicador de nav activo (underline slide) */
+.nav-link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: #D4537E;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-link-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Masonry de fotos (columnas CSS) */
+.port-grid {
+  columns: 4 240px;
+  column-gap: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
