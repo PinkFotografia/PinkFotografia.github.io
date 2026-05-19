@@ -1,38 +1,13 @@
-import { useEffect } from 'react'
 import { useLang } from '../../context/LangContext'
 import Reveal from '../ui/Reveal'
 import SectionKicker from '../ui/SectionKicker'
 
 const WA_LINK = 'https://wa.me/5492974197787?text=Hola%20Fernanda!%20Me%20gustar%C3%ADa%20reservar%20una%20sesi%C3%B3n%20%F0%9F%93%B8'
 const IG_LINK = 'https://www.instagram.com/pink.ph'
+const CAL_URL = 'https://cal.com/pink-fotografia/sesion-1-hora?embed=true&layout=month_view&theme=light'
 
 export default function Reservas() {
   const { t } = useLang()
-
-  useEffect(() => {
-    function setupEmbed() {
-      window.Cal('init', 'sesion-1-hora', { origin: 'https://app.cal.com' })
-      window.Cal.ns['sesion-1-hora']('inline', {
-        elementOrSelector: '#cal-embed-sesion',
-        config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
-        calLink: 'pink-fotografia/sesion-1-hora',
-      })
-      window.Cal.ns['sesion-1-hora']('ui', {
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      })
-    }
-
-    if (window.Cal) {
-      setupEmbed()
-    } else {
-      const script = document.createElement('script')
-      script.src = 'https://app.cal.com/embed/embed.js'
-      script.async = true
-      script.onload = setupEmbed
-      document.head.appendChild(script)
-    }
-  }, [])
 
   return (
     <section id="reservas" className="bg-[#111] py-24 px-12">
@@ -52,10 +27,12 @@ export default function Reservas() {
         </Reveal>
 
         {/* Cal.com embed */}
-        <div
-          id="cal-embed-sesion"
-          className="w-full rounded-[12px] mb-10 overflow-hidden"
-          style={{ minHeight: '700px' }}
+        <iframe
+          src={CAL_URL}
+          title="Reservar sesión — Pink Fotografía"
+          className="w-full rounded-[12px] mb-10"
+          style={{ minHeight: '700px', border: 'none' }}
+          loading="lazy"
         />
 
         {/* Botones */}
