@@ -9,14 +9,8 @@ const IG_LINK = 'https://www.instagram.com/pink.ph'
 export default function Reservas() {
   const { t } = useLang()
 
-  // Inyectar el script de Cal.com una sola vez
   useEffect(() => {
-    if (window.Cal) return // ya cargado
-
-    const script = document.createElement('script')
-    script.src = 'https://app.cal.com/embed/embed.js'
-    script.async = true
-    script.onload = () => {
+    function setupEmbed() {
       window.Cal('init', 'sesion-1-hora', { origin: 'https://app.cal.com' })
       window.Cal.ns['sesion-1-hora']('inline', {
         elementOrSelector: '#cal-embed-sesion',
@@ -28,7 +22,16 @@ export default function Reservas() {
         layout: 'month_view',
       })
     }
-    document.head.appendChild(script)
+
+    if (window.Cal) {
+      setupEmbed()
+    } else {
+      const script = document.createElement('script')
+      script.src = 'https://app.cal.com/embed/embed.js'
+      script.async = true
+      script.onload = setupEmbed
+      document.head.appendChild(script)
+    }
   }, [])
 
   return (
@@ -51,8 +54,8 @@ export default function Reservas() {
         {/* Cal.com embed */}
         <div
           id="cal-embed-sesion"
-          className="w-full overflow-auto rounded-[12px] mb-10"
-          style={{ height: '100%' }}
+          className="w-full rounded-[12px] mb-10 overflow-hidden"
+          style={{ minHeight: '700px' }}
         />
 
         {/* Botones */}
