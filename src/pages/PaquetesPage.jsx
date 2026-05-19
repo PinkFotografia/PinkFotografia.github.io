@@ -46,7 +46,7 @@ export default function PaquetesPage() {
           </Reveal>
 
           {/* Grid de paquetes — 1 col mobile, 2 o 3 en desktop */}
-          <div className={`grid gap-6 grid-cols-1 ${paquetes.length === 2 ? 'md:grid-cols-2' : 'sm:grid-cols-2 md:grid-cols-3'}`}>
+          <div className={`grid gap-6 grid-cols-1 ${paquetes.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
             {paquetes.map((p, i) => (
               <PaqueteCard
                 key={p.id}

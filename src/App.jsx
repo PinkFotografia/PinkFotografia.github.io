@@ -5,10 +5,12 @@ import Home from './pages/Home'
 import PaquetesPage from './pages/PaquetesPage'
 import PortafolioPage from './pages/PortafolioPage'
 import AdminPage from './pages/AdminPage'
+import ScrollToTop from './components/ui/ScrollToTop'
 
 export default function App() {
   return (
     <LangProvider>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/paquetes/:categoria" element={<Layout><PaquetesPage /></Layout>} />

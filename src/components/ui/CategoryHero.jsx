@@ -15,7 +15,7 @@ export default function CategoryHero({ categoria, type = 'paquetes' }) {
 
   return (
     <div
-      className="relative bg-[#1A1A1A] pt-32 pb-16 text-center overflow-hidden"
+      className="relative bg-[#1A1A1A] pt-24 md:pt-32 pb-10 md:pb-16 text-center overflow-hidden"
       style={{
         backgroundImage: `url('${bgImage}')`,
         backgroundSize: 'cover',
