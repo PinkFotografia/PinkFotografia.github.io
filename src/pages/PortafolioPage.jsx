@@ -24,9 +24,15 @@ export default function PortafolioPage() {
   const cat = CATEGORIES[categoria]
   if (!cat) return null
 
+  const isTematicas = categoria === 'tematicas'
+
   const albumes = (!loading && !error && data.length > 0)
     ? data
     : FALLBACK_ALBUMES[categoria] || []
+
+  const tematicasFotos = isTematicas
+    ? albumes.flatMap(a => Array.isArray(a.fotos) ? a.fotos : [])
+    : []
 
   function handleAlbumClick(album) {
     setOpenAlbum(album)
@@ -43,9 +49,48 @@ export default function PortafolioPage() {
   }
 
   function navSlide(dir) {
-    const total = openAlbum.fotos.length
+    const fotos = isTematicas ? tematicasFotos : (openAlbum?.fotos || [])
+    const total = fotos.length
     setSsIndex(i => (i + dir + total) % total)
   }
+
+  function renderPhotoGrid(fotos, altText) {
+    return (
+      <div className="port-grid">
+        {fotos.map((foto, i) => {
+          const isPol = i % 5 === 2
+          const rot = isPol ? ROTS[i % ROTS.length] * 0.6 : ROTS[i % ROTS.length]
+          return (
+            <div
+              key={i}
+              className={`break-inside-avoid mb-4 cursor-pointer group ${isPol ? 'is-polaroid' : ''}`}
+              style={{ transform: `rotate(${rot}deg)` }}
+              onClick={() => openSlideshow(i)}
+            >
+              <div className={`relative overflow-hidden ${isPol ? 'p-3 pb-10 bg-white shadow-[0_4px_18px_rgba(0,0,0,0.18)]' : 'rounded-[6px]'}`}>
+                <img
+                  src={foto}
+                  alt={altText}
+                  loading="lazy"
+                  className="w-full block transition-transform duration-400 group-hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-[18px]">🔍</span>
+                </div>
+                {isPol && (
+                  <div className="text-center text-[11px] text-ink-muted italic mt-2 font-serif">
+                    {altText}
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  const slideshowFotos = isTematicas ? tematicasFotos : (openAlbum?.fotos || [])
 
   return (
     <>
@@ -55,8 +100,24 @@ export default function PortafolioPage() {
       <div className="bg-cream py-14 md:py-20 px-6 md:px-12">
         <div className="max-w-[1200px] mx-auto">
 
-          {/* ── ALBUMS VIEW ── */}
-          {!openAlbum && (
+          {/* ── TEMÁTICAS: direct photo grid ── */}
+          {isTematicas && (
+            <>
+              <Reveal className="text-center mb-14">
+                <SectionKicker centered>{t('Galería de Temáticas', 'Themed Gallery')}</SectionKicker>
+                <p className="text-[14px] text-ink-muted mt-3">
+                  {t(
+                    'Explorá las distintas temáticas que podemos preparar para tu sesión.',
+                    'Explore the different themes we can prepare for your session.'
+                  )}
+                </p>
+              </Reveal>
+              {renderPhotoGrid(tematicasFotos, cat.es)}
+            </>
+          )}
+
+          {/* ── OTHER CATEGORIES: album list ── */}
+          {!isTematicas && !openAlbum && (
             <>
               <Reveal className="text-center mb-14">
                 <SectionKicker centered>{t('Álbumes', 'Albums')}</SectionKicker>
@@ -64,7 +125,6 @@ export default function PortafolioPage() {
                   {t('Seleccioná un álbum para ver las fotos.', 'Select an album to view the photos.')}
                 </p>
               </Reveal>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {albumes.map((album, i) => (
                   <AlbumCard
@@ -78,10 +138,9 @@ export default function PortafolioPage() {
             </>
           )}
 
-          {/* ── PHOTOS VIEW ── */}
-          {openAlbum && (
+          {/* ── OTHER CATEGORIES: album photos ── */}
+          {!isTematicas && openAlbum && (
             <>
-              {/* Back + title */}
               <div className="flex items-center gap-4 mb-10">
                 <button
                   onClick={handleBack}
@@ -94,56 +153,16 @@ export default function PortafolioPage() {
                   {openAlbum.nombre}
                 </h2>
               </div>
-
-              {/* Masonry grid */}
-              <div className="port-grid">
-                {openAlbum.fotos.map((foto, i) => {
-                  const isPol = i % 5 === 2
-                  const rot = isPol
-                    ? ROTS[i % ROTS.length] * 0.6
-                    : ROTS[i % ROTS.length]
-
-                  return (
-                    <div
-                      key={i}
-                      className={`break-inside-avoid mb-4 cursor-pointer group ${isPol ? 'is-polaroid' : ''}`}
-                      style={{ transform: `rotate(${rot}deg)` }}
-                      onClick={() => openSlideshow(i)}
-                    >
-                      <div className={`relative overflow-hidden ${isPol ? 'p-3 pb-10 bg-white shadow-[0_4px_18px_rgba(0,0,0,0.18)]' : 'rounded-[6px]'}`}>
-                        <img
-                          src={foto}
-                          alt={openAlbum.nombre}
-                          loading="lazy"
-                          className="w-full block transition-transform duration-400 group-hover:scale-[1.03]"
-                        />
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-                          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-[18px]">
-                            🔍
-                          </span>
-                        </div>
-                        {/* Polaroid caption */}
-                        {isPol && (
-                          <div className="text-center text-[11px] text-ink-muted italic mt-2 font-serif">
-                            {openAlbum.nombre}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
+              {renderPhotoGrid(openAlbum.fotos || [], openAlbum.nombre)}
             </>
           )}
 
         </div>
       </div>
 
-      {/* Slideshow overlay */}
-      {openAlbum && ssIndex !== null && (
+      {ssIndex !== null && (
         <Slideshow
-          fotos={openAlbum.fotos}
+          fotos={slideshowFotos}
           index={ssIndex}
           onClose={() => setSsIndex(null)}
           onNav={navSlide}

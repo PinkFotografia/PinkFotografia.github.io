@@ -130,4 +130,23 @@ export const FALLBACK_ALBUMES = {
       ],
     },
   ],
+  tematicas: [
+    {
+      id: 'tem-01',
+      nombre: 'Temáticas',
+      fecha: '2024',
+      categoria: 'tematicas',
+      fotos: [
+        '/assets/port-04.jpg',
+        '/assets/port-05.jpg',
+        '/assets/port-12.jpg',
+        '/assets/port-14.jpg',
+        '/assets/port-26.jpg',
+        '/assets/port-07.jpg',
+        '/assets/port-09.jpg',
+        '/assets/port-20.jpg',
+        '/assets/port-29.jpg',
+      ],
+    },
+  ],
 }

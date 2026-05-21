@@ -16,6 +16,8 @@ export default function TabAlbumes() {
   const [dragOver, setDragOver] = useState(false)
   const inputRef = useRef(null)
 
+  const isTematicas = categoria === 'tematicas'
+
   useEffect(() => { fetchAlbumes() }, [categoria])
 
   async function fetchAlbumes() {
@@ -76,10 +78,14 @@ export default function TabAlbumes() {
         urls.push(data.publicUrl)
       }
 
+      const nombre = isTematicas
+        ? `Temáticas · ${new Date().toLocaleDateString('es-AR')}`
+        : form.nombre
+
       const { error: dbErr } = await supabase.from('albumes').insert({
         categoria,
-        nombre: form.nombre,
-        fecha: form.fecha || null,
+        nombre,
+        fecha: isTematicas ? null : (form.fecha || null),
         fotos: urls,
         activo: true,
       })
@@ -94,11 +100,32 @@ export default function TabAlbumes() {
     setProgress({ current: 0, total: 0 })
   }
 
-  async function handleDelete(id) {
+  async function handleDeleteAlbum(id) {
     if (!window.confirm('¿Eliminar este álbum?')) return
     await supabase.from('albumes').delete().eq('id', id)
     fetchAlbumes()
   }
+
+  async function handleDeleteFoto(albumId, fotoUrl, currentFotos) {
+    const newFotos = currentFotos.filter(f => f !== fotoUrl)
+    if (newFotos.length === 0) {
+      await supabase.from('albumes').delete().eq('id', albumId)
+    } else {
+      await supabase.from('albumes').update({ fotos: newFotos }).eq('id', albumId)
+    }
+    fetchAlbumes()
+  }
+
+  // Flat list of {url, albumId, albumFotos} for tematicas view
+  const tematicasFotos = isTematicas
+    ? albumes.flatMap(a =>
+        (Array.isArray(a.fotos) ? a.fotos : []).map(url => ({
+          url,
+          albumId: a.id,
+          albumFotos: a.fotos,
+        }))
+      )
+    : []
 
   return (
     <div className="p-8 max-w-[1000px]">
@@ -108,7 +135,7 @@ export default function TabAlbumes() {
           onClick={() => { setShowForm(v => !v); setError(null) }}
           className="bg-pink text-white px-5 py-2 rounded-[6px] text-[11px] tracking-[0.08em] uppercase font-sans hover:bg-pink-dark transition-colors"
         >
-          + Nuevo álbum
+          {isTematicas ? '+ Agregar fotos' : '+ Nuevo álbum'}
         </button>
       </div>
 
@@ -132,36 +159,40 @@ export default function TabAlbumes() {
       {/* Form */}
       {showForm && (
         <form onSubmit={handleSave} className="bg-[#1A1A1A] rounded-[10px] p-6 border border-white/[0.06] mb-8">
-          <div className="text-[10px] tracking-[0.12em] uppercase text-white/30 mb-5">Nuevo álbum</div>
-
-          <div className="grid grid-cols-2 gap-4 mb-5">
-            <div>
-              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Nombre *</label>
-              <input
-                type="text"
-                value={form.nombre}
-                onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))}
-                required
-                placeholder="Ej: Familia García · 2025"
-                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
-              />
-            </div>
-            <div>
-              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Año / fecha</label>
-              <input
-                type="text"
-                value={form.fecha}
-                onChange={e => setForm(f => ({ ...f, fecha: e.target.value }))}
-                placeholder="Ej: 2025"
-                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
-              />
-            </div>
+          <div className="text-[10px] tracking-[0.12em] uppercase text-white/30 mb-5">
+            {isTematicas ? 'Agregar fotos temáticas' : 'Nuevo álbum'}
           </div>
+
+          {!isTematicas && (
+            <div className="grid grid-cols-2 gap-4 mb-5">
+              <div>
+                <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Nombre *</label>
+                <input
+                  type="text"
+                  value={form.nombre}
+                  onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))}
+                  required
+                  placeholder="Ej: Familia García · 2025"
+                  className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Año / fecha</label>
+                <input
+                  type="text"
+                  value={form.fecha}
+                  onChange={e => setForm(f => ({ ...f, fecha: e.target.value }))}
+                  placeholder="Ej: 2025"
+                  className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
+                />
+              </div>
+            </div>
+          )}
 
           {/* Drop zone */}
           <div className="mb-5">
             <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-2">
-              Fotos * <span className="text-white/20 normal-case tracking-normal">— la primera es la portada</span>
+              Fotos * {!isTematicas && <span className="text-white/20 normal-case tracking-normal">— la primera es la portada</span>}
             </label>
             <div
               onDragOver={e => { e.preventDefault(); setDragOver(true) }}
@@ -197,7 +228,7 @@ export default function TabAlbumes() {
                     >
                       ×
                     </button>
-                    {i === 0 && (
+                    {i === 0 && !isTematicas && (
                       <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[9px] text-white/70 text-center py-[2px] font-sans">
                         portada
                       </div>
@@ -232,7 +263,7 @@ export default function TabAlbumes() {
               disabled={uploading}
               className="bg-pink text-white px-5 py-2 rounded-[6px] text-[11px] tracking-[0.08em] uppercase font-sans hover:bg-pink-dark transition-colors disabled:opacity-50"
             >
-              {uploading ? `Subiendo ${progress.current}/${progress.total}…` : 'Guardar álbum'}
+              {uploading ? `Subiendo ${progress.current}/${progress.total}…` : (isTematicas ? 'Agregar fotos' : 'Guardar álbum')}
             </button>
             <button
               type="button"
@@ -245,38 +276,68 @@ export default function TabAlbumes() {
         </form>
       )}
 
-      {/* Albums grid */}
-      {loading ? (
-        <div className="text-white/20 text-[13px] text-center py-16 font-sans">Cargando…</div>
-      ) : albumes.length === 0 ? (
-        <div className="text-white/20 text-[13px] text-center py-16 font-sans">No hay álbumes para esta categoría</div>
-      ) : (
-        <div className="grid grid-cols-3 gap-4">
-          {albumes.map(a => {
-            const fotos = Array.isArray(a.fotos) ? a.fotos : []
-            return (
-              <div key={a.id} className="bg-[#1A1A1A] rounded-[10px] border border-white/[0.06] overflow-hidden">
-                {fotos[0] && (
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img src={fotos[0]} alt={a.nombre} className="w-full h-full object-cover" />
-                  </div>
-                )}
-                <div className="p-4">
-                  <div className="font-serif italic text-[1rem] text-white/75 mb-1 truncate">{a.nombre}</div>
-                  <div className="text-[11px] text-white/30 mb-3 font-sans">
-                    {fotos.length} {fotos.length === 1 ? 'foto' : 'fotos'}{a.fecha ? ` · ${a.fecha}` : ''}
-                  </div>
+      {/* ── TEMÁTICAS: flat photo grid ── */}
+      {isTematicas && !loading && (
+        tematicasFotos.length === 0 ? (
+          <div className="text-white/20 text-[13px] text-center py-16 font-sans">
+            No hay fotos temáticas aún. Agregá algunas con el botón de arriba.
+          </div>
+        ) : (
+          <>
+            <div className="text-[10px] tracking-[0.1em] uppercase text-white/20 mb-4 font-sans">
+              {tematicasFotos.length} {tematicasFotos.length === 1 ? 'foto' : 'fotos'}
+            </div>
+            <div className="grid grid-cols-4 gap-3">
+              {tematicasFotos.map((item, i) => (
+                <div key={i} className="relative aspect-square rounded-[6px] overflow-hidden bg-white/[0.05] group">
+                  <img src={item.url} alt="" className="w-full h-full object-cover" />
                   <button
-                    onClick={() => handleDelete(a.id)}
-                    className="text-[11px] text-white/25 hover:text-red-400 transition-colors font-sans"
+                    onClick={() => handleDeleteFoto(item.albumId, item.url, item.albumFotos)}
+                    className="absolute top-1.5 right-1.5 w-6 h-6 bg-black/70 text-white rounded-full text-[13px] leading-none flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-500 transition-all"
                   >
-                    Eliminar
+                    ×
                   </button>
                 </div>
-              </div>
-            )
-          })}
-        </div>
+              ))}
+            </div>
+          </>
+        )
+      )}
+
+      {/* ── STANDARD CATEGORIES: album grid ── */}
+      {!isTematicas && (
+        loading ? (
+          <div className="text-white/20 text-[13px] text-center py-16 font-sans">Cargando…</div>
+        ) : albumes.length === 0 ? (
+          <div className="text-white/20 text-[13px] text-center py-16 font-sans">No hay álbumes para esta categoría</div>
+        ) : (
+          <div className="grid grid-cols-3 gap-4">
+            {albumes.map(a => {
+              const fotos = Array.isArray(a.fotos) ? a.fotos : []
+              return (
+                <div key={a.id} className="bg-[#1A1A1A] rounded-[10px] border border-white/[0.06] overflow-hidden">
+                  {fotos[0] && (
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img src={fotos[0]} alt={a.nombre} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <div className="font-serif italic text-[1rem] text-white/75 mb-1 truncate">{a.nombre}</div>
+                    <div className="text-[11px] text-white/30 mb-3 font-sans">
+                      {fotos.length} {fotos.length === 1 ? 'foto' : 'fotos'}{a.fecha ? ` · ${a.fecha}` : ''}
+                    </div>
+                    <button
+                      onClick={() => handleDeleteAlbum(a.id)}
+                      className="text-[11px] text-white/25 hover:text-red-400 transition-colors font-sans"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )
       )}
     </div>
   )
