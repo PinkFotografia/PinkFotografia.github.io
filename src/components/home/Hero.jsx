@@ -12,6 +12,7 @@ const SLIDES = [
 
 export default function Hero() {
   const [current, setCurrent] = useState(0)
+  const [loadedSlides, setLoadedSlides] = useState(new Set([0]))
   const { config } = useConfiguracion()
   const { lang, toggle, t } = useLang()
 
@@ -25,6 +26,14 @@ export default function Hero() {
     return () => clearInterval(timer)
   }, [])
 
+  useEffect(() => {
+    const next = (current + 1) % SLIDES.length
+    setLoadedSlides(prev => {
+      if (prev.has(current) && prev.has(next)) return prev
+      return new Set([...prev, current, next])
+    })
+  }, [current])
+
   function goSlide(n) { setCurrent(n) }
 
   return (
@@ -37,7 +46,10 @@ export default function Hero() {
           className={`absolute inset-0 bg-cover transition-opacity duration-[1800ms] ease-in-out
             ${i === current ? 'opacity-100' : 'opacity-0'}
             ${i === 0 ? 'animate-hero-zoom' : ''}`}
-          style={{ backgroundImage: `url('${slide.image}')`, backgroundPosition: slide.position }}
+          style={{
+            backgroundImage: loadedSlides.has(i) ? `url('${slide.image}')` : undefined,
+            backgroundPosition: slide.position,
+          }}
         />
       ))}
 

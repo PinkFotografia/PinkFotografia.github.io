@@ -5,9 +5,12 @@ export default function CategoryCard({ image, position = 'center', tag, name, ct
       onClick={onClick}
     >
       {/* Foto de fondo */}
-      <div
-        className="absolute inset-0 bg-cover transition-transform duration-[600ms] group-hover:scale-105"
-        style={{ backgroundImage: `url('${image}')`, backgroundPosition: position }}
+      <img
+        src={image}
+        alt={name}
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[600ms] group-hover:scale-105"
+        style={{ objectPosition: position }}
       />
       {/* Overlay al hover */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
