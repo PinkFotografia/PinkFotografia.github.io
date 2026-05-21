@@ -35,8 +35,8 @@ const SERVICES = [
 
 const CONTACT = [
   { Icon: IconWhatsApp, label: '+54 9 297 419-7787',        href: 'https://wa.me/5492974197787' },
-  { Icon: IconInstagram, label: '@pink.ph',                 href: 'https://www.instagram.com/pink.ph' },
-  { Icon: IconFacebook,  label: 'Pink Fotografía',          href: 'https://www.facebook.com/Pink-Fotografia' },
+  { Icon: IconInstagram, label: '@pinkk.ph',                 href: 'https://www.instagram.com/pinkk.ph' },
+  { Icon: IconFacebook,  label: 'Pink Fotografía',          href: 'https://www.facebook.com/pinkk.ph' },
   { Icon: IconEmail,     label: 'pinkfotografiaph@gmail.com', href: 'mailto:pinkfotografiaph@gmail.com' },
 ]
 
