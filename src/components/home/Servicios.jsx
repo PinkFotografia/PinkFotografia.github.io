@@ -12,6 +12,7 @@ const SERVICES = [
   { cat: 'pelotero',    imgKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg',  position: 'center',     tag: { es: 'Cumpleaños', en: 'Birthday' }, name: { es: 'Pelotero y fiestas infantiles',            en: 'Kids parties & celebrations'         } },
   { cat: 'casamientos', imgKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg',position: 'center',     tag: { es: 'Eventos',    en: 'Events'   }, name: { es: 'Casamientos y 15 años',                   en: 'Weddings & Quinceañera'              } },
   { cat: 'comuniones',  imgKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg',  position: 'center top', tag: { es: 'Religioso',  en: 'Religious'}, name: { es: 'Comuniones y Confirmaciones',              en: 'Communions & Confirmations'          } },
+  { cat: 'tematicas',   imgKey: 'srv-tematicas',  fallback: '/assets/port-04.jpg',       position: 'center',     tag: { es: 'Temáticas',  en: 'Themes'   }, name: { es: 'Sesiones con temática especial',           en: 'Themed photo sessions'               } },
 ]
 
 export default function Servicios() {
@@ -37,8 +38,8 @@ export default function Servicios() {
               position={s.position}
               tag={t(s.tag.es, s.tag.en)}
               name={t(s.name.es, s.name.en)}
-              cta={t('Ver paquetes', 'View packages')}
-              onClick={() => navigate(`/paquetes/${s.cat}`)}
+              cta={s.cat === 'tematicas' ? t('Ver temáticas', 'View themes') : t('Ver paquetes', 'View packages')}
+              onClick={() => navigate(s.cat === 'tematicas' ? `/portafolio/tematicas` : `/paquetes/${s.cat}`)}
               className="h-[320px]"
             />
           </Reveal>
