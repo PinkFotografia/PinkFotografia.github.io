@@ -24,7 +24,7 @@ export default function PortafolioPage() {
   const cat = CATEGORIES[categoria]
   if (!cat) return null
 
-  const isTematicas = categoria === 'tematicas'
+  const isTematicas = categoria === 'tematicas' || categoria === 'pelotero'
 
   const albumes = (!loading && !error && data.length > 0)
     ? data
@@ -104,7 +104,7 @@ export default function PortafolioPage() {
           {isTematicas && (
             <>
               <Reveal className="text-center mb-14">
-                <SectionKicker centered>{t('Galería de Temáticas', 'Themed Gallery')}</SectionKicker>
+                <SectionKicker centered>{cat.es}</SectionKicker>
                 <p className="text-[14px] text-ink-muted mt-3">
                   {t(
                     'Explorá las distintas temáticas que podemos preparar para tu sesión.',

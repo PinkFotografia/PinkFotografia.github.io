@@ -26,7 +26,7 @@ export default function TabAlbumes() {
   const [addError, setAddError] = useState(null)
   const addInputRef = useRef(null)
 
-  const isTematicas = categoria === 'tematicas'
+  const isTematicas = categoria === 'tematicas' || categoria === 'pelotero'
 
   useEffect(() => { fetchAlbumes() }, [categoria])
 
@@ -98,7 +98,7 @@ export default function TabAlbumes() {
       }
 
       const nombre = isTematicas
-        ? `Temáticas · ${new Date().toLocaleDateString('es-AR')}`
+        ? `${CATEGORIES[categoria].es} · ${new Date().toLocaleDateString('es-AR')}`
         : form.nombre
 
       const { error: dbErr } = await supabase.from('albumes').insert({

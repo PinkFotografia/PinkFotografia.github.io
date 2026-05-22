@@ -3,7 +3,7 @@ export const CATEGORIES = {
   exterior:    { es: 'Exterior',             en: 'Outdoor',      imgKey: 'srv-exterior',   fallback: '/assets/srv-exterior.jpg' },
   embarazadas: { es: 'Embarazadas',          en: 'Maternity',    imgKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg' },
   pelotero:    { es: 'Pelotero',             en: 'Kids Parties', imgKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg' },
-  casamientos: { es: 'Casamientos y 15 años', en: 'Weddings',   imgKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg' },
+  casamientos: { es: 'Eventos',               en: 'Events',     imgKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg' },
   comuniones:  { es: 'Comuniones',           en: 'Communions',  imgKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg' },
   tematicas:   { es: 'Temáticas',            en: 'Themes',      imgKey: 'srv-tematicas',  fallback: '/assets/port-04.jpg' },
 }
