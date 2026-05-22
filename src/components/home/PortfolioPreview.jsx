@@ -2,16 +2,17 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLang } from '../../context/LangContext'
 import { useConfiguracion } from '../../hooks/useConfiguracion'
+import { CATEGORIES } from '../../lib/categories'
 import Reveal from '../ui/Reveal'
 import SectionKicker from '../ui/SectionKicker'
 
 const PHOTOS = [
-  { cat: 'estudio',     portKey: 'port-estudio',     srvKey: 'srv-estudio',    fallback: '/assets/srv-estudio.jpg',    label: { es: 'Estudio',     en: 'Studio'     }, rot: -4, yOff: 0   },
-  { cat: 'exterior',    portKey: 'port-exterior',    srvKey: 'srv-exterior',   fallback: '/assets/srv-exterior.jpg',   label: { es: 'Exterior',    en: 'Outdoor'    }, rot:  3, yOff: 28  },
-  { cat: 'embarazadas', portKey: 'port-embarazadas', srvKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg',   label: { es: 'Maternidad',  en: 'Maternity'  }, rot: -2, yOff: -14 },
-  { cat: 'pelotero',    portKey: 'port-pelotero',    srvKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg',   label: { es: 'Pelotero',    en: 'Parties'    }, rot:  5, yOff: 18  },
-  { cat: 'casamientos', portKey: 'port-casamientos', srvKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg', label: { es: 'Casamientos', en: 'Weddings'   }, rot: -3, yOff: -6  },
-  { cat: 'comuniones',  portKey: 'port-comuniones',  srvKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg',   label: { es: 'Comuniones',  en: 'Communions' }, rot:  1, yOff: 22  },
+  { cat: 'estudio',     portKey: 'port-estudio',     srvKey: 'srv-estudio',    fallback: '/assets/srv-estudio.jpg',    rot: -4, yOff: 0   },
+  { cat: 'exterior',    portKey: 'port-exterior',    srvKey: 'srv-exterior',   fallback: '/assets/srv-exterior.jpg',   rot:  3, yOff: 28  },
+  { cat: 'embarazadas', portKey: 'port-embarazadas', srvKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg',   rot: -2, yOff: -14 },
+  { cat: 'pelotero',    portKey: 'port-pelotero',    srvKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg',   rot:  5, yOff: 18  },
+  { cat: 'casamientos', portKey: 'port-casamientos', srvKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg', rot: -3, yOff: -6  },
+  { cat: 'comuniones',  portKey: 'port-comuniones',  srvKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg',   rot:  1, yOff: 22  },
 ]
 
 function PolaroidCard({ src, label, rot, yOff, onClick }) {
@@ -100,7 +101,7 @@ export default function PortfolioPreview() {
             <div style={{ marginBottom: i < 3 ? '3.5rem' : '0' }}>
               <PolaroidCard
                 src={config[p.portKey] || config[p.srvKey] || p.fallback}
-                label={t(p.label.es, p.label.en)}
+                label={t(CATEGORIES[p.cat].es, CATEGORIES[p.cat].en)}
                 rot={p.rot}
                 yOff={p.yOff}
                 onClick={() => navigate(`/portafolio/${p.cat}`)}

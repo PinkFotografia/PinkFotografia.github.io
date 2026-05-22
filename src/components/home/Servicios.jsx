@@ -1,18 +1,19 @@
 import { useNavigate } from 'react-router-dom'
 import { useLang } from '../../context/LangContext'
 import { useConfiguracion } from '../../hooks/useConfiguracion'
+import { CATEGORIES } from '../../lib/categories'
 import Reveal from '../ui/Reveal'
 import SectionKicker from '../ui/SectionKicker'
 import CategoryCard from '../ui/CategoryCard'
 
 const SERVICES = [
-  { cat: 'estudio',     imgKey: 'srv-estudio',   fallback: '/assets/srv-estudio.jpg',   position: 'center',     tag: { es: 'Estudio',    en: 'Studio'   }, name: { es: 'Sesiones estudio infantiles y familiares', en: 'Studio sessions for kids & families' } },
-  { cat: 'exterior',    imgKey: 'srv-exterior',   fallback: '/assets/srv-exterior.jpg',  position: 'center',     tag: { es: 'Exterior',   en: 'Outdoor'  }, name: { es: 'Sesiones al aire libre',                  en: 'Outdoor sessions'                    } },
-  { cat: 'embarazadas', imgKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg',  position: 'center top', tag: { es: 'Maternidad', en: 'Maternity'}, name: { es: 'Sesiones de embarazo',                    en: 'Maternity sessions'                  } },
-  { cat: 'pelotero',    imgKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg',  position: 'center',     tag: { es: 'Cumpleaños', en: 'Birthday' }, name: { es: 'Pelotero y fiestas infantiles',            en: 'Kids parties & celebrations'         } },
-  { cat: 'casamientos', imgKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg',position: 'center',     tag: { es: 'Eventos',    en: 'Events'   }, name: { es: 'Casamientos y 15 años',                   en: 'Weddings & Quinceañera'              } },
-  { cat: 'comuniones',  imgKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg',  position: 'center top', tag: { es: 'Religioso',  en: 'Religious'}, name: { es: 'Comuniones y Confirmaciones',              en: 'Communions & Confirmations'          } },
-  { cat: 'tematicas',   imgKey: 'srv-tematicas',  fallback: '/assets/port-04.jpg',       position: 'center',     tag: { es: 'Temáticas',  en: 'Themes'   }, name: { es: 'Sesiones con temática especial',           en: 'Themed photo sessions'               } },
+  { cat: 'estudio',     imgKey: 'srv-estudio',   fallback: '/assets/srv-estudio.jpg',   position: 'center',     name: { es: 'Sesiones estudio infantiles y familiares', en: 'Studio sessions for kids & families' } },
+  { cat: 'exterior',    imgKey: 'srv-exterior',   fallback: '/assets/srv-exterior.jpg',  position: 'center',     name: { es: 'Sesiones al aire libre',                  en: 'Outdoor sessions'                    } },
+  { cat: 'embarazadas', imgKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg',  position: 'center top', name: { es: 'Sesiones de embarazo',                    en: 'Maternity sessions'                  } },
+  { cat: 'pelotero',    imgKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg',  position: 'center',     name: { es: 'Pelotero y fiestas infantiles',            en: 'Kids parties & celebrations'         } },
+  { cat: 'casamientos', imgKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg',position: 'center',     name: { es: 'Casamientos y 15 años',                   en: 'Weddings & Quinceañera'              } },
+  { cat: 'comuniones',  imgKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg',  position: 'center top', name: { es: 'Comuniones y Confirmaciones',              en: 'Communions & Confirmations'          } },
+  { cat: 'tematicas',   imgKey: 'srv-tematicas',  fallback: '/assets/port-04.jpg',       position: 'center',     name: { es: 'Sesiones con temática especial',           en: 'Themed photo sessions'               } },
 ]
 
 export default function Servicios() {
@@ -36,7 +37,7 @@ export default function Servicios() {
             <CategoryCard
               image={config[s.imgKey] || s.fallback}
               position={s.position}
-              tag={t(s.tag.es, s.tag.en)}
+              tag={t(CATEGORIES[s.cat].es, CATEGORIES[s.cat].en)}
               name={t(s.name.es, s.name.en)}
               cta={s.cat === 'tematicas' ? t('Ver temáticas', 'View themes') : t('Ver paquetes', 'View packages')}
               onClick={() => navigate(s.cat === 'tematicas' ? `/portafolio/tematicas` : `/paquetes/${s.cat}`)}
