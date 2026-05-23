@@ -27,8 +27,11 @@ export default function TabAlbumes() {
   const addInputRef = useRef(null)
 
   const isTematicas = categoria === 'tematicas' || categoria === 'pelotero'
+  const dragIdxRef = useRef(null)
+  const [dragOverIdx, setDragOverIdx] = useState(null)
+  const [tematicasOrder, setTematicasOrder] = useState(null)
 
-  useEffect(() => { fetchAlbumes() }, [categoria])
+  useEffect(() => { fetchAlbumes(); setTematicasOrder(null) }, [categoria])
 
   // Sync editingAlbum with fresh data after mutations
   useEffect(() => {
@@ -194,6 +197,34 @@ export default function TabAlbumes() {
     setAddProgress({ current: 0, total: 0 })
   }
 
+  async function handleReorderTematicas(fromIdx, toIdx) {
+    if (fromIdx === toIdx || fromIdx == null) return
+    const items = [...(tematicasOrder || tematicasFotos)]
+    const [moved] = items.splice(fromIdx, 1)
+    items.splice(toIdx, 0, moved)
+    const firstAlbumId = items[0]?.albumId
+    if (!firstAlbumId) return
+    const allUrls = items.map(i => i.url)
+    const newItems = items.map(i => ({ url: i.url, albumId: firstAlbumId, albumFotos: allUrls }))
+    setTematicasOrder(newItems)
+    await supabase.from('albumes').update({ fotos: allUrls }).eq('id', firstAlbumId)
+    const otherIds = albumes.filter(a => a.id !== firstAlbumId).map(a => a.id)
+    for (const id of otherIds) {
+      await supabase.from('albumes').delete().eq('id', id)
+    }
+    fetchAlbumes()
+  }
+
+  async function handleReorderFotos(fromIdx, toIdx) {
+    if (fromIdx === toIdx || fromIdx == null) return
+    const fotos = Array.isArray(editingAlbum.fotos) ? [...editingAlbum.fotos] : []
+    const [moved] = fotos.splice(fromIdx, 1)
+    fotos.splice(toIdx, 0, moved)
+    setEditingAlbum(prev => ({ ...prev, fotos }))
+    await supabase.from('albumes').update({ fotos }).eq('id', editingAlbum.id)
+    fetchAlbumes()
+  }
+
   // ── Temáticas flat list ─────────────────────────────────────────
   const tematicasFotos = isTematicas
     ? albumes.flatMap(a =>
@@ -235,14 +266,30 @@ export default function TabAlbumes() {
 
         {/* Existing photos */}
         <div className="mb-8">
-          <div className="text-[10px] tracking-[0.1em] uppercase text-white/20 mb-4 font-sans">
-            {fotos.length} {fotos.length === 1 ? 'foto' : 'fotos'}
+          <div className="flex items-baseline gap-3 mb-4">
+            <div className="text-[10px] tracking-[0.1em] uppercase text-white/20 font-sans">
+              {fotos.length} {fotos.length === 1 ? 'foto' : 'fotos'}
+            </div>
+            {fotos.length > 1 && (
+              <div className="text-[10px] text-white/15 font-sans">· arrastrá para reordenar</div>
+            )}
           </div>
           {fotos.length > 0 ? (
             <div className="grid grid-cols-4 gap-3">
               {fotos.map((url, i) => (
-                <div key={url} className="relative aspect-square rounded-[6px] overflow-hidden bg-white/[0.05] group">
-                  <img src={url} alt="" className="w-full h-full object-cover" />
+                <div
+                  key={url}
+                  draggable
+                  onDragStart={() => { dragIdxRef.current = i }}
+                  onDragEnter={() => setDragOverIdx(i)}
+                  onDragOver={e => e.preventDefault()}
+                  onDragEnd={() => { dragIdxRef.current = null; setDragOverIdx(null) }}
+                  onDrop={e => { e.preventDefault(); handleReorderFotos(dragIdxRef.current, i); setDragOverIdx(null) }}
+                  className={`relative aspect-square rounded-[6px] overflow-hidden bg-white/[0.05] group cursor-grab active:cursor-grabbing transition-all
+                    ${dragOverIdx === i ? 'ring-2 ring-pink scale-[0.97]' : ''}
+                    ${dragIdxRef.current === i ? 'opacity-40' : ''}`}
+                >
+                  <img src={url} alt="" className="w-full h-full object-cover pointer-events-none" />
                   <button
                     onClick={() => handleDeleteFoto(editingAlbum.id, url, fotos)}
                     className="absolute top-1.5 right-1.5 w-6 h-6 bg-black/70 text-white rounded-full text-[13px] leading-none flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-500 transition-all"
@@ -484,20 +531,36 @@ export default function TabAlbumes() {
       )}
 
       {/* ── TEMÁTICAS: flat photo grid ── */}
-      {isTematicas && !loading && (
-        tematicasFotos.length === 0 ? (
+      {isTematicas && !loading && (() => {
+        const displayFotos = tematicasOrder || tematicasFotos
+        return displayFotos.length === 0 ? (
           <div className="text-white/20 text-[13px] text-center py-16 font-sans">
             No hay fotos temáticas aún. Agregá algunas con el botón de arriba.
           </div>
         ) : (
           <>
-            <div className="text-[10px] tracking-[0.1em] uppercase text-white/20 mb-4 font-sans">
-              {tematicasFotos.length} {tematicasFotos.length === 1 ? 'foto' : 'fotos'}
+            <div className="flex items-baseline gap-3 mb-4">
+              <div className="text-[10px] tracking-[0.1em] uppercase text-white/20 font-sans">
+                {displayFotos.length} {displayFotos.length === 1 ? 'foto' : 'fotos'}
+              </div>
+              {displayFotos.length > 1 && (
+                <div className="text-[10px] text-white/15 font-sans">· arrastrá para reordenar</div>
+              )}
             </div>
             <div className="grid grid-cols-4 gap-3">
-              {tematicasFotos.map((item, i) => (
-                <div key={i} className="relative aspect-square rounded-[6px] overflow-hidden bg-white/[0.05] group">
-                  <img src={item.url} alt="" className="w-full h-full object-cover" />
+              {displayFotos.map((item, i) => (
+                <div
+                  key={item.url + i}
+                  draggable
+                  onDragStart={() => { dragIdxRef.current = i }}
+                  onDragEnter={() => setDragOverIdx(i)}
+                  onDragOver={e => e.preventDefault()}
+                  onDragEnd={() => { dragIdxRef.current = null; setDragOverIdx(null) }}
+                  onDrop={e => { e.preventDefault(); handleReorderTematicas(dragIdxRef.current, i); setDragOverIdx(null) }}
+                  className={`relative aspect-square rounded-[6px] overflow-hidden bg-white/[0.05] group cursor-grab active:cursor-grabbing transition-all
+                    ${dragOverIdx === i ? 'ring-2 ring-pink scale-[0.97]' : ''}`}
+                >
+                  <img src={item.url} alt="" className="w-full h-full object-cover pointer-events-none" />
                   <button
                     onClick={() => handleDeleteFoto(item.albumId, item.url, item.albumFotos)}
                     className="absolute top-1.5 right-1.5 w-6 h-6 bg-black/70 text-white rounded-full text-[13px] leading-none flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-500 transition-all"
@@ -509,7 +572,7 @@ export default function TabAlbumes() {
             </div>
           </>
         )
-      )}
+      })()}
 
       {/* ── STANDARD CATEGORIES: album grid ── */}
       {!isTematicas && (

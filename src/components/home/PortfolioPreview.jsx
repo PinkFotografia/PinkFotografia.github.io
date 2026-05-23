@@ -13,6 +13,7 @@ const PHOTOS = [
   { cat: 'pelotero',    portKey: 'port-pelotero',    srvKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg',   rot:  5, yOff: 18  },
   { cat: 'casamientos', portKey: 'port-casamientos', srvKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg', rot: -3, yOff: -6  },
   { cat: 'comuniones',  portKey: 'port-comuniones',  srvKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg',   rot:  1, yOff: 22  },
+  { cat: 'tematicas',  portKey: 'port-tematicas',  srvKey: 'srv-tematicas',  fallback: '/assets/port-04.jpg',        rot: -2, yOff: 8,  name: { es: 'Catálogo de Temáticas', en: 'Themes Catalogue' } },
 ]
 
 function PolaroidCard({ src, label, rot, yOff, onClick }) {
@@ -101,7 +102,7 @@ export default function PortfolioPreview() {
             <div style={{ marginBottom: i < 3 ? '3.5rem' : '0' }}>
               <PolaroidCard
                 src={config[p.portKey] || config[p.srvKey] || p.fallback}
-                label={t(CATEGORIES[p.cat].es, CATEGORIES[p.cat].en)}
+                label={p.name ? t(p.name.es, p.name.en) : t(CATEGORIES[p.cat].es, CATEGORIES[p.cat].en)}
                 rot={p.rot}
                 yOff={p.yOff}
                 onClick={() => navigate(`/portafolio/${p.cat}`)}

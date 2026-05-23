@@ -26,9 +26,11 @@ export default function PortafolioPage() {
 
   const isTematicas = categoria === 'tematicas' || categoria === 'pelotero'
 
-  const albumes = (!loading && !error && data.length > 0)
-    ? data
-    : FALLBACK_ALBUMES[categoria] || []
+  const albumes = loading
+    ? []
+    : (!error && data.length > 0)
+      ? data
+      : FALLBACK_ALBUMES[categoria] || []
 
   const tematicasFotos = isTematicas
     ? albumes.flatMap(a => Array.isArray(a.fotos) ? a.fotos : [])
@@ -112,7 +114,10 @@ export default function PortafolioPage() {
                   )}
                 </p>
               </Reveal>
-              {renderPhotoGrid(tematicasFotos, cat.es)}
+              {loading
+                ? <div className="text-center py-20 text-ink-muted/40 text-[13px] tracking-wide">{t('Cargando…', 'Loading…')}</div>
+                : renderPhotoGrid(tematicasFotos, cat.es)
+              }
             </>
           )}
 
@@ -125,16 +130,21 @@ export default function PortafolioPage() {
                   {t('Seleccioná un álbum para ver las fotos.', 'Select an album to view the photos.')}
                 </p>
               </Reveal>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {albumes.map((album, i) => (
-                  <AlbumCard
-                    key={album.id}
-                    album={album}
-                    delay={(i % 3) + 1}
-                    onClick={() => handleAlbumClick(album)}
-                  />
-                ))}
-              </div>
+              {loading
+                ? <div className="text-center py-20 text-ink-muted/40 text-[13px] tracking-wide">{t('Cargando…', 'Loading…')}</div>
+                : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {albumes.map((album, i) => (
+                      <AlbumCard
+                        key={album.id}
+                        album={album}
+                        delay={(i % 3) + 1}
+                        onClick={() => handleAlbumClick(album)}
+                      />
+                    ))}
+                  </div>
+                )
+              }
             </>
           )}
 
