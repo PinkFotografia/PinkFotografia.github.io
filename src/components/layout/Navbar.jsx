@@ -49,11 +49,13 @@ export default function Navbar() {
           onClick={() => scrollToSection('inicio')}
           className="cursor-pointer bg-transparent border-none p-0"
         >
-          <img
-            src="/assets/logo.png"
-            alt="Pink Fotografía"
-            className={`brightness-0 invert transition-all duration-400 ${scrolled ? 'h-10' : 'h-12'}`}
-          />
+          <div className={`rounded-full bg-white/90 backdrop-blur-sm shadow-sm overflow-hidden transition-all duration-400 ${scrolled ? 'w-14 h-14' : 'w-16 h-16'}`}>
+            <img
+              src="/assets/logo-color.png"
+              alt="Pink Fotografía"
+              className="w-full h-full object-contain"
+            />
+          </div>
         </button>
 
         {/* Links centrales — hidden on mobile */}
