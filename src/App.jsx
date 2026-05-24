@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import PaquetesPage from './pages/PaquetesPage'
 import PortafolioPage from './pages/PortafolioPage'
 import AdminPage from './pages/AdminPage'
+import TerminosPage from './pages/TerminosPage'
 import ScrollToTop from './components/ui/ScrollToTop'
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/paquetes/:categoria" element={<Layout><PaquetesPage /></Layout>} />
         <Route path="/portafolio/:categoria" element={<Layout><PortafolioPage /></Layout>} />
         <Route path="/admin/*" element={<AdminPage />} />
+        <Route path="/terminos" element={<Layout><TerminosPage /></Layout>} />
       </Routes>
     </LangProvider>
   )

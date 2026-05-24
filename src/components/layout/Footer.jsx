@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useLang } from '../../context/LangContext'
 
 const IconWhatsApp = () => (
@@ -118,6 +119,12 @@ export default function Footer() {
             )}
           </p>
           <p className="text-white/20">Comodoro Rivadavia, Chubut · Argentina</p>
+          <Link
+            to="/terminos"
+            className="text-white/20 hover:text-white/50 transition-colors no-underline mt-1 inline-block"
+          >
+            {t('Términos y condiciones', 'Terms & conditions')}
+          </Link>
         </div>
       </div>
     </footer>
