@@ -104,9 +104,20 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-[11px] text-white/25 text-center">
-          <span>© 2025 Pink Fotografía · Comodoro Rivadavia, Chubut</span>
-          <span>Fernanda Randazzo · Fotografía profesional</span>
+        <div className="flex flex-col items-center gap-1.5 text-[11px] text-white/30 text-center">
+          <p className="text-white/40">
+            {t(
+              'Las imágenes y contenido de esta web son propiedad de Fernanda Randazzo.',
+              'All images and content on this website are property of Fernanda Randazzo.'
+            )}
+          </p>
+          <p>
+            {t(
+              '© 2025 Pink Fotografía · Todos los derechos reservados al autor · Ley 11.723',
+              '© 2025 Pink Fotografía · All rights reserved'
+            )}
+          </p>
+          <p className="text-white/20">Comodoro Rivadavia, Chubut · Argentina</p>
         </div>
       </div>
     </footer>

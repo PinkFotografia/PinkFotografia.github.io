@@ -44,19 +44,29 @@ export default function Navbar() {
             : 'py-[1.1rem]'
           }`}
       >
-        {/* Logo */}
-        <button
-          onClick={() => scrollToSection('inicio')}
-          className="cursor-pointer bg-transparent border-none p-0"
-        >
-          <div className={`rounded-full bg-white/90 backdrop-blur-sm shadow-sm overflow-hidden transition-all duration-400 ${scrolled ? 'w-14 h-14' : 'w-16 h-16'}`}>
-            <img
-              src="/assets/logo-color.png"
-              alt="Pink Fotografía"
-              className="w-full h-full object-contain"
-            />
-          </div>
-        </button>
+        {/* Logo + ubicación */}
+        <div className="flex flex-col items-start gap-1">
+          <button
+            onClick={() => scrollToSection('inicio')}
+            className="cursor-pointer bg-transparent border-none p-0"
+          >
+            <div className={`rounded-full bg-white/90 backdrop-blur-sm shadow-sm overflow-hidden transition-all duration-400 ${scrolled ? 'w-14 h-14' : 'w-16 h-16'}`}>
+              <img
+                src="/assets/logo-color.png"
+                alt="Pink Fotografía"
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </button>
+          <span
+            className={`flex items-center gap-1 text-[10px] text-white/40 tracking-wide ml-0.5 transition-all duration-300 ${scrolled ? 'opacity-0 pointer-events-none -translate-y-1' : 'opacity-100'}`}
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 shrink-0 text-white/40">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            Comodoro Rivadavia, Chubut
+          </span>
+        </div>
 
         {/* Links centrales — hidden on mobile */}
         <div className="hidden md:flex items-center gap-8">
