@@ -35,8 +35,9 @@ function PolaroidCard({ src, label, rot, yOff, onClick }) {
     >
       {/* Marco polaroid */}
       <div
-        className="relative bg-white"
+        className="relative"
         style={{
+          background: '#FAF8F6',
           padding: '10px 10px 48px',
           boxShadow: hovered
             ? '0 24px 56px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.08)'
@@ -64,9 +65,9 @@ function PolaroidCard({ src, label, rot, yOff, onClick }) {
         {/* Caption dentro del borde inferior */}
         <div className="absolute bottom-0 left-0 right-0 h-12 flex items-center justify-center px-3">
           <span
-            className="font-serif italic text-[1rem] truncate"
+            className="font-serif italic font-bold text-[1rem] truncate"
             style={{
-              color: hovered ? '#D4537E' : 'rgba(44,44,42,0.4)',
+              color: hovered ? '#72243E' : '#9B3D5E',
               transition: 'color 0.3s ease',
             }}
           >
