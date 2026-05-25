@@ -1,18 +1,47 @@
+import { useState, useEffect, useRef } from 'react'
 import { useLang } from '../../context/LangContext'
 import Reveal from '../ui/Reveal'
 import SectionKicker from '../ui/SectionKicker'
 
+// Hasta 10 reseñas — agregar/reemplazar con las reales de Google Maps
 const REVIEWS = [
-  { text: '"Nosotros te conocimos en el 2024 con la sesión de otoño, vimos las fotos por Facebook, a mi mamá le encantó, pagó la sesión, y cuando mandaste las fotos quedó enamorada de tu trabajo. Desde ese día dijo que quería que le hagas las sesiones de foto a Ambar."', author: 'Mariia Alvarado' },
-  { text: '"Super recomendable. Profesional, atenta y con mucha calidez. Logró captar momentos espontáneos de mis bebes. Feliz con el resultado de la sesión."', author: 'Rocío Orellana' },
-  { text: '"Primero que nada excelente persona, con tanto amor y paciencia. Excelentes fotos, me encanta cada sección que tuve. Atesorar cada momento en una foto de tan hermosa y buena calidad. Amamos a Fer."', author: 'Camila Coliboro' },
-  { text: '"La mejor, trabaja con dedicación y muchísima paciencia 💪 Te elegimos siempre con Noah, siempre regalándonos fotos y recuerdos hermosos."', author: 'Tatiana Mansilla' },
-  { text: '"Una de las mejores!!! Con la paciencia que nadie tiene... Hermoso su trabajo y te saca millones de fotos, ¡una genia Fer! Nosotros ya hicimos la sesión de 1 año, 2 años y esperando los 3 años de los mellizos."', author: 'Daiana Celeste Brizuela' },
-  { text: '"Excelente profesional. Super dedicada, está en cada detalle, hace magia con las decoraciones y las fotos son tremendas."', author: 'Brunella Olmos' },
+  { text: '"Nosotros te conocimos en el 2024 con la sesión de otoño, vimos las fotos por Facebook, a mi mamá le encantó, pagó la sesión, y cuando mandaste las fotos quedó enamorada de tu trabajo. Desde ese día dijo que quería que le hagas las sesiones de foto a Ambar."', author: 'Mariia Alvarado', rating: 5 },
+  { text: '"Super recomendable. Profesional, atenta y con mucha calidez. Logró captar momentos espontáneos de mis bebes. Feliz con el resultado de la sesión."', author: 'Rocío Orellana', rating: 5 },
+  { text: '"Primero que nada excelente persona, con tanto amor y paciencia. Excelentes fotos, me encanta cada sección que tuve. Atesorar cada momento en una foto de tan hermosa y buena calidad. Amamos a Fer."', author: 'Camila Coliboro', rating: 5 },
+  { text: '"La mejor, trabaja con dedicación y muchísima paciencia 💪 Te elegimos siempre con Noah, siempre regalándonos fotos y recuerdos hermosos."', author: 'Tatiana Mansilla', rating: 5 },
+  { text: '"Una de las mejores!!! Con la paciencia que nadie tiene... Hermoso su trabajo y te saca millones de fotos, ¡una genia Fer! Nosotros ya hicimos la sesión de 1 año, 2 años y esperando los 3 años de los mellizos."', author: 'Daiana Celeste Brizuela', rating: 5 },
+  { text: '"Excelente profesional. Super dedicada, está en cada detalle, hace magia con las decoraciones y las fotos son tremendas."', author: 'Brunella Olmos', rating: 5 },
+  { text: '"Hermoso trabajo, estuvo en nuestra boda y todo muy profesional, quedamos encantados."', author: 'Karen Naguelquin', rating: 5 },
+  { text: '"Una genia total, se ve su dedicación con cada sesión de fotos y el amor que le pone. Recomendadísima."', author: 'Camila Pacheco', rating: 5 },
+  { text: '"Hermosa experiencia, hermosas fotos para el cumple de mi hijo y la sesión navideña."', author: 'Maripillan Camila', rating: 5 },
+  { text: '"Ya voy haciendo 3 sesiones de mis nenes con sus primos. Excelente servicio."', author: 'Angela Lohaiza', rating: 4 },
 ]
+
+const VISIBLE = 6
+const INTERVAL = 6000
 
 export default function Resenas() {
   const { t } = useLang()
+  const [offset, setOffset] = useState(0)
+  const [fading, setFading] = useState(false)
+  const timerRef = useRef(null)
+
+  useEffect(() => {
+    if (REVIEWS.length <= VISIBLE) return
+    timerRef.current = setInterval(() => {
+      setFading(true)
+      setTimeout(() => {
+        setOffset(prev => (prev + 1) % REVIEWS.length)
+        setFading(false)
+      }, 350)
+    }, INTERVAL)
+    return () => clearInterval(timerRef.current)
+  }, [])
+
+  const displayed = Array.from(
+    { length: Math.min(VISIBLE, REVIEWS.length) },
+    (_, i) => REVIEWS[(offset + i) % REVIEWS.length]
+  )
 
   return (
     <section id="resenas" className="bg-cream py-16 md:py-24 px-6 md:px-12">
@@ -24,18 +53,19 @@ export default function Resenas() {
         </h2>
       </Reveal>
 
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        {REVIEWS.map((r, i) => (
-          <Reveal key={i} delay={(i % 3) + 1}>
-            <div className="bg-white rounded-[12px] p-6 border border-black/[0.06] flex flex-col gap-3">
-              <div className="text-pink text-lg tracking-wider">★★★★★</div>
-              <p className="text-[14px] text-ink-muted leading-relaxed flex-1">{r.text}</p>
-              <div>
-                <div className="text-[13px] font-medium text-ink">{r.author}</div>
-                <div className="text-[11px] text-ink-muted mt-0.5">Google · Comodoro Rivadavia</div>
-              </div>
+      <div
+        className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 transition-opacity duration-350"
+        style={{ opacity: fading ? 0 : 1 }}
+      >
+        {displayed.map((r, i) => (
+          <div key={`${offset}-${i}`} className="bg-white rounded-[12px] p-6 border border-black/[0.06] flex flex-col gap-3">
+            <div className="text-pink text-lg tracking-wider">{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</div>
+            <p className="text-[14px] text-ink-muted leading-relaxed flex-1">{r.text}</p>
+            <div>
+              <div className="text-[13px] font-medium text-ink">{r.author}</div>
+              <div className="text-[11px] text-ink-muted mt-0.5">Google · Comodoro Rivadavia</div>
             </div>
-          </Reveal>
+          </div>
         ))}
       </div>
 
