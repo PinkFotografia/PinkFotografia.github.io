@@ -14,6 +14,7 @@ const PHOTOS = [
   { cat: 'casamientos', portKey: 'port-casamientos', srvKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg', rot: -3, yOff: -6  },
   { cat: 'comuniones',  portKey: 'port-comuniones',  srvKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg',   rot:  1, yOff: 22  },
   { cat: 'tematicas',  portKey: 'port-tematicas',  srvKey: 'srv-tematicas',  fallback: '/assets/port-04.jpg',        rot: -2, yOff: 8,  name: { es: 'Catálogo de Temáticas', en: 'Themes Catalogue' } },
+  { cat: 'temporada',  portKey: 'port-temporada',  srvKey: 'srv-temporada',  fallback: '/assets/srv-exterior.jpg',   rot:  3, yOff: 14 },
 ]
 
 function PolaroidCard({ src, label, rot, yOff, onClick }) {

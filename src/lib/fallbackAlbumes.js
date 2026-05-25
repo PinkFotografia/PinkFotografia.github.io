@@ -130,6 +130,19 @@ export const FALLBACK_ALBUMES = {
       ],
     },
   ],
+  temporada: [
+    {
+      id: 'tmp-01',
+      nombre: 'Navidad 2024',
+      fecha: '2024',
+      categoria: 'temporada',
+      fotos: [
+        '/assets/port-04.jpg',
+        '/assets/port-14.jpg',
+        '/assets/port-20.jpg',
+      ],
+    },
+  ],
   tematicas: [
     {
       id: 'tem-01',

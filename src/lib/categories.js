@@ -5,7 +5,8 @@ export const CATEGORIES = {
   pelotero:    { es: 'Pelotero',             en: 'Kids Parties', imgKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg' },
   casamientos: { es: 'Eventos',               en: 'Events',     imgKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg' },
   comuniones:  { es: 'Comuniones y Bautismo', en: 'Communions & Baptism', imgKey: 'srv-comunion', fallback: '/assets/srv-comunion.jpg' },
-  tematicas:   { es: 'Temáticas',            en: 'Themes',      imgKey: 'srv-tematicas',  fallback: '/assets/port-04.jpg' },
+  tematicas:   { es: 'Temáticas',            en: 'Themes',       imgKey: 'srv-tematicas',  fallback: '/assets/port-04.jpg' },
+  temporada:   { es: 'Temporada',            en: 'Seasonal',     imgKey: 'srv-temporada',  fallback: '/assets/srv-exterior.jpg' },
 }
 
 export const CATEGORY_SUBTITLES = {
@@ -16,4 +17,5 @@ export const CATEGORY_SUBTITLES = {
   casamientos: { es: 'Fotografía de bodas, 15 años y casamientos civiles',   en: 'Wedding and quinceañera photography' },
   comuniones:  { es: 'Cobertura de comuniones y confirmaciones',             en: 'First communion and confirmation coverage' },
   tematicas:   { es: 'Sesiones con decoración y propuestas temáticas',       en: 'Themed sessions with decoration and props' },
+  temporada:   { es: 'Sesiones especiales de temporada: Navidad, Halloween, Pascua y más', en: 'Special seasonal sessions: Christmas, Halloween, Easter and more' },
 }

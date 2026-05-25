@@ -13,6 +13,7 @@ const SERVICES = [
   { cat: 'pelotero',    imgKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg',  position: 'center',     name: { es: 'Pelotero y fiestas infantiles',            en: 'Kids parties & celebrations'         } },
   { cat: 'casamientos', imgKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg',position: 'center',     name: { es: 'Casamientos y 15 años',                   en: 'Weddings & Quinceañera'              } },
   { cat: 'comuniones',  imgKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg',  position: 'center top', name: { es: 'Comuniones y Confirmaciones',              en: 'Communions & Confirmations'          } },
+  { cat: 'temporada',   imgKey: 'srv-temporada',  fallback: '/assets/srv-exterior.jpg',  position: 'center',     name: { es: 'Sesiones de Temporada',                   en: 'Seasonal Sessions'                   } },
 ]
 
 export default function Servicios() {

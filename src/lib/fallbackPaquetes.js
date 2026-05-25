@@ -72,6 +72,17 @@ export const FALLBACK_PAQUETES = {
     },
   ],
 
+  temporada: [
+    {
+      id: 'f-tmp-1', nombre: 'Mini Sesión', precio: null, featured: false, orden: 1,
+      items: [i('30 minutos en estudio','30 min studio session'), i('Hasta 4 personas','Up to 4 people'), i('15 fotos editadas','15 edited photos'), i('Galería digital','Digital gallery'), i('Descarga alta resolución','High res download')],
+    },
+    {
+      id: 'f-tmp-2', nombre: 'Completo', precio: null, featured: true, orden: 2,
+      items: [i('1 hora en estudio','1 hour studio'), i('Familia completa','Full family'), i('25 fotos editadas','25 edited photos'), i('Galería digital','Digital gallery'), i('Descarga alta resolución','High res download'), i('Decoración incluida','Decoration included')],
+    },
+  ],
+
   comuniones: [
     {
       id: 'f-com-1', nombre: 'Básico', precio: null, featured: false, orden: 1,
