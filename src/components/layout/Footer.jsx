@@ -121,7 +121,7 @@ export default function Footer() {
           <p className="text-white/20">Comodoro Rivadavia, Chubut · Argentina</p>
           <Link
             to="/terminos"
-            className="text-white/20 hover:text-white/50 transition-colors no-underline mt-1 inline-block"
+            className="text-[12px] tracking-[0.06em] text-white/50 hover:text-white/90 border border-white/15 hover:border-white/35 rounded-[20px] px-4 py-1.5 no-underline transition-all duration-200 mt-2 inline-block"
           >
             {t('Términos y condiciones', 'Terms & conditions')}
           </Link>
