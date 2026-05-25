@@ -75,7 +75,7 @@ export default function PaquetesPage() {
         <div className="relative z-10 max-w-[1000px] mx-auto">
 
           {/* Encabezado */}
-          <Reveal className="text-center mb-10 md:mb-14">
+          <Reveal className="text-center mb-10 md:mb-14 bg-cream/80 backdrop-blur-sm rounded-2xl px-6 py-6">
             <SectionKicker centered>{t('Nuestros paquetes', 'Our packages')}</SectionKicker>
             <p className="text-[14px] text-ink-muted mt-3 mb-5">
               {t(
