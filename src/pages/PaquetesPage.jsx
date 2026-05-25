@@ -3,9 +3,11 @@ import { usePaquetes } from '../hooks/usePaquetes'
 import { useLang } from '../context/LangContext'
 import { CATEGORIES } from '../lib/categories'
 import { FALLBACK_PAQUETES } from '../lib/fallbackPaquetes'
+import { SESIONES_INFO } from '../lib/sesionesInfo'
 import CategoryHero from '../components/ui/CategoryHero'
 import CategoryTabs from '../components/ui/CategoryTabs'
 import PaqueteCard from '../components/ui/PaqueteCard'
+import SesionInfoSection from '../components/ui/SesionInfoSection'
 import Reveal from '../components/ui/Reveal'
 import SectionKicker from '../components/ui/SectionKicker'
 
@@ -19,10 +21,11 @@ export default function PaquetesPage() {
   const cat = CATEGORIES[categoria]
   if (!cat) return null
 
-  // Si Supabase devuelve datos los usamos; si no, mostramos los hardcodeados
   const paquetes = (!loading && !error && data.length > 0)
     ? data
     : FALLBACK_PAQUETES[categoria] || []
+
+  const sesionesInfo = SESIONES_INFO[categoria] || null
 
   const waConsulta = `${WA_GENERAL}${encodeURIComponent(`Hola Fernanda! Me gustaria consultar paquetes de ${cat.es}`)}`
 
@@ -71,6 +74,8 @@ export default function PaquetesPage() {
 
         </div>
       </div>
+
+      {sesionesInfo && <SesionInfoSection sesiones={sesionesInfo} />}
     </>
   )
 }
