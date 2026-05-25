@@ -1,9 +1,11 @@
+import { useState, useEffect, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { usePaquetes } from '../hooks/usePaquetes'
 import { useLang } from '../context/LangContext'
 import { CATEGORIES } from '../lib/categories'
 import { FALLBACK_PAQUETES } from '../lib/fallbackPaquetes'
 import { SESIONES_INFO } from '../lib/sesionesInfo'
+import { supabase } from '../lib/supabase'
 import CategoryHero from '../components/ui/CategoryHero'
 import CategoryTabs from '../components/ui/CategoryTabs'
 import PaqueteCard from '../components/ui/PaqueteCard'
@@ -17,6 +19,21 @@ export default function PaquetesPage() {
   const { categoria } = useParams()
   const { data, loading, error } = usePaquetes(categoria)
   const { t } = useLang()
+  const [bgPhotos, setBgPhotos] = useState([])
+
+  useEffect(() => {
+    supabase
+      .from('albumes')
+      .select('fotos')
+      .eq('categoria', categoria)
+      .then(({ data }) => {
+        if (!data) return
+        const all = data.flatMap(a => a.fotos || [])
+        // Mezcla aleatoria y toma hasta 12
+        const shuffled = all.sort(() => Math.random() - 0.5).slice(0, 12)
+        setBgPhotos(shuffled)
+      })
+  }, [categoria])
 
   const cat = CATEGORIES[categoria]
   if (!cat) return null
@@ -34,8 +51,28 @@ export default function PaquetesPage() {
       <CategoryHero categoria={categoria} type="paquetes" />
       <CategoryTabs basePath="/paquetes" />
 
-      <div className="bg-cream py-14 md:py-20 px-6 md:px-12">
-        <div className="max-w-[1000px] mx-auto">
+      <div className="relative bg-cream py-14 md:py-20 px-6 md:px-12 overflow-hidden">
+
+        {/* Fondo de fotos de la categoría */}
+        {bgPhotos.length >= 3 && (
+          <>
+            <div className="absolute inset-0 grid grid-cols-3 md:grid-cols-4 gap-1 pointer-events-none">
+              {Array.from({ length: 12 }, (_, i) => (
+                <div key={i} className="overflow-hidden">
+                  <img
+                    src={bgPhotos[i % bgPhotos.length]}
+                    alt=""
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="absolute inset-0 bg-cream/[0.15]" />
+          </>
+        )}
+
+        <div className="relative z-10 max-w-[1000px] mx-auto">
 
           {/* Encabezado */}
           <Reveal className="text-center mb-10 md:mb-14">
@@ -82,6 +119,7 @@ export default function PaquetesPage() {
           </Reveal>
 
         </div>
+
       </div>
 
       {sesionesInfo && <SesionInfoSection sesiones={sesionesInfo} />}
