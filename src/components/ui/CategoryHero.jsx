@@ -14,14 +14,13 @@ export default function CategoryHero({ categoria, type = 'paquetes' }) {
   const typeLabel = type === 'paquetes' ? t('Paquetes', 'Packages') : t('Portafolio', 'Portfolio')
 
   return (
-    <div
-      className="relative bg-[#1A1A1A] min-h-[260px] md:min-h-[320px] pt-24 md:pt-36 pb-12 md:pb-20 text-center overflow-hidden"
-      style={{
-        backgroundImage: `url('${bgImage}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center top',
-      }}
-    >
+    <div className="relative bg-[#1A1A1A] min-h-[45vh] pt-24 md:pt-36 pb-12 md:pb-20 text-center overflow-hidden">
+      {/* Foto de fondo */}
+      <img
+        src={bgImage}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover object-center"
+      />
       {/* Overlay oscuro */}
       <div className="absolute inset-0 bg-black/75" />
       {/* Resplandor pink sutil */}
