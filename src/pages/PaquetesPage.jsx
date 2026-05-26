@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { usePaquetes } from '../hooks/usePaquetes'
 import { useLang } from '../context/LangContext'
 import { CATEGORIES } from '../lib/categories'
@@ -15,6 +15,7 @@ const WA_GENERAL = 'https://wa.me/5492974197787?text='
 
 export default function PaquetesPage() {
   const { categoria } = useParams()
+  const navigate = useNavigate()
   const { data, loading, error } = usePaquetes(categoria)
   const { t } = useLang()
 
@@ -46,15 +47,23 @@ export default function PaquetesPage() {
                 'All prices are on request — every session is unique and can be tailored to your needs.'
               )}
             </p>
-            <Link
-              to="/terminos"
-              className="inline-flex items-center gap-2 text-[11px] tracking-[0.08em] uppercase text-pink border border-pink/30 bg-pink/[0.06] hover:bg-pink/[0.12] hover:border-pink/60 transition-all duration-200 rounded-[20px] px-5 py-2 no-underline font-sans"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-[14px] h-[14px] shrink-0">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-              </svg>
-              {t('Ver Términos y Condiciones', 'View Terms & Conditions')}
-            </Link>
+            <div className="flex flex-col items-center gap-3">
+              <Link
+                to="/terminos"
+                className="inline-flex items-center gap-2 text-[11px] tracking-[0.08em] uppercase text-pink border border-pink/30 bg-pink/[0.06] hover:bg-pink/[0.12] hover:border-pink/60 transition-all duration-200 rounded-[20px] px-5 py-2 no-underline font-sans"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-[14px] h-[14px] shrink-0">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                </svg>
+                {t('Ver Términos y Condiciones', 'View Terms & Conditions')}
+              </Link>
+              <button
+                onClick={() => navigate(`/portafolio/${categoria}`)}
+                className="inline-flex items-center gap-2 text-[11px] tracking-[0.1em] uppercase text-pink hover:gap-4 transition-all duration-200"
+              >
+                {t('Ver portafolio de esta categoría →', 'View portfolio for this category →')}
+              </button>
+            </div>
           </Reveal>
 
           {/* Grid de paquetes — 1 col mobile, 2 o 3 en desktop */}

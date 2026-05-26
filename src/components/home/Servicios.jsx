@@ -41,7 +41,7 @@ export default function Servicios() {
               name={t(s.name.es, s.name.en)}
               cta={s.cat === 'tematicas' ? t('Ver temáticas', 'View themes') : t('Ver paquetes', 'View packages')}
               onClick={() => navigate(s.cat === 'tematicas' ? `/portafolio/tematicas` : `/paquetes/${s.cat}`)}
-              className="h-[320px]"
+className="h-[320px]"
             />
           </Reveal>
         ))}
