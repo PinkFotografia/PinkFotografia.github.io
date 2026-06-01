@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /#/admin
 
 Sitemap: https://pinkfotografia.github.io/sitemap.xml
