@@ -25,6 +25,12 @@ const IconEmail = () => (
   </svg>
 )
 
+const IconTikTok = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 shrink-0">
+    <path d="M19.321 5.562a5.122 5.122 0 0 1-2.806 2.291V12a3 3 0 1 1-3.6-2.957v2.538A1.5 1.5 0 1 0 10.5 15v-5.445A5.002 5.002 0 0 0 5 5c0-2.761 2.239-5 5-5s5 2.239 5 5v5.562z"/>
+  </svg>
+)
+
 const SERVICES = [
   { es: 'Sesiones de estudio',   en: 'Studio sessions' },
   { es: 'Sesiones exterior',     en: 'Outdoor sessions' },
@@ -38,6 +44,7 @@ const CONTACT = [
   { Icon: IconWhatsApp, label: '+54 9 297 419-7787',        href: 'https://wa.me/5492974197787' },
   { Icon: IconInstagram, label: '@pinkk.ph',                 href: 'https://www.instagram.com/pinkk.ph' },
   { Icon: IconFacebook,  label: 'Pink Fotografía',          href: 'https://www.facebook.com/pinkk.ph' },
+  { Icon: IconTikTok,    label: '@pinkfotografia',                href: 'https://www.tiktok.com/@pinkfotografia' },
   { Icon: IconEmail,     label: 'pinkfotografiaph@gmail.com', href: 'mailto:pinkfotografiaph@gmail.com' },
 ]
 
