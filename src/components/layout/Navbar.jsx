@@ -58,14 +58,6 @@ export default function Navbar() {
               />
             </div>
           </button>
-          <span
-            className={`flex items-center gap-1 text-[10px] text-white/40 tracking-wide ml-0.5 transition-all duration-300 ${scrolled ? 'opacity-0 pointer-events-none -translate-y-1' : 'opacity-100'}`}
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 shrink-0 text-white/40">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-            </svg>
-            Comodoro Rivadavia, Chubut
-          </span>
         </div>
 
         {/* Links centrales — hidden on mobile */}
@@ -81,42 +73,52 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Derecha: idioma + CTA (desktop) / hamburger (mobile) */}
-        <div className="flex items-center gap-4">
-          {/* Lang + CTA — desktop only */}
-          <button
-            onClick={toggle}
-            className="hidden md:block text-[10px] tracking-[0.08em] text-white/35 border border-white/15 px-[10px] py-1 rounded-[10px] hover:text-white/80 hover:border-white/35 transition-all duration-200 bg-transparent cursor-pointer font-sans"
-          >
-            {lang === 'es' ? 'EN' : 'ES'}
-          </button>
+        {/* Derecha: ubicación + idioma + CTA (desktop) / hamburger (mobile) */}
+        <div className="flex flex-col items-end gap-2">
+          {/* Ubicación — visible en mobile y desktop */}
+          <span className={`flex items-center gap-1 text-[10px] text-white/40 tracking-wide transition-all duration-300 ${scrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 shrink-0 text-white/40">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            Comodoro Rivadavia, Chubut
+          </span>
 
-          <button
-            onClick={() => scrollToSection('reservas')}
-            className="text-[11px] tracking-[0.1em] uppercase px-5 py-[0.5rem] rounded-[20px] bg-pink text-white hover:bg-pink-dark transition-all duration-[250ms] border-none cursor-pointer font-sans"
-          >
-            {t('Reservar', 'Book now')}
-          </button>
+          <div className="flex items-center gap-4">
+            {/* Lang + CTA — desktop only */}
+            <button
+              onClick={toggle}
+              className="hidden md:block text-[10px] tracking-[0.08em] text-white/35 border border-white/15 px-[10px] py-1 rounded-[10px] hover:text-white/80 hover:border-white/35 transition-all duration-200 bg-transparent cursor-pointer font-sans"
+            >
+              {lang === 'es' ? 'EN' : 'ES'}
+            </button>
 
-          {/* Hamburger — mobile only */}
-          <button
-            onClick={() => setMenuOpen(o => !o)}
-            className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px] bg-transparent border-none cursor-pointer p-1"
-            aria-label="Menú"
-          >
-            <span
-              className="block w-6 h-[1.5px] bg-white transition-all duration-300"
-              style={{ transform: menuOpen ? 'rotate(45deg) translateY(6.5px)' : 'none' }}
-            />
-            <span
-              className="block w-6 h-[1.5px] bg-white transition-all duration-300"
-              style={{ opacity: menuOpen ? 0 : 1 }}
-            />
-            <span
-              className="block w-6 h-[1.5px] bg-white transition-all duration-300"
-              style={{ transform: menuOpen ? 'rotate(-45deg) translateY(-6.5px)' : 'none' }}
-            />
-          </button>
+            <button
+              onClick={() => scrollToSection('reservas')}
+              className="text-[11px] tracking-[0.1em] uppercase px-5 py-[0.5rem] rounded-[20px] bg-pink text-white hover:bg-pink-dark transition-all duration-[250ms] border-none cursor-pointer font-sans"
+            >
+              {t('Reservar', 'Book now')}
+            </button>
+
+            {/* Hamburger — mobile only */}
+            <button
+              onClick={() => setMenuOpen(o => !o)}
+              className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px] bg-transparent border-none cursor-pointer p-1"
+              aria-label="Menú"
+            >
+              <span
+                className="block w-6 h-[1.5px] bg-white transition-all duration-300"
+                style={{ transform: menuOpen ? 'rotate(45deg) translateY(6.5px)' : 'none' }}
+              />
+              <span
+                className="block w-6 h-[1.5px] bg-white transition-all duration-300"
+                style={{ opacity: menuOpen ? 0 : 1 }}
+              />
+              <span
+                className="block w-6 h-[1.5px] bg-white transition-all duration-300"
+                style={{ transform: menuOpen ? 'rotate(-45deg) translateY(-6.5px)' : 'none' }}
+              />
+            </button>
+          </div>
         </div>
       </nav>
 
