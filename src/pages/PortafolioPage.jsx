@@ -58,14 +58,14 @@ export default function PortafolioPage() {
 
   function renderPhotoGrid(fotos, altText) {
     return (
-      <div className="port-grid">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
         {fotos.map((foto, i) => {
           const isPol = i % 5 === 2
           const rot = isPol ? ROTS[i % ROTS.length] * 0.6 : ROTS[i % ROTS.length]
           return (
             <div
               key={i}
-              className={`break-inside-avoid mb-4 cursor-pointer group ${isPol ? 'is-polaroid' : ''}`}
+              className={`break-inside-avoid cursor-pointer group ${isPol ? 'is-polaroid' : ''}`}
               style={{ transform: `rotate(${rot}deg)` }}
               onClick={() => openSlideshow(i)}
             >
