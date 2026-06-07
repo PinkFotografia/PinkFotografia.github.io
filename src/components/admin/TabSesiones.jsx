@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
-import { CATEGORIES } from '../../lib/categories'
 
-const ESTADOS = ['pendiente', 'pagado', 'cancelado']
+const ESTADOS = ['pendiente', 'confirmada', 'pagado', 'cancelado']
 
 const ESTADO_STYLE = {
-  pendiente: 'bg-amber-400/15 text-amber-400',
-  pagado:    'bg-emerald-400/15 text-emerald-400',
-  cancelado: 'bg-white/[0.06] text-white/25',
+  pendiente:  'bg-amber-400/15 text-amber-400',
+  confirmada: 'bg-blue-400/15 text-blue-400',
+  pagado:     'bg-emerald-400/15 text-emerald-400',
+  cancelado:  'bg-white/[0.06] text-white/25',
 }
 
 const EMPTY = {
   cliente: '',
-  categoria: 'estudio',
   fecha: new Date().toISOString().split('T')[0],
-  monto: '',
+  monto_total: '',
+  sena: '',
   estado: 'pendiente',
   notas: '',
 }
@@ -49,7 +49,14 @@ export default function TabSesiones() {
     e.preventDefault()
     setSaving(true)
     setError(null)
-    const payload = { ...form, monto: form.monto !== '' ? parseFloat(form.monto) : null }
+    const payload = {
+      cliente:     form.cliente,
+      fecha:       form.fecha,
+      monto_total: form.monto_total !== '' ? parseFloat(form.monto_total) : null,
+      sena:        form.sena !== '' ? parseFloat(form.sena) : 0,
+      estado:      form.estado,
+      notas:       form.notas,
+    }
     const { error } = form.id
       ? await supabase.from('sesiones').update(payload).eq('id', form.id)
       : await supabase.from('sesiones').insert(payload)
@@ -68,20 +75,24 @@ export default function TabSesiones() {
 
   function handleEdit(s) {
     setForm({
-      id: s.id,
-      cliente: s.cliente || '',
-      categoria: s.categoria || 'estudio',
-      fecha: s.fecha || '',
-      monto: s.monto ?? '',
-      estado: s.estado || 'pendiente',
-      notas: s.notas || '',
+      id:          s.id,
+      cliente:     s.cliente || '',
+      fecha:       s.fecha || '',
+      monto_total: s.monto_total ?? '',
+      sena:        s.sena ?? '',
+      estado:      s.estado || 'pendiente',
+      notas:       s.notas || '',
     })
     setShowForm(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const totalPendiente = sesiones.filter(s => s.estado === 'pendiente').reduce((a, s) => a + (s.monto || 0), 0)
-  const totalCobrado   = sesiones.filter(s => s.estado === 'pagado').reduce((a, s) => a + (s.monto || 0), 0)
+  const totalCobrado   = sesiones.reduce((a, s) => a + (s.sena || 0), 0)
+  const totalPendiente = sesiones.reduce((a, s) => a + ((s.monto_total || 0) - (s.sena || 0)), 0)
+
+  const formTotal    = parseFloat(form.monto_total) || 0
+  const formSena     = parseFloat(form.sena) || 0
+  const formPendiente = formTotal - formSena
 
   return (
     <div className="p-8 max-w-[1100px]">
@@ -128,18 +139,6 @@ export default function TabSesiones() {
               />
             </div>
             <div>
-              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Categoría</label>
-              <select
-                value={form.categoria}
-                onChange={e => setForm(f => ({ ...f, categoria: e.target.value }))}
-                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 focus:outline-none focus:border-pink"
-              >
-                {Object.entries(CATEGORIES).map(([k, cat]) => (
-                  <option key={k} value={k}>{cat.es}</option>
-                ))}
-              </select>
-            </div>
-            <div>
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Fecha *</label>
               <input
                 type="date"
@@ -150,17 +149,37 @@ export default function TabSesiones() {
               />
             </div>
             <div>
-              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Monto (ARS)</label>
+              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Monto Total (ARS)</label>
               <input
                 type="number"
-                value={form.monto}
-                onChange={e => setForm(f => ({ ...f, monto: e.target.value }))}
+                value={form.monto_total}
+                onChange={e => setForm(f => ({ ...f, monto_total: e.target.value }))}
                 placeholder="0"
                 min="0"
                 step="100"
                 className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
               />
             </div>
+            <div>
+              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Seña (ARS)</label>
+              <input
+                type="number"
+                value={form.sena}
+                onChange={e => setForm(f => ({ ...f, sena: e.target.value }))}
+                placeholder="0"
+                min="0"
+                step="100"
+                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
+              />
+            </div>
+            {formTotal > 0 && (
+              <div>
+                <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Pendiente</label>
+                <div className={`w-full bg-[#0A0A0A] border rounded-[6px] px-3 py-[0.55rem] text-[13px] ${formPendiente > 0 ? 'border-amber-400/30 text-amber-400' : 'border-emerald-400/30 text-emerald-400'}`}>
+                  {fmt(formPendiente)}
+                </div>
+              </div>
+            )}
             <div>
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Estado</label>
               <select
@@ -214,29 +233,41 @@ export default function TabSesiones() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-white/[0.06]">
-                {['Cliente', 'Categoría', 'Fecha', 'Monto', 'Estado', ''].map(h => (
+                {['Cliente', 'Fecha', 'Total', 'Seña', 'Pendiente', 'Estado', ''].map(h => (
                   <th key={h} className={`px-5 py-3 text-[10px] tracking-[0.1em] uppercase text-white/25 font-normal ${h === '' ? '' : 'text-left'}`}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {sesiones.map((s, i) => (
-                <tr key={s.id} className={`border-b border-white/[0.03] ${i % 2 ? 'bg-white/[0.01]' : ''}`}>
-                  <td className="px-5 py-3 text-[13px] text-white/70">{s.cliente}</td>
-                  <td className="px-5 py-3 text-[13px] text-white/45">{CATEGORIES[s.categoria]?.es || s.categoria}</td>
-                  <td className="px-5 py-3 text-[13px] text-white/45">{fmtFecha(s.fecha)}</td>
-                  <td className="px-5 py-3 text-[13px] text-white/70">{s.monto ? fmt(s.monto) : '—'}</td>
-                  <td className="px-5 py-3">
-                    <span className={`text-[10px] tracking-[0.08em] uppercase px-2 py-[2px] rounded-[4px] ${ESTADO_STYLE[s.estado] || 'bg-white/[0.06] text-white/25'}`}>
-                      {s.estado}
-                    </span>
-                  </td>
-                  <td className="px-5 py-3 text-right whitespace-nowrap">
-                    <button onClick={() => handleEdit(s)} className="text-[11px] text-white/25 hover:text-pink transition-colors mr-4 font-sans">Editar</button>
-                    <button onClick={() => handleDelete(s.id)} className="text-[11px] text-white/25 hover:text-red-400 transition-colors font-sans">Eliminar</button>
-                  </td>
-                </tr>
-              ))}
+              {sesiones.map((s, i) => {
+                const total     = s.monto_total || 0
+                const sena      = s.sena || 0
+                const pendiente = total - sena
+                return (
+                  <tr key={s.id} className={`border-b border-white/[0.03] ${i % 2 ? 'bg-white/[0.01]' : ''}`}>
+                    <td className="px-5 py-3 text-[13px] text-white/70">{s.cliente}</td>
+                    <td className="px-5 py-3 text-[13px] text-white/45">{fmtFecha(s.fecha)}</td>
+                    <td className="px-5 py-3 text-[13px] text-white/70">{total ? fmt(total) : '—'}</td>
+                    <td className="px-5 py-3 text-[13px] text-emerald-400">{sena ? fmt(sena) : '—'}</td>
+                    <td className="px-5 py-3 text-[13px]">
+                      {total ? (
+                        <span className={pendiente > 0 ? 'text-amber-400' : 'text-emerald-400'}>
+                          {fmt(pendiente)}
+                        </span>
+                      ) : '—'}
+                    </td>
+                    <td className="px-5 py-3">
+                      <span className={`text-[10px] tracking-[0.08em] uppercase px-2 py-[2px] rounded-[4px] ${ESTADO_STYLE[s.estado] || 'bg-white/[0.06] text-white/25'}`}>
+                        {s.estado}
+                      </span>
+                    </td>
+                    <td className="px-5 py-3 text-right whitespace-nowrap">
+                      <button onClick={() => handleEdit(s)} className="text-[11px] text-white/25 hover:text-pink transition-colors mr-4 font-sans">Editar</button>
+                      <button onClick={() => handleDelete(s.id)} className="text-[11px] text-white/25 hover:text-red-400 transition-colors font-sans">Eliminar</button>
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
