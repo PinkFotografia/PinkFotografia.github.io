@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
+import { CATEGORIES } from '../../lib/categories'
 
 const ESTADOS = ['pendiente', 'confirmada', 'pagado', 'cancelado']
+const TIPOS = Object.entries(CATEGORIES).map(([, cat]) => cat.es)
 
 const ESTADO_STYLE = {
   pendiente:  'bg-amber-400/15 text-amber-400',
@@ -13,6 +15,7 @@ const ESTADO_STYLE = {
 const EMPTY = {
   cliente: '',
   fecha: new Date().toISOString().split('T')[0],
+  tipo: '',
   monto_total: '',
   sena: '',
   estado: 'pendiente',
@@ -52,6 +55,7 @@ export default function TabSesiones() {
     const payload = {
       cliente:     form.cliente,
       fecha:       form.fecha,
+      tipo:        form.tipo,
       monto_total: form.monto_total !== '' ? parseFloat(form.monto_total) : null,
       sena:        form.sena !== '' ? parseFloat(form.sena) : 0,
       estado:      form.estado,
@@ -78,6 +82,7 @@ export default function TabSesiones() {
       id:          s.id,
       cliente:     s.cliente || '',
       fecha:       s.fecha || '',
+      tipo:        s.tipo || '',
       monto_total: s.monto_total ?? '',
       sena:        s.sena ?? '',
       estado:      s.estado || 'pendiente',
@@ -149,37 +154,17 @@ export default function TabSesiones() {
               />
             </div>
             <div>
-              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Monto Total (ARS)</label>
-              <input
-                type="number"
-                value={form.monto_total}
-                onChange={e => setForm(f => ({ ...f, monto_total: e.target.value }))}
-                placeholder="0"
-                min="0"
-                step="100"
-                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
-              />
+              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Tipo de sesión *</label>
+              <select
+                value={form.tipo}
+                onChange={e => setForm(f => ({ ...f, tipo: e.target.value }))}
+                required
+                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 focus:outline-none focus:border-pink"
+              >
+                <option value="">— Seleccionar —</option>
+                {TIPOS.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
             </div>
-            <div>
-              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Seña (ARS)</label>
-              <input
-                type="number"
-                value={form.sena}
-                onChange={e => setForm(f => ({ ...f, sena: e.target.value }))}
-                placeholder="0"
-                min="0"
-                step="100"
-                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
-              />
-            </div>
-            {formTotal > 0 && (
-              <div>
-                <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Pendiente</label>
-                <div className={`w-full bg-[#0A0A0A] border rounded-[6px] px-3 py-[0.55rem] text-[13px] ${formPendiente > 0 ? 'border-amber-400/30 text-amber-400' : 'border-emerald-400/30 text-emerald-400'}`}>
-                  {fmt(formPendiente)}
-                </div>
-              </div>
-            )}
             <div>
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Estado</label>
               <select
@@ -192,6 +177,38 @@ export default function TabSesiones() {
                 ))}
               </select>
             </div>
+            <div>
+              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Monto Total (ARS)</label>
+              <input
+                type="number"
+                value={form.monto_total}
+                onChange={e => setForm(f => ({ ...f, monto_total: e.target.value }))}
+                placeholder="0"
+                min="0"
+                step="1"
+                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Seña (ARS)</label>
+              <input
+                type="number"
+                value={form.sena}
+                onChange={e => setForm(f => ({ ...f, sena: e.target.value }))}
+                placeholder="0"
+                min="0"
+                step="1"
+                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
+              />
+            </div>
+            {formTotal > 0 && (
+              <div>
+                <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Pendiente</label>
+                <div className={`w-full bg-[#0A0A0A] border rounded-[6px] px-3 py-[0.55rem] text-[13px] ${formPendiente > 0 ? 'border-amber-400/30 text-amber-400' : 'border-emerald-400/30 text-emerald-400'}`}>
+                  {fmt(formPendiente)}
+                </div>
+              </div>
+            )}
             <div>
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Notas</label>
               <input

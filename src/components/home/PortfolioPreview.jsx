@@ -104,7 +104,7 @@ export default function PortfolioPreview() {
             <div style={{ marginBottom: i < 3 ? '3.5rem' : '0' }}>
               <PolaroidCard
                 src={config[p.portKey] || config[p.srvKey] || p.fallback}
-                label={p.name ? t(p.name.es, p.name.en) : t(CATEGORIES[p.cat].es, CATEGORIES[p.cat].en)}
+                label={config[`port-label-${p.cat}`] || (p.name ? t(p.name.es, p.name.en) : t(CATEGORIES[p.cat]?.es ?? p.cat, CATEGORIES[p.cat]?.en ?? p.cat))}
                 rot={p.rot}
                 yOff={p.yOff}
                 onClick={() => navigate(`/portafolio/${p.cat}`)}

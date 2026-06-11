@@ -122,6 +122,40 @@ function ImageSlot({ slot, currentUrl, onUploaded }) {
   )
 }
 
+// ─── PortfolioNameSlot ────────────────────────────────────────────────────────
+function PortfolioNameSlot({ catKey, defaultLabel, currentName, onSaved }) {
+  const [value, setValue] = useState(currentName || '')
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => { setValue(currentName || '') }, [currentName])
+
+  async function handleBlur() {
+    const trimmed = value.trim()
+    if (trimmed === (currentName || '')) return
+    setSaving(true)
+    await supabase
+      .from('configuracion')
+      .upsert({ clave: `port-label-${catKey}`, valor: trimmed || null }, { onConflict: 'clave' })
+    onSaved(`port-label-${catKey}`, trimmed || '')
+    setSaving(false)
+  }
+
+  return (
+    <div className="bg-[#111] rounded-[8px] border border-white/[0.06] px-3 py-3">
+      <div className="text-[9px] tracking-[0.08em] uppercase text-white/25 mb-1 font-sans">{defaultLabel}</div>
+      <input
+        type="text"
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        onBlur={handleBlur}
+        placeholder={defaultLabel}
+        className="w-full bg-transparent text-[13px] text-white/75 placeholder:text-white/20 focus:outline-none border-b border-white/10 focus:border-pink pb-[2px] transition-colors"
+      />
+      {saving && <div className="text-[9px] text-white/20 mt-1 font-sans">Guardando…</div>}
+    </div>
+  )
+}
+
 // ─── TabFotos ─────────────────────────────────────────────────────────────────
 function TabFotos({ config, onConfigChange }) {
   const [section, setSection] = useState('hero')
@@ -179,6 +213,24 @@ function TabFotos({ config, onConfigChange }) {
           />
         ))}
       </div>
+
+      {section === 'portfolio' && (
+        <div className="mt-8">
+          <div className="text-[10px] tracking-[0.12em] uppercase text-white/20 mb-2 font-sans">Nombres en las tarjetas polaroid</div>
+          <p className="text-[12px] text-white/25 font-sans mb-4">El texto que aparece debajo de cada foto. Si lo dejás vacío usa el nombre de categoría por defecto.</p>
+          <div className="grid grid-cols-3 gap-3">
+            {Object.entries(CATEGORIES).map(([key, cat]) => (
+              <PortfolioNameSlot
+                key={key}
+                catKey={key}
+                defaultLabel={cat.es}
+                currentName={config[`port-label-${key}`] || ''}
+                onSaved={onConfigChange}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
