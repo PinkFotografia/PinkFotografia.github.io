@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
+import TabResumen from '../components/admin/TabResumen'
 import TabSesiones from '../components/admin/TabSesiones'
 import TabGastos from '../components/admin/TabGastos'
 import TabPaquetes from '../components/admin/TabPaquetes'
@@ -7,6 +8,7 @@ import TabAlbumes from '../components/admin/TabAlbumes'
 import TabConfiguracion from '../components/admin/TabConfiguracion'
 
 const TABS = [
+  { id: 'resumen',       label: 'Resumen' },
   { id: 'sesiones',      label: 'Sesiones' },
   { id: 'gastos',        label: 'Gastos' },
   { id: 'paquetes',      label: 'Paquetes' },
@@ -15,6 +17,7 @@ const TABS = [
 ]
 
 const TAB_COMPONENTS = {
+  resumen:       TabResumen,
   sesiones:      TabSesiones,
   gastos:        TabGastos,
   paquetes:      TabPaquetes,
@@ -25,7 +28,7 @@ const TAB_COMPONENTS = {
 export default function AdminPage() {
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState('sesiones')
+  const [activeTab, setActiveTab] = useState('resumen')
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
