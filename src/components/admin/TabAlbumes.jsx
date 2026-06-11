@@ -123,6 +123,14 @@ export default function TabAlbumes() {
   }
 
   // ── Album detail actions ────────────────────────────────────────
+  async function handleRenameAlbum(nombre) {
+    const trimmed = nombre.trim()
+    if (!trimmed || trimmed === editingAlbum.nombre) return
+    await supabase.from('albumes').update({ nombre: trimmed }).eq('id', editingAlbum.id)
+    setEditingAlbum(prev => ({ ...prev, nombre: trimmed }))
+    fetchAlbumes()
+  }
+
   async function handleDeleteAlbum(id) {
     if (!window.confirm('¿Eliminar este álbum completo?')) return
     await supabase.from('albumes').delete().eq('id', id)
@@ -250,9 +258,15 @@ export default function TabAlbumes() {
             ← Volver
           </button>
           <div className="w-px h-4 bg-white/10" />
-          <h1 className="text-[1.1rem] font-serif italic text-white/80 truncate">{editingAlbum.nombre}</h1>
+          <input
+            type="text"
+            defaultValue={editingAlbum.nombre}
+            key={editingAlbum.id}
+            onBlur={e => handleRenameAlbum(e.target.value)}
+            className="text-[1.1rem] font-serif italic text-white/80 bg-transparent border-b border-transparent hover:border-white/20 focus:border-pink focus:outline-none truncate transition-colors min-w-0 flex-1"
+          />
           {editingAlbum.fecha && (
-            <span className="text-[11px] text-white/30 font-sans">{editingAlbum.fecha}</span>
+            <span className="text-[11px] text-white/30 font-sans shrink-0">{editingAlbum.fecha}</span>
           )}
           <div className="ml-auto">
             <button
