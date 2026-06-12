@@ -56,6 +56,10 @@ export default function PortafolioPage() {
     setSsIndex(i => (i + dir + total) % total)
   }
 
+  function jumpSlide(idx) {
+    setSsIndex(idx)
+  }
+
   function renderPhotoGrid(fotos, altText) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
@@ -176,6 +180,7 @@ export default function PortafolioPage() {
           index={ssIndex}
           onClose={() => setSsIndex(null)}
           onNav={navSlide}
+          onJump={jumpSlide}
         />
       )}
     </>
