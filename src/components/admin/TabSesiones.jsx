@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase'
 import { CATEGORIES } from '../../lib/categories'
 
@@ -35,6 +35,8 @@ export default function TabSesiones() {
   const [form, setForm] = useState(EMPTY)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
+  const [senaModal, setSenaModal] = useState({ open: false, sesion: null, amount: '' })
+  const senaInputRef = useRef(null)
 
   useEffect(() => { fetchSesiones() }, [])
 
@@ -77,6 +79,26 @@ export default function TabSesiones() {
     fetchSesiones()
   }
 
+  async function handleQuickPagar(id) {
+    await supabase.from('sesiones').update({ estado: 'pagado' }).eq('id', id)
+    fetchSesiones()
+  }
+
+  function openSenaModal(sesion) {
+    setSenaModal({ open: true, sesion, amount: '' })
+    setTimeout(() => senaInputRef.current?.focus(), 50)
+  }
+
+  async function handleConfirmSena() {
+    const amount = parseFloat(senaModal.amount)
+    if (!amount || amount <= 0) return
+    await supabase.from('sesiones')
+      .update({ sena: amount, estado: 'confirmada' })
+      .eq('id', senaModal.sesion.id)
+    setSenaModal({ open: false, sesion: null, amount: '' })
+    fetchSesiones()
+  }
+
   function handleEdit(s) {
     setForm({
       id:          s.id,
@@ -92,12 +114,18 @@ export default function TabSesiones() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const totalCobrado   = sesiones.reduce((a, s) => a + (s.sena || 0), 0)
-  const totalPendiente = sesiones.reduce((a, s) => a + ((s.monto_total || 0) - (s.sena || 0)), 0)
+  const totalCobrado   = sesiones.reduce((a, s) => {
+    if (s.estado === 'cancelado') return a
+    return a + (s.estado === 'pagado' ? (s.monto_total || 0) : (s.sena || 0))
+  }, 0)
+  const totalPendiente = sesiones.reduce((a, s) => {
+    if (s.estado === 'pagado' || s.estado === 'cancelado') return a
+    return a + ((s.monto_total || 0) - (s.sena || 0))
+  }, 0)
 
-  const formTotal    = parseFloat(form.monto_total) || 0
-  const formSena     = parseFloat(form.sena) || 0
-  const formPendiente = formTotal - formSena
+  const formTotal     = parseFloat(form.monto_total) || 0
+  const formSena      = parseFloat(form.sena) || 0
+  const formPendiente = form.estado === 'pagado' ? 0 : formTotal - formSena
 
   return (
     <div className="p-8 max-w-[1100px]">
@@ -240,6 +268,49 @@ export default function TabSesiones() {
         </form>
       )}
 
+      {/* Seña modal */}
+      {senaModal.open && (
+        <div
+          className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center px-4"
+          onClick={() => setSenaModal({ open: false, sesion: null, amount: '' })}
+        >
+          <div
+            className="bg-[#1A1A1A] rounded-[12px] p-6 border border-white/[0.08] w-full max-w-[340px]"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="text-[10px] tracking-[0.12em] uppercase text-white/30 mb-1">Cobrar seña</div>
+            <div className="text-[13px] text-white/60 mb-5">{senaModal.sesion?.cliente}</div>
+            <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Monto de seña (ARS)</label>
+            <input
+              ref={senaInputRef}
+              type="number"
+              value={senaModal.amount}
+              onChange={e => setSenaModal(m => ({ ...m, amount: e.target.value }))}
+              onKeyDown={e => e.key === 'Enter' && handleConfirmSena()}
+              placeholder="0"
+              min="0"
+              step="1"
+              className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink mb-5"
+            />
+            <div className="flex gap-3">
+              <button
+                onClick={handleConfirmSena}
+                disabled={!senaModal.amount || parseFloat(senaModal.amount) <= 0}
+                className="flex-1 bg-pink text-white py-2 rounded-[6px] text-[11px] tracking-[0.08em] uppercase font-sans hover:bg-pink-dark transition-colors disabled:opacity-40"
+              >
+                Confirmar
+              </button>
+              <button
+                onClick={() => setSenaModal({ open: false, sesion: null, amount: '' })}
+                className="text-[11px] text-white/35 hover:text-white transition-colors font-sans px-3"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Table */}
       {loading ? (
         <div className="text-white/20 text-[13px] text-center py-16">Cargando…</div>
@@ -259,7 +330,7 @@ export default function TabSesiones() {
               {sesiones.map((s, i) => {
                 const total     = s.monto_total || 0
                 const sena      = s.sena || 0
-                const pendiente = total - sena
+                const pendiente = (s.estado === 'pagado' || s.estado === 'cancelado') ? 0 : total - sena
                 return (
                   <tr key={s.id} className={`border-b border-white/[0.03] ${i % 2 ? 'bg-white/[0.01]' : ''}`}>
                     <td className="px-5 py-3 text-[13px] text-white/70">{s.cliente}</td>
@@ -267,7 +338,9 @@ export default function TabSesiones() {
                     <td className="px-5 py-3 text-[13px] text-white/70">{total ? fmt(total) : '—'}</td>
                     <td className="px-5 py-3 text-[13px] text-emerald-400">{sena ? fmt(sena) : '—'}</td>
                     <td className="px-5 py-3 text-[13px]">
-                      {total ? (
+                      {s.estado === 'cancelado' ? (
+                        <span className="text-white/20">—</span>
+                      ) : total ? (
                         <span className={pendiente > 0 ? 'text-amber-400' : 'text-emerald-400'}>
                           {fmt(pendiente)}
                         </span>
@@ -279,6 +352,22 @@ export default function TabSesiones() {
                       </span>
                     </td>
                     <td className="px-5 py-3 text-right whitespace-nowrap">
+                      {s.estado === 'pendiente' && (
+                        <button
+                          onClick={() => openSenaModal(s)}
+                          className="text-[11px] text-amber-400/70 hover:text-amber-400 transition-colors mr-4 font-sans"
+                        >
+                          Cobrar seña
+                        </button>
+                      )}
+                      {s.estado === 'confirmada' && (
+                        <button
+                          onClick={() => handleQuickPagar(s.id)}
+                          className="text-[11px] text-emerald-400/70 hover:text-emerald-400 transition-colors mr-4 font-sans"
+                        >
+                          Marcar pagado
+                        </button>
+                      )}
                       <button onClick={() => handleEdit(s)} className="text-[11px] text-white/25 hover:text-pink transition-colors mr-4 font-sans">Editar</button>
                       <button onClick={() => handleDelete(s.id)} className="text-[11px] text-white/25 hover:text-red-400 transition-colors font-sans">Eliminar</button>
                     </td>

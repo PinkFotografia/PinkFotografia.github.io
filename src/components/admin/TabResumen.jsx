@@ -107,8 +107,10 @@ function filterRange(items, start, end, field = 'fecha') {
 function calcStats(sesiones, gastos) {
   const activas    = sesiones.filter(s => s.estado !== 'cancelado')
   const ingresos   = activas.reduce((a, s) => a + (s.monto_total || 0), 0)
-  const cobrado    = sesiones.reduce((a, s) => a + (s.sena || 0), 0)
-  const pendiente  = ingresos - cobrado
+  const cobrado    = activas.reduce((a, s) =>
+    a + (s.estado === 'pagado' ? (s.monto_total || 0) : (s.sena || 0)), 0)
+  const pendiente  = activas.reduce((a, s) =>
+    a + (s.estado === 'pagado' ? 0 : (s.monto_total || 0) - (s.sena || 0)), 0)
   const gastoTotal = gastos.reduce((a, g) => a + (g.monto || 0), 0)
   const ganancia   = cobrado - gastoTotal
   const ticket     = activas.length ? Math.round(ingresos / activas.length) : 0
