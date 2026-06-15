@@ -34,12 +34,13 @@ const IconTikTok = () => (
 )
 
 const SERVICES = [
-  { es: 'Sesiones de estudio',   en: 'Studio sessions' },
-  { es: 'Sesiones exterior',     en: 'Outdoor sessions' },
-  { es: 'Embarazadas',          en: 'Maternity' },
-  { es: 'Pelotero y eventos',   en: 'Kids parties & events' },
-  { es: 'Casamientos y 15 años', en: 'Weddings & Quinceañera' },
-  { es: 'Comuniones',           en: 'Communions' },
+  { es: 'Pre Cumple / Cake Smash',   en: 'Pre Birthday / Cake Smash' },
+  { es: 'Maternidad',               en: 'Maternity' },
+  { es: 'Individual y Familiar',    en: 'Individual & Family' },
+  { es: 'Pelotero y Eventos',       en: 'Kids Parties & Events' },
+  { es: 'Casamientos y 15 Años',   en: 'Weddings & Quinceañera' },
+  { es: 'Comuniones y Bautismos',  en: 'Communions & Baptisms' },
+  { es: 'Temporada / Combo',        en: 'Seasonal / Bundle' },
 ]
 
 const CONTACT = [
