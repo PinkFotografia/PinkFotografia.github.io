@@ -12,7 +12,7 @@ export const PAQUETE_CATEGORIES = {
   'bautismo':            { es: 'Bautismo',                    en: 'Baptism' },
   'comuniones':          { es: 'Comuniones',                  en: 'Communions' },
   'temporada':           { es: 'Temporada',                   en: 'Seasonal' },
-  'combo':               { es: 'Combo Pre Cumple + Pelotero', en: 'Bundle' },
+  'combo':               { es: 'Combo',                       en: 'Bundle' },
   'productos':           { es: 'Productos',                   en: 'Products' },
 }
 

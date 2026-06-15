@@ -8,8 +8,26 @@ import PaqueteCard from '../components/ui/PaqueteCard'
 import Reveal from '../components/ui/Reveal'
 
 const WA = 'https://wa.me/5492974197787?text='
-const SUBCATS = ['pre-cumple', 'individual-familiar']
+const SUBCATS  = ['pre-cumple', 'individual-familiar']
 const GROUPED  = ['casamientos', 'quince']
+
+const PORTAFOLIO_MAP = {
+  'pre-cumple':          'estudio',
+  'cake-smash':          'estudio',
+  'maternidad':          'embarazadas',
+  'individual-familiar': 'exterior',
+  'pelotero':            'pelotero',
+  'evento-social':       'casamientos',
+  'baby-shower':         'embarazadas',
+  'revelacion-genero':   'embarazadas',
+  'casamientos':         'casamientos',
+  'quince':              'casamientos',
+  'bautismo':            'comuniones',
+  'comuniones':          'comuniones',
+  'temporada':           'temporada',
+  'combo':               'pelotero',
+  'productos':           null,
+}
 
 function priceValidUntil() {
   const d = new Date()
@@ -19,7 +37,8 @@ function priceValidUntil() {
 
 function groupBy(arr, key) {
   return arr.reduce((acc, item) => {
-    const k = item[key] || ''
+    const k = item[key] ?? ''
+    if (!k) return acc
     if (!acc[k]) acc[k] = []
     acc[k].push(item)
     return acc
@@ -37,7 +56,6 @@ function CardGrid({ paquetes, catLabel }) {
 }
 
 function ServiciosIndividuales({ items, catLabel }) {
-  const waBase = encodeURIComponent(`Hola Fernanda! Me interesa consultar por`)
   return (
     <div className="rounded-[12px] border border-black/[0.07] overflow-hidden bg-white">
       {items.map((p, idx) => (
@@ -121,7 +139,8 @@ export default function PaquetesPage() {
   const hasGrupos   = GROUPED.includes(categoria)
   const isProductos = categoria === 'productos'
 
-  const waConsulta = `${WA}${encodeURIComponent(`Hola Fernanda! Quiero consultar sobre ${cat.es}`)}`
+  const waConsulta      = `${WA}${encodeURIComponent(`Hola Fernanda! Quiero consultar sobre ${cat.es}`)}`
+  const portafolioSlug  = PORTAFOLIO_MAP[categoria] ?? null
 
   const globalNota = paquetes.find(p => p.nota)?.nota
   const globalAds  = paquetes.find(p => p.adicionales?.length)?.adicionales
@@ -209,12 +228,14 @@ export default function PaquetesPage() {
 
           {/* CTA WhatsApp */}
           <Reveal className="text-center mt-8">
-            <button
-              onClick={() => navigate(`/portafolio/${categoria === 'combo' ? 'pelotero' : categoria}`)}
-              className="text-[11px] tracking-[0.08em] uppercase text-pink hover:text-pink-dark transition-colors font-sans mb-4 block mx-auto"
-            >
-              {t('Ver portafolio →', 'View portfolio →')}
-            </button>
+            {portafolioSlug && (
+              <button
+                onClick={() => navigate(`/portafolio/${portafolioSlug}`)}
+                className="text-[11px] tracking-[0.08em] uppercase text-pink hover:text-pink-dark transition-colors font-sans mb-4 block mx-auto"
+              >
+                {t('Ver portafolio →', 'View portfolio →')}
+              </button>
+            )}
             <a
               href={waConsulta}
               target="_blank"

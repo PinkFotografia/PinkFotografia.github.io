@@ -24,7 +24,7 @@ export default function PortafolioPage() {
   const cat = CATEGORIES[categoria]
   if (!cat) return null
 
-  const isTematicas = categoria === 'tematicas' || categoria === 'pelotero'
+  const isTematicas = categoria === 'pelotero'
 
   const albumes = loading
     ? []
