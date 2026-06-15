@@ -1,3 +1,21 @@
+export const PAQUETE_CATEGORIES = {
+  'pre-cumple':          { es: 'Pre Cumple',                  en: 'Pre Birthday' },
+  'cake-smash':          { es: 'Cake Smash',                  en: 'Cake Smash' },
+  'maternidad':          { es: 'Maternidad',                  en: 'Maternity' },
+  'individual-familiar': { es: 'Individual / Familiar',       en: 'Individual / Family' },
+  'pelotero':            { es: 'Pelotero',                    en: 'Kids Party' },
+  'evento-social':       { es: 'Evento Social',               en: 'Social Event' },
+  'baby-shower':         { es: 'Baby Shower',                 en: 'Baby Shower' },
+  'revelacion-genero':   { es: 'Revelación de Género',        en: 'Gender Reveal' },
+  'casamientos':         { es: 'Casamientos',                 en: 'Weddings' },
+  'quince':              { es: '15 Años',                     en: 'Quinceañera' },
+  'bautismo':            { es: 'Bautismo',                    en: 'Baptism' },
+  'comuniones':          { es: 'Comuniones',                  en: 'Communions' },
+  'temporada':           { es: 'Temporada',                   en: 'Seasonal' },
+  'combo':               { es: 'Combo Pre Cumple + Pelotero', en: 'Bundle' },
+  'productos':           { es: 'Productos',                   en: 'Products' },
+}
+
 export const CATEGORIES = {
   estudio:     { es: 'Estudio',              en: 'Studio',       imgKey: 'srv-estudio',    fallback: '/assets/srv-estudio.jpg' },
   exterior:    { es: 'Exterior',             en: 'Outdoor',      imgKey: 'srv-exterior',   fallback: '/assets/srv-exterior.jpg' },

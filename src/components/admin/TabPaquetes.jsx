@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
-import { CATEGORIES } from '../../lib/categories'
+import { PAQUETE_CATEGORIES } from '../../lib/categories'
 
 function emptyForm(categoria) {
-  return { nombre: '', precio: '', featured: false, items: [{ es: '', en: '' }], categoria, orden: 0 }
+  return { nombre: '', precio: '', featured: false, items: [{ es: '', en: '' }], categoria, subcategoria: '', grupo: '', nota: '', adicionales: [], orden: 0 }
 }
 
 function normalizeItem(item) {
@@ -12,11 +12,11 @@ function normalizeItem(item) {
 }
 
 export default function TabPaquetes() {
-  const [categoria, setCategoria] = useState('estudio')
+  const [categoria, setCategoria] = useState('pre-cumple')
   const [paquetes, setPaquetes] = useState([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState(emptyForm('estudio'))
+  const [form, setForm] = useState(emptyForm('pre-cumple'))
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
 
@@ -38,12 +38,15 @@ export default function TabPaquetes() {
     setSaving(true)
     setError(null)
     const payload = {
-      nombre:   form.nombre,
-      precio:   form.precio || null,
-      featured: form.featured,
-      items:    form.items.filter(item => normalizeItem(item).es.trim()),
-      categoria: form.categoria,
-      orden:    form.orden ?? 0,
+      nombre:       form.nombre,
+      precio:       form.precio || null,
+      featured:     form.featured,
+      items:        form.items.filter(item => normalizeItem(item).es.trim()),
+      categoria:    form.categoria,
+      subcategoria: form.subcategoria || null,
+      grupo:        form.grupo || null,
+      nota:         form.nota || null,
+      orden:        form.orden ?? 0,
     }
     const { error } = form.id
       ? await supabase.from('paquetes').update(payload).eq('id', form.id)
@@ -62,13 +65,16 @@ export default function TabPaquetes() {
 
   function handleEdit(p) {
     setForm({
-      id: p.id,
-      nombre:   p.nombre || '',
-      precio:   p.precio || '',
-      featured: p.featured || false,
-      items:    (p.items || []).length > 0 ? p.items.map(normalizeItem) : [{ es: '', en: '' }],
-      categoria: p.categoria,
-      orden:    p.orden ?? 0,
+      id:           p.id,
+      nombre:       p.nombre || '',
+      precio:       p.precio || '',
+      featured:     p.featured || false,
+      items:        (p.items || []).length > 0 ? p.items.map(normalizeItem) : [{ es: '', en: '' }],
+      categoria:    p.categoria,
+      subcategoria: p.subcategoria || '',
+      grupo:        p.grupo || '',
+      nota:         p.nota || '',
+      orden:        p.orden ?? 0,
     })
     setShowForm(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -95,7 +101,7 @@ export default function TabPaquetes() {
 
       {/* Category tabs */}
       <div className="flex gap-2 flex-wrap mb-8">
-        {Object.entries(CATEGORIES).map(([key, cat]) => (
+        {Object.entries(PAQUETE_CATEGORIES).map(([key, cat]) => (
           <button
             key={key}
             onClick={() => { setCategoria(key); setShowForm(false) }}
@@ -117,28 +123,36 @@ export default function TabPaquetes() {
             {form.id ? 'Editar paquete' : 'Nuevo paquete'}
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mb-5">
+          <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Nombre *</label>
-              <input
-                type="text"
-                value={form.nombre}
-                onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))}
-                required
-                placeholder="Ej: Paquete Completo"
-                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
-              />
+              <input type="text" value={form.nombre} onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))} required placeholder="Ej: Completo"
+                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink" />
             </div>
             <div>
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Precio</label>
-              <input
-                type="text"
-                value={form.precio}
-                onChange={e => setForm(f => ({ ...f, precio: e.target.value }))}
-                placeholder="Ej: $45.000 ARS  (dejar vacío = a consultar)"
-                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink"
-              />
+              <input type="text" value={form.precio} onChange={e => setForm(f => ({ ...f, precio: e.target.value }))} placeholder="$150.000"
+                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink" />
             </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Subcategoría</label>
+              <input type="text" value={form.subcategoria} onChange={e => setForm(f => ({ ...f, subcategoria: e.target.value }))} placeholder="estudio / exterior"
+                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink" />
+            </div>
+            <div>
+              <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Grupo</label>
+              <input type="text" value={form.grupo} onChange={e => setForm(f => ({ ...f, grupo: e.target.value }))} placeholder="Ej: Paquetes / Servicios individuales"
+                className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink" />
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Nota</label>
+            <input type="text" value={form.nota} onChange={e => setForm(f => ({ ...f, nota: e.target.value }))} placeholder="Ej: La torta corre por cuenta del cliente"
+              className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 placeholder:text-white/15 focus:outline-none focus:border-pink" />
           </div>
 
           {/* Destacado toggle */}

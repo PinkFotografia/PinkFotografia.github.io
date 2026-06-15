@@ -1,99 +1,236 @@
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { usePaquetes } from '../hooks/usePaquetes'
 import { useLang } from '../context/LangContext'
-import { CATEGORIES } from '../lib/categories'
+import { PAQUETE_CATEGORIES } from '../lib/categories'
 import { FALLBACK_PAQUETES } from '../lib/fallbackPaquetes'
-import { SESIONES_INFO } from '../lib/sesionesInfo'
-import CategoryHero from '../components/ui/CategoryHero'
 import CategoryTabs from '../components/ui/CategoryTabs'
 import PaqueteCard from '../components/ui/PaqueteCard'
-import SesionInfoSection from '../components/ui/SesionInfoSection'
 import Reveal from '../components/ui/Reveal'
-import SectionKicker from '../components/ui/SectionKicker'
 
-const WA_GENERAL = 'https://wa.me/5492974197787?text='
+const WA = 'https://wa.me/5492974197787?text='
+const SUBCATS = ['pre-cumple', 'individual-familiar']
+const GROUPED  = ['casamientos', 'quince']
+
+function priceValidUntil() {
+  const d = new Date()
+  d.setMonth(d.getMonth() + 3)
+  return d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
+}
+
+function groupBy(arr, key) {
+  return arr.reduce((acc, item) => {
+    const k = item[key] || ''
+    if (!acc[k]) acc[k] = []
+    acc[k].push(item)
+    return acc
+  }, {})
+}
+
+function CardGrid({ paquetes, catLabel }) {
+  return (
+    <div className={`grid gap-4 ${paquetes.length === 1 ? 'max-w-[320px] mx-auto' : paquetes.length === 2 ? 'grid-cols-1 sm:grid-cols-2 max-w-[640px] mx-auto' : 'grid-cols-1 sm:grid-cols-3'}`}>
+      {paquetes.map(p => (
+        <PaqueteCard key={p.id} paquete={p} categoriaLabel={catLabel} />
+      ))}
+    </div>
+  )
+}
+
+function ServiciosIndividuales({ items, catLabel }) {
+  const waBase = encodeURIComponent(`Hola Fernanda! Me interesa consultar por`)
+  return (
+    <div className="rounded-[12px] border border-black/[0.07] overflow-hidden bg-white">
+      {items.map((p, idx) => (
+        <a
+          key={p.id}
+          href={`${WA}${encodeURIComponent(`Hola Fernanda! Me interesa consultar por ${p.nombre} de ${catLabel}`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`flex items-center justify-between px-4 py-3 no-underline hover:bg-pink/[0.04] transition-colors ${idx > 0 ? 'border-t border-black/[0.05]' : ''}`}
+        >
+          <span className="text-[14px] text-ink font-sans">{p.nombre}</span>
+          <span className="text-[14px] font-semibold text-pink ml-4 shrink-0">{p.precio}</span>
+        </a>
+      ))}
+    </div>
+  )
+}
+
+function ProductosList({ paquetes }) {
+  const grupos = groupBy(paquetes, 'grupo')
+  const notaDescuento = paquetes.find(p => p.nota)?.nota
+
+  return (
+    <div className="space-y-6">
+      {Object.entries(grupos).map(([grupo, items]) => (
+        <div key={grupo}>
+          <div className="text-[10px] tracking-[0.14em] uppercase text-ink/40 mb-2 font-sans">{grupo}</div>
+          <div className="rounded-[12px] border border-black/[0.07] overflow-hidden bg-white">
+            {items.map((p, idx) => (
+              <div
+                key={p.id}
+                className={`flex items-center justify-between px-4 py-3 ${idx > 0 ? 'border-t border-black/[0.05]' : ''}`}
+              >
+                <span className="text-[14px] text-ink font-sans">{p.nombre}</span>
+                <span className="text-[14px] font-semibold text-pink ml-4 shrink-0">{p.precio}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      {notaDescuento && (
+        <div className="bg-pink/[0.06] border border-pink/20 rounded-[10px] px-4 py-3 text-[12px] text-ink/60 leading-relaxed">
+          🏷️ {notaDescuento}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function Adicionales({ adicionales, t, lang }) {
+  if (!adicionales?.length) return null
+  return (
+    <div className="mt-5 rounded-[10px] bg-black/[0.03] border border-black/[0.06] px-4 py-3">
+      <div className="text-[10px] tracking-[0.12em] uppercase text-ink/40 mb-2 font-sans">{t('Adicionales', 'Add-ons')}</div>
+      <div className="flex flex-wrap gap-2">
+        {adicionales.map((a, i) => {
+          const txt = typeof a === 'string' ? a : (lang === 'es' ? a.es : (a.en || a.es))
+          return (
+            <span key={i} className="text-[12px] text-ink/60 bg-white border border-black/[0.08] rounded-[20px] px-3 py-1">{txt}</span>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
 
 export default function PaquetesPage() {
   const { categoria } = useParams()
   const navigate = useNavigate()
   const { data, loading, error } = usePaquetes(categoria)
-  const { t } = useLang()
+  const { t, lang } = useLang()
 
-  const cat = CATEGORIES[categoria]
+  const cat = PAQUETE_CATEGORIES[categoria]
   if (!cat) return null
 
   const paquetes = (!loading && !error && data.length > 0)
     ? data
-    : FALLBACK_PAQUETES[categoria] || []
+    : (FALLBACK_PAQUETES[categoria] || [])
 
-  const sesionesInfo = SESIONES_INFO[categoria] || null
+  const hasSubcats  = SUBCATS.includes(categoria)
+  const hasGrupos   = GROUPED.includes(categoria)
+  const isProductos = categoria === 'productos'
 
-  const waConsulta = `${WA_GENERAL}${encodeURIComponent(`Hola Fernanda! Me gustaria consultar paquetes de ${cat.es}`)}`
+  const waConsulta = `${WA}${encodeURIComponent(`Hola Fernanda! Quiero consultar sobre ${cat.es}`)}`
+
+  const globalNota = paquetes.find(p => p.nota)?.nota
+  const globalAds  = paquetes.find(p => p.adicionales?.length)?.adicionales
 
   return (
     <>
-      <CategoryHero categoria={categoria} type="paquetes" />
-      <CategoryTabs basePath="/paquetes" />
+      {/* Tabs */}
+      <CategoryTabs basePath="/paquetes" categories={PAQUETE_CATEGORIES} />
 
-      <div className="bg-cream py-14 md:py-20 px-6 md:px-12">
-        <div className="max-w-[1000px] mx-auto">
+      {/* Header compacto */}
+      <div className="bg-[#1A1A1A] pt-6 pb-5 px-5 text-center border-b border-white/[0.04]">
+        <div className="text-[9px] tracking-[0.2em] uppercase text-pink/70 mb-1 font-sans">Paquetes</div>
+        <h1 className="font-serif text-[1.6rem] italic font-light text-white">{t(cat.es, cat.en)}</h1>
+      </div>
 
-          {/* Encabezado */}
-          <Reveal className="text-center mb-10 md:mb-14">
-            <SectionKicker centered>{t('Nuestros paquetes', 'Our packages')}</SectionKicker>
-            <p className="text-[14px] text-ink-muted mt-3 mb-5">
-              {t(
-                'Todos los precios son a consultar — cada sesión es única y puede adaptarse a tus necesidades.',
-                'All prices are on request — every session is unique and can be tailored to your needs.'
+      {/* Contenido */}
+      <div className="bg-cream min-h-screen">
+        <div className="max-w-[900px] mx-auto px-4 py-8">
+
+          {/* ── PRODUCTOS ───────────────────────────── */}
+          {isProductos && (
+            <Reveal>
+              <ProductosList paquetes={paquetes} />
+            </Reveal>
+          )}
+
+          {/* ── SUBCATEGORÍAS (estudio / exterior) ──── */}
+          {hasSubcats && (() => {
+            const porSubcat = groupBy(paquetes, 'subcategoria')
+            return Object.entries(porSubcat).map(([subcat, items]) => (
+              <Reveal key={subcat} className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-[11px] tracking-[0.14em] uppercase text-pink font-sans">{subcat}</span>
+                  <div className="flex-1 h-px bg-black/10" />
+                </div>
+                <CardGrid paquetes={items} catLabel={cat.es} />
+              </Reveal>
+            ))
+          })()}
+
+          {/* ── GRUPOS (casamientos / quince) ───────── */}
+          {hasGrupos && (() => {
+            const porGrupo = groupBy(paquetes, 'grupo')
+            return Object.entries(porGrupo).map(([grupo, items]) => (
+              <Reveal key={grupo} className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-[11px] tracking-[0.14em] uppercase text-ink/50 font-sans">{grupo}</span>
+                  <div className="flex-1 h-px bg-black/10" />
+                </div>
+                {grupo === 'Servicios individuales'
+                  ? <ServiciosIndividuales items={items} catLabel={cat.es} />
+                  : <CardGrid paquetes={items} catLabel={cat.es} />
+                }
+              </Reveal>
+            ))
+          })()}
+
+          {/* ── ESTÁNDAR ────────────────────────────── */}
+          {!hasSubcats && !hasGrupos && !isProductos && (
+            <Reveal>
+              <CardGrid paquetes={paquetes} catLabel={cat.es} />
+            </Reveal>
+          )}
+
+          {/* Nota + Adicionales globales */}
+          {!isProductos && (
+            <Reveal className="mt-6">
+              {globalNota && (
+                <div className="bg-pink/[0.05] border border-pink/15 rounded-[10px] px-4 py-3 text-[12px] text-ink/55 mb-3 leading-relaxed">
+                  ℹ️ {globalNota}
+                </div>
               )}
-            </p>
-            <div className="flex flex-col items-center gap-3">
-              <Link
-                to="/terminos"
-                className="inline-flex items-center gap-2 text-[11px] tracking-[0.08em] uppercase text-pink border border-pink/30 bg-pink/[0.06] hover:bg-pink/[0.12] hover:border-pink/60 transition-all duration-200 rounded-[20px] px-5 py-2 no-underline font-sans"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-[14px] h-[14px] shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                </svg>
-                {t('Ver Términos y Condiciones', 'View Terms & Conditions')}
-              </Link>
-              <button
-                onClick={() => navigate(`/portafolio/${categoria}`)}
-                className="inline-flex items-center gap-2 text-[11px] tracking-[0.1em] uppercase text-pink hover:gap-4 transition-all duration-200"
-              >
-                {t('Ver portafolio de esta categoría →', 'View portfolio for this category →')}
-              </button>
-            </div>
-          </Reveal>
+              {!hasGrupos && <Adicionales adicionales={globalAds} t={t} lang={lang} />}
+            </Reveal>
+          )}
 
-          {/* Grid de paquetes — 1 col mobile, 2 o 3 en desktop */}
-          <div className={`grid gap-6 grid-cols-1 ${paquetes.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
-            {paquetes.map((p, i) => (
-              <PaqueteCard
-                key={p.id}
-                paquete={p}
-                categoriaLabel={cat.es}
-                delay={(i % 3) + 1}
-              />
-            ))}
-          </div>
+          {/* Validez de precios */}
+          {!isProductos && (
+            <Reveal className="mt-4">
+              <div className="text-[11px] text-ink/35 text-center font-sans">
+                {t(`Precios válidos hasta el ${priceValidUntil()}`, `Prices valid until ${priceValidUntil()}`)}
+              </div>
+            </Reveal>
+          )}
 
-          {/* CTA WhatsApp general */}
-          <Reveal className="text-center mt-14">
+          {/* CTA WhatsApp */}
+          <Reveal className="text-center mt-8">
+            <button
+              onClick={() => navigate(`/portafolio/${categoria === 'combo' ? 'pelotero' : categoria}`)}
+              className="text-[11px] tracking-[0.08em] uppercase text-pink hover:text-pink-dark transition-colors font-sans mb-4 block mx-auto"
+            >
+              {t('Ver portafolio →', 'View portfolio →')}
+            </button>
             <a
               href={waConsulta}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-[10px] px-8 py-[0.85rem] rounded-[25px] bg-pink text-white no-underline text-[12px] tracking-[0.08em] uppercase hover:bg-pink-dark transition-colors font-sans"
+              className="inline-flex items-center gap-2 px-7 py-[0.8rem] rounded-[25px] bg-pink text-white no-underline text-[12px] tracking-[0.08em] uppercase hover:bg-pink-dark transition-colors font-sans"
             >
-              📱 {t('Consultar por WhatsApp', 'Ask via WhatsApp')}
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-[14px] h-[14px] shrink-0">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.134.558 4.133 1.535 5.867L.057 23.454a.5.5 0 0 0 .613.613l5.588-1.478A11.942 11.942 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.7-.504-5.255-1.385l-.376-.217-3.892 1.029 1.029-3.892-.217-.376A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+              {t('Consultar por WhatsApp', 'Ask via WhatsApp')}
             </a>
           </Reveal>
 
         </div>
       </div>
-
-      {sesionesInfo && <SesionInfoSection sesiones={sesionesInfo} />}
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { LangProvider } from './context/LangContext'
 import { ConfiguracionProvider } from './context/ConfiguracionContext'
 import { TextosProvider } from './context/TextosContext'
@@ -21,6 +21,7 @@ export default function App() {
           <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<Layout><Home /></Layout>} />
+              <Route path="/paquetes" element={<Navigate to="/paquetes/pre-cumple" replace />} />
               <Route path="/paquetes/:categoria" element={<Layout><PaquetesPage /></Layout>} />
               <Route path="/portafolio/:categoria" element={<Layout><PortafolioPage /></Layout>} />
               <Route path="/admin/*" element={<AdminPage />} />
