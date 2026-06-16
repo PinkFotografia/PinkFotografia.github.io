@@ -2,18 +2,15 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLang } from '../../context/LangContext'
 import { useConfiguracion } from '../../hooks/useConfiguracion'
-import { CATEGORIES } from '../../lib/categories'
 import Reveal from '../ui/Reveal'
 import SectionKicker from '../ui/SectionKicker'
 
 const PHOTOS = [
-  { cat: 'estudio',     portKey: 'port-estudio',     srvKey: 'srv-estudio',    fallback: '/assets/srv-estudio.jpg',    rot: -4, yOff: 0   },
-  { cat: 'exterior',    portKey: 'port-exterior',    srvKey: 'srv-exterior',   fallback: '/assets/srv-exterior.jpg',   rot:  3, yOff: 28  },
-  { cat: 'embarazadas', portKey: 'port-embarazadas', srvKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg',   rot: -2, yOff: -14 },
-  { cat: 'pelotero',    portKey: 'port-pelotero',    srvKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg',   rot:  5, yOff: 18  },
-  { cat: 'casamientos', portKey: 'port-casamientos', srvKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg', rot: -3, yOff: -6  },
-  { cat: 'comuniones',  portKey: 'port-comuniones',  srvKey: 'srv-comunion',   fallback: '/assets/srv-comunion.jpg',   rot:  1, yOff: 22  },
-  { cat: 'temporada',  portKey: 'port-temporada',  srvKey: 'srv-temporada',  fallback: '/assets/srv-exterior.jpg',   rot:  3, yOff: 14 },
+  { cat: 'bebes-ninos',           portKey: 'port-bebes-ninos',           srvKey: 'srv-estudio',    fallback: '/assets/srv-estudio.jpg',    rot: -4, yOff: 0,   name: { es: 'Bebés y niños',           en: 'Babies & Kids'         } },
+  { cat: 'retratos',              portKey: 'port-retratos',              srvKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg',   rot:  3, yOff: 28,  name: { es: 'Retratos',                en: 'Portraits'             } },
+  { cat: 'eventos-celebraciones', portKey: 'port-eventos-celebraciones', srvKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg', rot: -2, yOff: -14, name: { es: 'Eventos',                 en: 'Events'                } },
+  { cat: 'especiales',            portKey: 'port-especiales',            srvKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg',   rot:  5, yOff: 18,  name: { es: 'Especiales',              en: 'Specials'              } },
+  { cat: 'tematicas',             portKey: 'port-tematicas',             srvKey: 'srv-temporada',  fallback: '/assets/srv-exterior.jpg',   rot: -3, yOff: -6,  name: { es: 'Temáticas',               en: 'Themed'                } },
 ]
 
 function PolaroidCard({ src, label, rot, yOff, onClick }) {
@@ -95,15 +92,15 @@ export default function PortfolioPreview() {
       </Reveal>
 
       <div
-        className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-3 gap-x-6 md:gap-x-10"
+        className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-5 gap-x-6 md:gap-x-8"
         style={{ paddingBottom: '3rem' }}
       >
         {PHOTOS.map((p, i) => (
-          <Reveal key={p.cat} delay={(i % 3) + 1}>
-            <div style={{ marginBottom: i < 3 ? '3.5rem' : '0' }}>
+          <Reveal key={p.cat} delay={(i % 5) + 1}>
+            <div style={{ marginBottom: i < 2 ? '3.5rem' : '0' }}>
               <PolaroidCard
                 src={config[p.portKey] || config[p.srvKey] || p.fallback}
-                label={config[`port-label-${p.cat}`] || (p.name ? t(p.name.es, p.name.en) : t(CATEGORIES[p.cat]?.es ?? p.cat, CATEGORIES[p.cat]?.en ?? p.cat))}
+                label={config[`port-label-${p.cat}`] || t(p.name.es, p.name.en)}
                 rot={p.rot}
                 yOff={p.yOff}
                 onClick={() => navigate(`/portafolio/${p.cat}`)}

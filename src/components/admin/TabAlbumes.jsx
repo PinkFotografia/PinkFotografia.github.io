@@ -7,7 +7,7 @@ export default function TabAlbumes() {
   const [albumes, setAlbumes] = useState([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState({ nombre: '', fecha: '' })
+  const [form, setForm] = useState({ nombre: '', fecha: '', categoria: 'estudio' })
   const [files, setFiles] = useState([])
   const [previews, setPreviews] = useState([])
   const [uploading, setUploading] = useState(false)
@@ -27,6 +27,7 @@ export default function TabAlbumes() {
   const addInputRef = useRef(null)
 
   const isTematicas = categoria === 'tematicas' || categoria === 'pelotero'
+  const formIsTematicas = form.categoria === 'tematicas' || form.categoria === 'pelotero'
   const dragIdxRef = useRef(null)
   const [dragOverIdx, setDragOverIdx] = useState(null)
   const [tematicasOrder, setTematicasOrder] = useState(null)
@@ -72,7 +73,7 @@ export default function TabAlbumes() {
 
   function resetForm() {
     setShowForm(false)
-    setForm({ nombre: '', fecha: '' })
+    setForm({ nombre: '', fecha: '', categoria })
     setFiles([])
     setPreviews([])
     setError(null)
@@ -84,6 +85,7 @@ export default function TabAlbumes() {
     setUploading(true)
     setError(null)
     const albumId = Date.now()
+    const catSave = form.categoria
     const urls = []
 
     try {
@@ -91,7 +93,7 @@ export default function TabAlbumes() {
         setProgress({ current: i + 1, total: files.length })
         const f = files[i]
         const ext = f.name.split('.').pop().toLowerCase()
-        const path = `albumes/${categoria}/${albumId}/${i + 1}.${ext}`
+        const path = `albumes/${catSave}/${albumId}/${i + 1}.${ext}`
         const { error: upErr } = await supabase.storage
           .from('imagenes')
           .upload(path, f, { upsert: true })
@@ -100,14 +102,14 @@ export default function TabAlbumes() {
         urls.push(data.publicUrl)
       }
 
-      const nombre = isTematicas
-        ? `${CATEGORIES[categoria].es} · ${new Date().toLocaleDateString('es-AR')}`
+      const nombre = formIsTematicas
+        ? `${CATEGORIES[catSave]?.es ?? catSave} · ${new Date().toLocaleDateString('es-AR')}`
         : form.nombre
 
       const { error: dbErr } = await supabase.from('albumes').insert({
-        categoria,
+        categoria: catSave,
         nombre,
-        fecha: isTematicas ? null : (form.fecha || null),
+        fecha: formIsTematicas ? null : (form.fecha || null),
         fotos: urls,
         activo: true,
       })
@@ -123,6 +125,13 @@ export default function TabAlbumes() {
   }
 
   // ── Album detail actions ────────────────────────────────────────
+  async function handleChangeCategoria(nuevaCat) {
+    if (!nuevaCat || nuevaCat === editingAlbum.categoria) return
+    await supabase.from('albumes').update({ categoria: nuevaCat }).eq('id', editingAlbum.id)
+    setEditingAlbum(prev => ({ ...prev, categoria: nuevaCat }))
+    fetchAlbumes()
+  }
+
   async function handleRenameAlbum(nombre) {
     const trimmed = nombre.trim()
     if (!trimmed || trimmed === editingAlbum.nombre) return
@@ -265,6 +274,16 @@ export default function TabAlbumes() {
             onBlur={e => handleRenameAlbum(e.target.value)}
             className="text-[1.1rem] font-serif italic text-white/80 bg-transparent border-b border-transparent hover:border-white/20 focus:border-pink focus:outline-none truncate transition-colors min-w-0 flex-1"
           />
+          <select
+            value={editingAlbum.categoria}
+            onChange={e => handleChangeCategoria(e.target.value)}
+            className="shrink-0 bg-[#1A1A1A] border border-white/10 rounded-[6px] px-2 py-[0.3rem] text-[11px] text-white/50 focus:outline-none focus:border-pink cursor-pointer hover:border-white/20 transition-colors"
+          >
+            {Object.entries(CATEGORIES).map(([key, cat]) => (
+              <option key={key} value={key}>{cat.es}</option>
+            ))}
+          </select>
+
           {editingAlbum.fecha && (
             <span className="text-[11px] text-white/30 font-sans shrink-0">{editingAlbum.fecha}</span>
           )}
@@ -402,7 +421,7 @@ export default function TabAlbumes() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-[1.4rem] font-serif italic text-white/80">Álbumes</h1>
         <button
-          onClick={() => { setShowForm(v => !v); setError(null) }}
+          onClick={() => { setShowForm(v => !v); setForm(f => ({ ...f, categoria })); setError(null) }}
           className="bg-pink text-white px-5 py-2 rounded-[6px] text-[11px] tracking-[0.08em] uppercase font-sans hover:bg-pink-dark transition-colors"
         >
           {isTematicas ? '+ Agregar fotos' : '+ Nuevo álbum'}
@@ -430,10 +449,23 @@ export default function TabAlbumes() {
       {showForm && (
         <form onSubmit={handleSave} className="bg-[#1A1A1A] rounded-[10px] p-6 border border-white/[0.06] mb-8">
           <div className="text-[10px] tracking-[0.12em] uppercase text-white/30 mb-5">
-            {isTematicas ? 'Agregar fotos temáticas' : 'Nuevo álbum'}
+            {formIsTematicas ? 'Agregar fotos temáticas' : 'Nuevo álbum'}
           </div>
 
-          {!isTematicas && (
+          <div className="mb-5">
+            <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Categoría</label>
+            <select
+              value={form.categoria}
+              onChange={e => setForm(f => ({ ...f, categoria: e.target.value }))}
+              className="w-full bg-[#0A0A0A] border border-white/10 rounded-[6px] px-3 py-[0.55rem] text-[13px] text-white/80 focus:outline-none focus:border-pink cursor-pointer"
+            >
+              {Object.entries(CATEGORIES).map(([key, cat]) => (
+                <option key={key} value={key}>{cat.es}</option>
+              ))}
+            </select>
+          </div>
+
+          {!formIsTematicas && (
             <div className="grid grid-cols-2 gap-4 mb-5">
               <div>
                 <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Nombre *</label>
@@ -461,7 +493,7 @@ export default function TabAlbumes() {
 
           <div className="mb-5">
             <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-2">
-              Fotos * {!isTematicas && <span className="text-white/20 normal-case tracking-normal">— la primera es la portada</span>}
+              Fotos * {!formIsTematicas && <span className="text-white/20 normal-case tracking-normal">— la primera es la portada</span>}
             </label>
             <div
               onDragOver={e => { e.preventDefault(); setDragOver(true) }}
@@ -497,7 +529,7 @@ export default function TabAlbumes() {
                     >
                       ×
                     </button>
-                    {i === 0 && !isTematicas && (
+                    {i === 0 && !formIsTematicas && (
                       <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-[9px] text-white/70 text-center py-[2px] font-sans">
                         portada
                       </div>
@@ -531,7 +563,7 @@ export default function TabAlbumes() {
               disabled={uploading}
               className="bg-pink text-white px-5 py-2 rounded-[6px] text-[11px] tracking-[0.08em] uppercase font-sans hover:bg-pink-dark transition-colors disabled:opacity-50"
             >
-              {uploading ? `Subiendo ${progress.current}/${progress.total}…` : (isTematicas ? 'Agregar fotos' : 'Guardar álbum')}
+              {uploading ? `Subiendo ${progress.current}/${progress.total}…` : (formIsTematicas ? 'Agregar fotos' : 'Guardar álbum')}
             </button>
             <button
               type="button"

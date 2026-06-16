@@ -8,7 +8,7 @@ export default function CategoryTabs({ basePath, categories }) {
   const cats = categories || CATEGORIES
 
   return (
-    <div className="bg-[#1A1A1A] border-b border-white/[0.05]">
+    <div className="sticky top-[80px] z-[100] bg-[#1A1A1A] border-b border-white/[0.05]">
       <div
         className="flex gap-2 px-4 py-4 overflow-x-auto"
         style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}

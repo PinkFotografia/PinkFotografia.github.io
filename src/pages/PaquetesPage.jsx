@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { usePaquetes } from '../hooks/usePaquetes'
 import { useLang } from '../context/LangContext'
-import { PAQUETE_CATEGORIES } from '../lib/categories'
+import { PAQUETE_CATEGORIES, PAQUETE_DESCRIPTIONS } from '../lib/categories'
 import { FALLBACK_PAQUETES } from '../lib/fallbackPaquetes'
 import CategoryTabs from '../components/ui/CategoryTabs'
 import PaqueteCard from '../components/ui/PaqueteCard'
@@ -27,6 +27,7 @@ const PORTAFOLIO_MAP = {
   'temporada':           'temporada',
   'combo':               'pelotero',
   'productos':           null,
+  'profesional':         'exterior',
 }
 
 function priceValidUntil() {
@@ -145,8 +146,11 @@ export default function PaquetesPage() {
   const globalNota = paquetes.find(p => p.nota)?.nota
   const globalAds  = paquetes.find(p => p.adicionales?.length)?.adicionales
 
+  const descripcion = PAQUETE_DESCRIPTIONS[categoria]
+  const descText = descripcion ? (lang === 'es' ? descripcion.es : descripcion.en) : null
+
   return (
-    <>
+    <div className="pt-[80px]">
       {/* Tabs */}
       <CategoryTabs basePath="/paquetes" categories={PAQUETE_CATEGORIES} />
 
@@ -159,6 +163,13 @@ export default function PaquetesPage() {
       {/* Contenido */}
       <div className="bg-cream min-h-screen">
         <div className="max-w-[900px] mx-auto px-4 py-8">
+
+          {/* Descripción del servicio */}
+          {descText && (
+            <p className="text-[14px] text-ink/60 leading-[1.8] text-center mb-8 max-w-[620px] mx-auto font-sans">
+              {descText}
+            </p>
+          )}
 
           {/* ── PRODUCTOS ───────────────────────────── */}
           {isProductos && (
@@ -252,6 +263,6 @@ export default function PaquetesPage() {
 
         </div>
       </div>
-    </>
+    </div>
   )
 }

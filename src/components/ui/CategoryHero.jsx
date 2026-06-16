@@ -1,5 +1,5 @@
 import { useLang } from '../../context/LangContext'
-import { CATEGORIES, CATEGORY_SUBTITLES } from '../../lib/categories'
+import { CATEGORIES } from '../../lib/categories'
 import { useConfiguracion } from '../../hooks/useConfiguracion'
 
 export default function CategoryHero({ categoria, type = 'paquetes' }) {
@@ -7,7 +7,6 @@ export default function CategoryHero({ categoria, type = 'paquetes' }) {
   const { config } = useConfiguracion()
 
   const cat = CATEGORIES[categoria]
-  const sub = CATEGORY_SUBTITLES[categoria]
   if (!cat) return null
 
   const bgImage = config[cat.imgKey] || cat.fallback
@@ -33,11 +32,6 @@ export default function CategoryHero({ categoria, type = 'paquetes' }) {
         <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] italic font-light text-white mb-2">
           <em className="text-pink-mid not-italic">{t(cat.es, cat.en)}</em>
         </h1>
-        {sub && (
-          <p className="text-[14px] text-white/45 mt-2">
-            {t(sub.es, sub.en)}
-          </p>
-        )}
       </div>
     </div>
   )

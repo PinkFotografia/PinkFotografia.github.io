@@ -19,11 +19,23 @@ const SOBREMI_SLOTS = [
   { key: 'sobremi5', label: 'Foto 5', path: 'sobremi/sobremi5' },
 ]
 
-const SERVICIO_SLOTS = Object.entries(CATEGORIES).map(([key, cat]) => ({
-  key: cat.imgKey,
-  label: cat.es,
-  path: `servicios/${cat.imgKey}`,
-}))
+const SERVICIO_SLOTS = [
+  { key: 'srv-estudio',    label: 'Pre Cumple',           path: 'servicios/srv-estudio'    },
+  { key: 'srv-cake-smash', label: 'Cake Smash',           path: 'servicios/srv-cake-smash' },
+  { key: 'srv-embarazo',   label: 'Maternidad',           path: 'servicios/srv-embarazo'   },
+  { key: 'srv-exterior',   label: 'Individual / Familiar', path: 'servicios/srv-exterior'   },
+  { key: 'srv-pelotero',   label: 'Pelotero',             path: 'servicios/srv-pelotero'   },
+  { key: 'srv-evento',     label: 'Evento Social',        path: 'servicios/srv-evento'     },
+  { key: 'srv-casamiento', label: 'Casamientos',          path: 'servicios/srv-casamiento' },
+  { key: 'srv-quince',     label: '15 Años',              path: 'servicios/srv-quince'     },
+  { key: 'srv-bautismo',   label: 'Bautismo',             path: 'servicios/srv-bautismo'   },
+  { key: 'srv-comunion',   label: 'Comuniones',           path: 'servicios/srv-comunion'   },
+  { key: 'srv-babyshower', label: 'Baby Shower',          path: 'servicios/srv-babyshower' },
+  { key: 'srv-revelacion', label: 'Revelación de Género', path: 'servicios/srv-revelacion' },
+  { key: 'srv-combo',      label: 'Combo',                path: 'servicios/srv-combo'      },
+  { key: 'srv-productos',  label: 'Productos',            path: 'servicios/srv-productos'  },
+  { key: 'srv-temporada',  label: 'Temporada',            path: 'servicios/srv-temporada'  },
+]
 
 const PORTFOLIO_SLOTS = Object.entries(CATEGORIES).map(([key, cat]) => ({
   key: `port-${key}`,
@@ -162,7 +174,7 @@ function TabFotos({ config, onConfigChange }) {
 
   const sections = [
     { id: 'hero',      label: 'Hero (inicio)' },
-    { id: 'servicios', label: 'Tarjetas de servicios' },
+    { id: 'servicios', label: 'Servicios (acordeón)' },
     { id: 'portfolio', label: 'Tarjetas de portafolio' },
     { id: 'sobremi',   label: 'Sobre mí' },
   ]
@@ -198,12 +210,12 @@ function TabFotos({ config, onConfigChange }) {
 
       <p className="text-[12px] text-white/25 font-sans mb-5">
         {section === 'hero' && 'Las 5 fotos que rotan en el inicio. Hacé clic en cualquiera para reemplazarla.'}
-        {section === 'servicios' && 'Fotos de fondo de cada tarjeta de servicio en el inicio.'}
+        {section === 'servicios' && 'Fotos de las tarjetas dentro del acordeón de servicios. Cada imagen corresponde a una sesión específica.'}
         {section === 'portfolio' && 'Fotos de las tarjetas polaroid en la sección Portafolio del inicio. Si no se carga ninguna, usa las fotos de servicios como fallback.'}
         {section === 'sobremi' && 'Las 5 fotos que alternan en la sección "Sobre mí". Hacé clic para reemplazar.'}
       </p>
 
-      <div className={`grid gap-4 ${section === 'sobremi' || section === 'hero' ? 'grid-cols-5' : 'grid-cols-3'}`}>
+      <div className={`grid gap-4 ${section === 'sobremi' || section === 'hero' ? 'grid-cols-5' : section === 'portfolio' ? 'grid-cols-5' : 'grid-cols-3'}`}>
         {slots.map(slot => (
           <ImageSlot
             key={slot.key}
@@ -218,7 +230,7 @@ function TabFotos({ config, onConfigChange }) {
         <div className="mt-8">
           <div className="text-[10px] tracking-[0.12em] uppercase text-white/20 mb-2 font-sans">Nombres en las tarjetas polaroid</div>
           <p className="text-[12px] text-white/25 font-sans mb-4">El texto que aparece debajo de cada foto. Si lo dejás vacío usa el nombre de categoría por defecto.</p>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-5 gap-3">
             {Object.entries(CATEGORIES).map(([key, cat]) => (
               <PortfolioNameSlot
                 key={key}

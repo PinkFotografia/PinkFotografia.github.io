@@ -7,17 +7,29 @@ import SectionKicker from '../ui/SectionKicker'
 
 const SM_KEYS = ['sobremi1', 'sobremi2', 'sobremi3', 'sobremi4', 'sobremi5']
 
-const FALLBACK = {
+const FALLBACK_BIENVENIDA = {
+  es: 'En Pink Fotografía capturamos los momentos que el corazón nunca olvida. Desde bodas íntimas hasta sesiones de estudio para bebés y familias, cada imagen lleva nuestra firma: pasión, creatividad y atención a cada detalle. Porque cada historia merece ser contada con luz.',
+  en: 'At Pink Fotografía we capture the moments the heart never forgets. From intimate weddings to studio sessions for babies and families, every image carries our signature: passion, creativity and attention to detail.',
+}
+
+const FALLBACK_SOBRE_MI = {
   es: 'Soy Fernanda Randazzo, fotógrafa profesional con base en Comodoro Rivadavia. Lo que empezó como un hobby en 2016 se convirtió en mi vocación: en 2018 di el salto y nunca miré atrás. Me especializo en sesiones de bebés y niños — esos momentos llenos de vida, espontaneidad y ternura que pasan volando y merecen quedarse para siempre. Cada sesión es única para mí, porque detrás de cada foto hay una familia que confió en mí para guardar algo que no tiene precio.',
   en: "I'm Fernanda Randazzo, a professional photographer based in Comodoro Rivadavia. What started as a hobby in 2016 became my calling: in 2018 I took the leap and never looked back. I specialize in baby and children sessions — those moments full of life, spontaneity and tenderness that fly by and deserve to last forever.",
 }
 
 const TAGS = [
-  { es: 'Bebés y niños', en: 'Babies & kids' },
-  { es: 'Familias',      en: 'Families' },
-  { es: 'Embarazadas',   en: 'Maternity' },
-  { es: 'Eventos',       en: 'Events' },
+  { es: 'Bebés y niños',      en: 'Babies & kids' },
+  { es: 'Familias',           en: 'Families' },
+  { es: 'Embarazadas',        en: 'Maternity' },
+  { es: 'Eventos',            en: 'Events' },
   { es: 'Comodoro Rivadavia', en: 'Comodoro Rivadavia' },
+]
+
+const STATS = [
+  { n: '+7',     es: 'Años de experiencia',    en: 'Years of experience' },
+  { n: '+500',   es: 'Familias fotografiadas', en: 'Families photographed' },
+  { n: '5.0 ★', es: 'Estrellas en Google',    en: 'Stars on Google' },
+  { n: '35',     es: 'Reseñas verificadas',    en: 'Verified reviews' },
 ]
 
 const IconWhatsApp = () => (
@@ -53,11 +65,11 @@ const IconEmail = () => (
 )
 
 const CONTACT = [
-  { Icon: IconWhatsApp, label: '+54 9 297 419-7787',        href: 'https://wa.me/5492974197787' },
-  { Icon: IconInstagram, label: '@pinkk.ph',                 href: 'https://www.instagram.com/pinkk.ph' },
-  { Icon: IconFacebook,  label: 'Pink Fotografía',          href: 'https://www.facebook.com/pinkk.ph' },
-  { Icon: IconTikTok,    label: '@pinkfotografia',          href: 'https://www.tiktok.com/@pinkfotografia' },
-  { Icon: IconEmail,     label: 'pinkfotografiaph@gmail.com', href: 'mailto:pinkfotografiaph@gmail.com' },
+  { Icon: IconWhatsApp,  label: '+54 9 297 419-7787',          href: 'https://wa.me/5492974197787' },
+  { Icon: IconInstagram, label: '@pinkk.ph',                   href: 'https://www.instagram.com/pinkk.ph' },
+  { Icon: IconFacebook,  label: 'Pink Fotografía',             href: 'https://www.facebook.com/pinkk.ph' },
+  { Icon: IconTikTok,    label: '@pinkfotografia',             href: 'https://www.tiktok.com/@pinkfotografia' },
+  { Icon: IconEmail,     label: 'pinkfotografiaph@gmail.com',  href: 'mailto:pinkfotografiaph@gmail.com' },
 ]
 
 export default function SobreMi() {
@@ -66,10 +78,16 @@ export default function SobreMi() {
   const { textos } = useTextos()
   const [current, setCurrent] = useState(0)
 
-  const sobremi = textos['sobre_mi']
-  const parrafo = sobremi
-    ? (lang === 'es' ? sobremi.es : sobremi.en) || FALLBACK[lang]
-    : FALLBACK[lang]
+  const bienvenidaTxt = textos['bienvenida']
+  const sobremiTxt    = textos['sobre_mi']
+
+  const parrafoBienvenida = bienvenidaTxt
+    ? (lang === 'es' ? bienvenidaTxt.es : bienvenidaTxt.en) || FALLBACK_BIENVENIDA[lang]
+    : FALLBACK_BIENVENIDA[lang]
+
+  const parrafoSobreMi = sobremiTxt
+    ? (lang === 'es' ? sobremiTxt.es : sobremiTxt.en) || FALLBACK_SOBRE_MI[lang]
+    : FALLBACK_SOBRE_MI[lang]
 
   const fotos = SM_KEYS.map(k => config[k] || '/assets/sobre-mi.jpg')
 
@@ -80,65 +98,90 @@ export default function SobreMi() {
 
   return (
     <section id="sobre-mi" className="bg-cream-dark py-16 md:py-24 px-6 md:px-12">
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center">
+      <div className="max-w-[1200px] mx-auto">
 
-        {/* Fotos alternando */}
-        <Reveal>
-          <div className="relative rounded-[20px] overflow-hidden aspect-[4/5] shadow-[0_24px_60px_rgba(0,0,0,0.12)]">
-            {fotos.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt="Fernanda Randazzo — Pink Fotografía"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${i === current ? 'opacity-100' : 'opacity-0'}`}
-              />
-            ))}
-          </div>
-        </Reveal>
+        {/* Foto + texto */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center">
 
-        {/* Texto */}
-        <Reveal delay={2}>
-          <SectionKicker>{t('Sobre mí', 'About me')}</SectionKicker>
-          <h2 className="font-serif text-[clamp(1.8rem,2.8vw,2.6rem)] italic font-normal text-ink leading-[1.3] mb-6">
-            {t('Quién está detrás del lente', "Who's behind the lens")}
-          </h2>
-          <p className="text-[15px] text-ink-muted leading-[1.85] mb-8">
-            {parrafo}
-          </p>
+          <Reveal>
+            <div className="relative rounded-[20px] overflow-hidden aspect-[4/5] shadow-[0_24px_60px_rgba(0,0,0,0.12)]">
+              {fotos.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt="Fernanda Randazzo — Pink Fotografía"
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${i === current ? 'opacity-100' : 'opacity-0'}`}
+                />
+              ))}
+            </div>
+          </Reveal>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {TAGS.map((tag, i) => (
-              <span
-                key={i}
-                className="text-[11px] tracking-[0.06em] px-3 py-1 rounded-full border border-pink/30 text-pink bg-pink-light"
-              >
-                {t(tag.es, tag.en)}
-              </span>
-            ))}
-          </div>
+          <Reveal delay={2}>
+            <SectionKicker>{t('Sobre mí', 'About me')}</SectionKicker>
+            <h2 className="font-serif text-[clamp(1.8rem,2.8vw,2.6rem)] italic font-normal text-ink leading-[1.3] mb-6">
+              {t('Capturamos lo que el corazón nunca olvida', 'We capture what the heart never forgets')}
+            </h2>
+            <p className="text-[15px] text-ink-muted leading-[1.85] mb-4">
+              {parrafoBienvenida}
+            </p>
+            <p className="text-[15px] text-ink-muted leading-[1.85] mb-8">
+              {parrafoSobreMi}
+            </p>
 
-          {/* Firma */}
-          <div className="font-serif text-[1.4rem] italic text-ink/50 mb-4">
-            Fernanda Randazzo
-          </div>
+            <div className="flex flex-wrap gap-2 mb-8">
+              {TAGS.map((tag, i) => (
+                <span
+                  key={i}
+                  className="text-[11px] tracking-[0.06em] px-3 py-1 rounded-full border border-pink/30 text-pink bg-pink-light"
+                >
+                  {t(tag.es, tag.en)}
+                </span>
+              ))}
+            </div>
 
-          {/* Contacto */}
-          <div className="flex flex-col gap-2">
-            {CONTACT.map((c, i) => (
-              <a
-                key={i}
-                href={c.href}
-                target={c.href.startsWith('mailto') ? undefined : '_blank'}
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-[12px] text-ink-muted hover:text-pink transition-colors no-underline"
-              >
-                <c.Icon />
-                <span>{c.label}</span>
-              </a>
-            ))}
-          </div>
-        </Reveal>
+            <div className="font-serif text-[1.4rem] italic text-ink/50 mb-6">
+              Fernanda Randazzo
+            </div>
+
+            <div className="flex flex-col gap-2">
+              {CONTACT.map((c, i) => (
+                <a
+                  key={i}
+                  href={c.href}
+                  target={c.href.startsWith('mailto') ? undefined : '_blank'}
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-[12px] text-ink-muted hover:text-pink transition-colors no-underline"
+                >
+                  <c.Icon />
+                  <span>{c.label}</span>
+                </a>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Separador */}
+        <div className="my-12 md:my-16 flex items-center gap-4">
+          <div className="h-px flex-1 bg-ink/10" />
+          <div className="w-1.5 h-1.5 rounded-full bg-pink/40" />
+          <div className="h-px flex-1 bg-ink/10" />
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          {STATS.map((s, i) => (
+            <Reveal key={i} delay={i + 1}>
+              <div className="bg-white rounded-[12px] p-6 border border-black/[0.06] text-center hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] transition-all duration-[250ms]">
+                <div className="font-serif text-[2.6rem] italic font-normal text-pink leading-none mb-1">
+                  {s.n}
+                </div>
+                <div className="text-[11px] tracking-[0.08em] uppercase text-ink-muted">
+                  {t(s.es, s.en)}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
 
       </div>
     </section>

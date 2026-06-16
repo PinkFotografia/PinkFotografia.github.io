@@ -44,7 +44,7 @@ export default function Resenas() {
   )
 
   return (
-    <section id="resenas" className="bg-cream py-16 md:py-24 px-6 md:px-12">
+    <section id="resenas" className="bg-cream-dark py-16 md:py-24 px-6 md:px-12">
 
       <Reveal className="text-center mb-12 md:mb-16">
         <SectionKicker centered>{t('Reseñas', 'Reviews')}</SectionKicker>

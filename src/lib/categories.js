@@ -3,6 +3,7 @@ export const PAQUETE_CATEGORIES = {
   'cake-smash':          { es: 'Cake Smash',                  en: 'Cake Smash' },
   'maternidad':          { es: 'Maternidad',                  en: 'Maternity' },
   'individual-familiar': { es: 'Individual / Familiar',       en: 'Individual / Family' },
+  'profesional':         { es: 'Profesional',                 en: 'Professional' },
   'pelotero':            { es: 'Pelotero',                    en: 'Kids Party' },
   'evento-social':       { es: 'Evento Social',               en: 'Social Event' },
   'baby-shower':         { es: 'Baby Shower',                 en: 'Baby Shower' },
@@ -16,22 +17,29 @@ export const PAQUETE_CATEGORIES = {
   'productos':           { es: 'Productos',                   en: 'Products' },
 }
 
-export const CATEGORIES = {
-  estudio:     { es: 'Estudio',              en: 'Studio',       imgKey: 'srv-estudio',    fallback: '/assets/srv-estudio.jpg' },
-  exterior:    { es: 'Exterior',             en: 'Outdoor',      imgKey: 'srv-exterior',   fallback: '/assets/srv-exterior.jpg' },
-  embarazadas: { es: 'Embarazadas',          en: 'Maternity',    imgKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg' },
-  pelotero:    { es: 'Pelotero',             en: 'Kids Parties', imgKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg' },
-  casamientos: { es: 'Eventos',               en: 'Events',     imgKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg' },
-  comuniones:  { es: 'Comuniones y Bautismo', en: 'Communions & Baptism', imgKey: 'srv-comunion', fallback: '/assets/srv-comunion.jpg' },
-  temporada:   { es: 'Temporada',            en: 'Seasonal',     imgKey: 'srv-temporada',  fallback: '/assets/srv-exterior.jpg' },
+export const PAQUETE_DESCRIPTIONS = {
+  'pre-cumple':          { es: 'Sesión fotográfica para inmortalizar el año previo al primer cumpleaños. En estudio, con decoración temática y toda la ternura de esa etapa irrepetible.', en: 'A photo session to immortalize the year before the first birthday, in studio with themed décor.' },
+  'cake-smash':          { es: 'La sesión donde el protagonista destroza su torta de cumpleaños. Colores, espontaneidad y una sonrisa que vale mil fotos.', en: 'The session where the birthday star smashes their cake. Colors, spontaneity and a smile worth a thousand photos.' },
+  'maternidad':          { es: 'Capturamos la belleza única de la espera. Con luz natural, siluetas y detalles que atesorarás para siempre.', en: 'We capture the unique beauty of expecting. Natural light, silhouettes and details you\'ll treasure forever.' },
+  'individual-familiar': { es: 'Sesiones para parejas, familias o individuales en estudio o al aire libre, con un estilo cálido y espontáneo que resalta lo mejor de cada uno.', en: 'Sessions for couples, families or individuals in studio or outdoors, with a warm and spontaneous style.' },
+  'profesional':         { es: 'Fotos de perfil y headshots profesionales para redes, LinkedIn o uso corporativo. Imagen que comunica.', en: 'Professional headshots and profile photos for social media, LinkedIn or corporate use.' },
+  'pelotero':            { es: 'Cobertura completa del festejo: torta, canciones, juegos y los mejores momentos del día. Sin perderte ningún detalle.', en: 'Full coverage of the birthday party: cake, songs, games and all the best moments.' },
+  'evento-social':       { es: 'Cobertura fotográfica de eventos sociales, cumpleaños adultos, reuniones y celebraciones. Cada momento, inmortalizado.', en: 'Photography coverage for social events, adult birthdays, gatherings and celebrations.' },
+  'baby-shower':         { es: 'Los momentos más especiales de tu baby shower, con imágenes llenas de emoción, ternura y la magia de la espera.', en: 'The most special moments of your baby shower, with images full of emotion, tenderness and the magic of expecting.' },
+  'revelacion-genero':   { es: 'El gran momento de la revelación, inmortalizado. Sorpresa, risas y emociones que quedarán para siempre.', en: 'The big reveal moment, immortalized. Surprise, laughter and emotions that will last forever.' },
+  'casamientos':         { es: 'Fotografía de bodas que captura la emoción, los detalles y el amor de tu día más especial. Cada mirada, cada abrazo.', en: 'Wedding photography that captures the emotion, the details and the love of your most special day.' },
+  'quince':              { es: 'Sesiones y cobertura de 15 años, desde la previa hasta el festejo. Un estilo elegante y romántico para una celebración única.', en: 'Quinceañera sessions and coverage, from the pre-shoot to the party, with an elegant and romantic style.' },
+  'bautismo':            { es: 'Cobertura del bautismo y la celebración. El altar, la familia y todos los momentos que hacen único este día tan especial.', en: 'Baptism and celebration coverage. The altar, the family and every moment that makes this special day unique.' },
+  'comuniones':          { es: 'Fotografía de primera comunión: el altar, la familia y los detalles que hacen especial este sacramento tan importante.', en: 'First communion photography: the altar, the family and all the details that make this sacrament special.' },
+  'temporada':           { es: 'Sesiones especiales de temporada: Navidad, Halloween, Pascua, Día de la Madre y más. Porque cada época del año merece su propia magia.', en: 'Special seasonal sessions: Christmas, Halloween, Easter, Mother\'s Day and more.' },
+  'combo':               { es: 'El combo ideal: sesión de pre cumpleaños en estudio más cobertura completa del festejo en pelotero. Todo en uno, sin perder nada.', en: 'The ideal bundle: pre-birthday studio session plus full kids party coverage. Everything in one.' },
+  'productos':           { es: 'Fotografía de productos para emprendedores y negocios. Imágenes para ecommerce, redes sociales y catálogos que venden.', en: 'Product photography for entrepreneurs and businesses. Images for ecommerce, social media and catalogs.' },
 }
 
-export const CATEGORY_SUBTITLES = {
-  estudio:     { es: 'Sesiones en estudio para bebés, niños y familias',    en: 'Studio sessions for babies, kids & families' },
-  exterior:    { es: 'Sesiones al aire libre en locaciones naturales',       en: 'Outdoor sessions in natural locations' },
-  embarazadas: { es: 'Sesiones de embarazo únicas y especiales',             en: 'Unique and special maternity sessions' },
-  pelotero:    { es: 'Cobertura fotográfica de fiestas infantiles',          en: 'Photography coverage for kids parties' },
-  casamientos: { es: 'Fotografía de bodas, 15 años y casamientos civiles',   en: 'Wedding and quinceañera photography' },
-  comuniones:  { es: 'Cobertura de comuniones y confirmaciones',             en: 'First communion and confirmation coverage' },
-  temporada:   { es: 'Sesiones especiales de temporada: Navidad, Halloween, Pascua y más', en: 'Special seasonal sessions: Christmas, Halloween, Easter and more' },
+export const CATEGORIES = {
+  'bebes-ninos':           { es: 'Bebés y niños',           en: 'Babies & Kids',        imgKey: 'srv-estudio',    fallback: '/assets/srv-estudio.jpg'    },
+  'retratos':              { es: 'Retratos',                en: 'Portraits',             imgKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg'   },
+  'eventos-celebraciones': { es: 'Eventos y celebraciones', en: 'Events & Celebrations', imgKey: 'srv-casamiento', fallback: '/assets/srv-casamiento.jpg' },
+  'especiales':            { es: 'Especiales',              en: 'Specials',              imgKey: 'srv-pelotero',   fallback: '/assets/srv-pelotero.jpg'   },
+  'tematicas':             { es: 'Temáticas',               en: 'Themed',                imgKey: 'srv-temporada',  fallback: '/assets/srv-exterior.jpg'   },
 }
