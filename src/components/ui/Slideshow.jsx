@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useState, useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
   const total = fotos.length
@@ -49,8 +50,8 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
 
   if (!fotos.length) return null
 
-  return (
-    <div className="fixed inset-0 z-[200] bg-black/96 flex flex-col">
+  return createPortal(
+    <div className="fixed inset-0 z-[2000] bg-black/96 flex flex-col">
 
       {/* ── Top bar — padding-top respects iOS notch / safe area ── */}
       <div
@@ -71,33 +72,34 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
 
       {/* ── Image area — swipe detection only here ── */}
       <div
-        className="flex-1 flex items-center justify-center relative min-h-0 px-14 md:px-20"
+        className="flex-1 relative min-h-0"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {total > 1 && (
-          <button
-            onClick={(e) => { e.stopPropagation(); onNav(-1) }}
-            className="absolute left-3 md:left-5 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.22] text-white/60 hover:text-white transition-all text-[24px] leading-none"
-            aria-label="Anterior"
-          >
-            ‹
-          </button>
-        )}
-
+        {/* Image fills the area with object-contain — never overflows */}
         <img
           key={index}
           src={fotos[index]}
           alt={`Foto ${index + 1} de ${total}`}
           onLoad={() => setLoaded(true)}
           draggable={false}
-          className={`max-h-full max-w-full object-contain select-none transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 w-full h-full object-contain select-none transition-opacity duration-300 px-14 md:px-20 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         />
 
         {total > 1 && (
           <button
+            onClick={(e) => { e.stopPropagation(); onNav(-1) }}
+            className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.22] text-white/60 hover:text-white transition-all text-[24px] leading-none"
+            aria-label="Anterior"
+          >
+            ‹
+          </button>
+        )}
+
+        {total > 1 && (
+          <button
             onClick={(e) => { e.stopPropagation(); onNav(1) }}
-            className="absolute right-3 md:right-5 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.22] text-white/60 hover:text-white transition-all text-[24px] leading-none"
+            className="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.22] text-white/60 hover:text-white transition-all text-[24px] leading-none"
             aria-label="Siguiente"
           >
             ›
@@ -130,6 +132,7 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
         </div>
       )}
 
-    </div>
+    </div>,
+    document.body
   )
 }
