@@ -37,6 +37,16 @@ export const PAQUETE_DESCRIPTIONS = {
 }
 
 export const SESION_INFO = {
+  'pre-cumple': {
+    titulo: 'Sesiones Pre Cumple 🎈',
+    parrafos: [
+      '¡Se viene el cumple y hay que celebrarlo como se merece!',
+      'La sesión pre cumple es uno de esos momentos que toda la familia espera con emoción. Es la oportunidad perfecta para capturar esa etapa tan especial, con toda su personalidad, su energía y esa magia única que tienen los chicos en cada edad.',
+      'Trabajamos en estudio o en exterior, y la temática la elegís vos: desde algo súper colorido y divertido hasta algo más clásico y elegante. Nosotros nos encargamos de que cada detalle cuente la historia de tu pequeño/a tal cual es.',
+      'Porque las fotos son las que hacen que ese cumpleaños se recuerde para siempre. 🩷',
+    ],
+    disclaimer: null,
+  },
   'maternidad': {
     titulo: 'Sesiones de Maternidad 🤰🩷',
     parrafos: [
