@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { usePaquetes } from '../hooks/usePaquetes'
 import { useLang } from '../context/LangContext'
-import { PAQUETE_CATEGORIES, PAQUETE_DESCRIPTIONS } from '../lib/categories'
+import { PAQUETE_CATEGORIES, PAQUETE_DESCRIPTIONS, SESION_INFO } from '../lib/categories'
 import { FALLBACK_PAQUETES } from '../lib/fallbackPaquetes'
 import CategoryTabs from '../components/ui/CategoryTabs'
 import PaqueteCard from '../components/ui/PaqueteCard'
@@ -148,6 +148,7 @@ export default function PaquetesPage() {
 
   const descripcion = PAQUETE_DESCRIPTIONS[categoria]
   const descText = descripcion ? (lang === 'es' ? descripcion.es : descripcion.en) : null
+  const sesionInfo = SESION_INFO[categoria] || null
 
   return (
     <div className="pt-[80px]">
@@ -174,9 +175,33 @@ export default function PaquetesPage() {
 
           {/* Descripción del servicio */}
           {descText && (
-            <p className="text-[14px] text-ink/60 leading-[1.8] text-center mb-8 max-w-[620px] mx-auto font-sans">
+            <p className="text-[14px] text-ink/60 leading-[1.8] text-center mb-6 max-w-[620px] mx-auto font-sans">
               {descText}
             </p>
+          )}
+
+          {/* Info extendida de la sesión (ej. Cake Smash) */}
+          {sesionInfo && (
+            <Reveal className="mb-8">
+              <div className="rounded-[14px] border border-black/[0.08] bg-white overflow-hidden max-w-[680px] mx-auto">
+                <div className="px-5 pt-5 pb-4">
+                  <h3 className="font-serif italic text-[1.05rem] text-ink mb-3 leading-snug">
+                    {sesionInfo.titulo}
+                  </h3>
+                  <div className="space-y-2">
+                    {sesionInfo.parrafos.map((p, i) => (
+                      <p key={i} className="text-[13px] text-ink/65 leading-[1.8] font-sans">{p}</p>
+                    ))}
+                  </div>
+                </div>
+                {sesionInfo.disclaimer && (
+                  <div className="border-t border-black/[0.06] bg-black/[0.025] px-5 py-3 flex items-start gap-2">
+                    <span className="text-[13px] shrink-0">⚠️</span>
+                    <p className="text-[12px] text-ink/50 font-sans leading-snug">{sesionInfo.disclaimer}</p>
+                  </div>
+                )}
+              </div>
+            </Reveal>
           )}
 
           {/* ── PRODUCTOS ───────────────────────────── */}

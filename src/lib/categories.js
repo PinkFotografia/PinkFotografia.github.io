@@ -36,6 +36,18 @@ export const PAQUETE_DESCRIPTIONS = {
   'productos':           { es: 'Fotografía de productos para emprendedores y negocios. Imágenes para ecommerce, redes sociales y catálogos que venden.', en: 'Product photography for entrepreneurs and businesses. Images for ecommerce, social media and catalogs.' },
 }
 
+export const SESION_INFO = {
+  'cake-smash': {
+    titulo: '¿Cómo se desarrolla la sesión? 🎂🛁',
+    parrafos: [
+      'La sesión combina el cake smash con un baño de espuma, el cierre perfecto para que tu bebé chapotee y se divierta haciendo travesuras con la torta.',
+      'Comenzamos con fotos familiares e individuales para capturar toda la ternura de este momento. Podés elegir la ambientación de la galería disponible para el set de cake smash y el de baño, o consultarme por propuestas nuevas.',
+      'El desarrollo va a depender del ritmo de tu pequeño/a, que es la prioridad absoluta. Con juegos, música y mucho cariño, lo ayudamos a relajarse y ganar confianza en el espacio. El ánimo del bebé es clave, así que es importante que llegue descansado y bien alimentado. La sesión dura aprox. 60 minutos según el paquete elegido.',
+    ],
+    disclaimer: 'La torta y el vestuario no están incluidos en el precio del paquete.',
+  },
+}
+
 export const CATEGORIES = {
   'bebes-ninos':           { es: 'Bebés y niños',           en: 'Babies & Kids',        imgKey: 'srv-estudio',    fallback: '/assets/srv-estudio.jpg'    },
   'retratos':              { es: 'Retratos',                en: 'Portraits',             imgKey: 'srv-embarazo',   fallback: '/assets/srv-embarazo.jpg'   },
