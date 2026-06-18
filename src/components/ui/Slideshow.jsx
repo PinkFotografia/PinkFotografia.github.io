@@ -53,15 +53,15 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
     >
       {/* ── Top bar ── */}
       <div
-        className="flex items-center justify-between px-5 py-4 shrink-0"
+        className="flex items-center justify-between px-4 py-3 shrink-0"
         onClick={e => e.stopPropagation()}
       >
-        <div className="text-white/35 text-[12px] tracking-[0.15em] font-sans tabular-nums">
-          {index + 1} <span className="text-white/20">/</span> {total}
+        <div className="text-white/40 text-[13px] tracking-[0.12em] font-sans tabular-nums">
+          {index + 1} <span className="text-white/25">/</span> {total}
         </div>
         <button
           onClick={onClose}
-          className="w-9 h-9 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.18] text-white/60 hover:text-white transition-all text-[15px]"
+          className="w-11 h-11 flex items-center justify-center rounded-full bg-white/[0.15] hover:bg-white/[0.30] text-white transition-all text-[18px] border border-white/20"
           aria-label="Cerrar"
         >
           ✕

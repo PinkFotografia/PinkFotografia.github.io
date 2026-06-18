@@ -158,7 +158,7 @@ export default function PortafolioPage() {
               <div className="flex items-center gap-4 mb-10">
                 <button
                   onClick={handleBack}
-                  className="text-[11px] tracking-[0.12em] uppercase text-ink-muted hover:text-pink transition-colors bg-transparent border-0 cursor-pointer flex items-center gap-2 p-0 font-sans"
+                  className="flex items-center gap-2 px-4 py-2 rounded-[20px] border border-black/15 text-[12px] tracking-[0.08em] uppercase text-ink-muted hover:text-pink hover:border-pink transition-colors bg-transparent cursor-pointer font-sans"
                 >
                   ← {t('Álbumes', 'Albums')}
                 </button>
