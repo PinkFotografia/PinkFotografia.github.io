@@ -52,14 +52,17 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
   return (
     <div className="fixed inset-0 z-[200] bg-black/96 flex flex-col">
 
-      {/* ── Top bar — close button is OUTSIDE the swipe zone ── */}
-      <div className="flex items-center justify-between px-4 py-3 shrink-0">
+      {/* ── Top bar — padding-top respects iOS notch / safe area ── */}
+      <div
+        className="flex items-center justify-between px-4 pb-3 shrink-0"
+        style={{ paddingTop: 'max(12px, env(safe-area-inset-top, 12px))' }}
+      >
         <div className="text-white/40 text-[13px] tracking-[0.12em] font-sans tabular-nums">
           {index + 1} <span className="text-white/25">/</span> {total}
         </div>
         <button
           onClick={onClose}
-          className="w-11 h-11 flex items-center justify-center rounded-full bg-white/[0.15] hover:bg-white/[0.30] text-white transition-all text-[18px] border border-white/20"
+          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/20 text-white text-[20px] border border-white/30 active:bg-white/40"
           aria-label="Cerrar"
         >
           ✕
@@ -102,11 +105,11 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
         )}
       </div>
 
-      {/* ── Thumbnail strip ── */}
+      {/* ── Thumbnail strip — padding-bottom respects iOS home indicator ── */}
       {total > 1 && (
         <div
-          className="shrink-0 py-3 px-4 overflow-x-auto"
-          style={{ scrollbarWidth: 'none' }}
+          className="shrink-0 pt-3 px-4 overflow-x-auto"
+          style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom, 12px))', scrollbarWidth: 'none' }}
         >
           <div ref={thumbsRef} className="flex gap-[6px] w-max mx-auto">
             {fotos.map((foto, i) => (
