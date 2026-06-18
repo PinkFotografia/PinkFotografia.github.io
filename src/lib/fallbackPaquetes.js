@@ -55,6 +55,17 @@ export const FALLBACK_PAQUETES = {
       items:[i('2hs en exterior'),i('50 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Hasta 4 familiares'),i('Foto impresa 20x30'),i('Cuadro bastidor 20x30'),i('Doble locación')] },
   ],
 
+  'profesional': [
+    { id:'f-pro-e1', categoria:'profesional', subcategoria:'estudio', nombre:'Esencial', precio:'$90.000', featured:false, orden:1, nota:null, adicionales:[i('Persona adicional +$20.000')],
+      items:[i('1hs en estudio'),i('20 fotos editadas'),i('Galería digital')] },
+    { id:'f-pro-c1', categoria:'profesional', subcategoria:'estudio', nombre:'Completo', precio:'$140.000', featured:true, orden:2, nota:null, adicionales:[i('Persona adicional +$20.000')],
+      items:[i('1:30hs en estudio'),i('35 fotos editadas'),i('Galería digital'),i('Cambio de vestuario')] },
+    { id:'f-pro-e2', categoria:'profesional', subcategoria:'exterior', nombre:'Esencial', precio:'$150.000', featured:false, orden:1, nota:null, adicionales:[i('Persona adicional +$20.000')],
+      items:[i('1hs en exterior'),i('20 fotos editadas'),i('Galería digital')] },
+    { id:'f-pro-c2', categoria:'profesional', subcategoria:'exterior', nombre:'Completo', precio:'$210.000', featured:true, orden:2, nota:null, adicionales:[i('Persona adicional +$20.000')],
+      items:[i('1:30hs en exterior'),i('35 fotos editadas'),i('Galería digital'),i('Cambio de vestuario')] },
+  ],
+
   'pelotero': [
     { id:'f-pel-1', categoria:'pelotero', subcategoria:null, nombre:'1:30hs', precio:'$150.000', featured:false, orden:1, nota:null, adicionales:adPelotero,
       items:[i('40 fotos editadas'),i('Galería digital')] },

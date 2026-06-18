@@ -8,26 +8,26 @@ import PaqueteCard from '../components/ui/PaqueteCard'
 import Reveal from '../components/ui/Reveal'
 
 const WA = 'https://wa.me/5492974197787?text='
-const SUBCATS  = ['pre-cumple', 'individual-familiar']
+const SUBCATS  = ['pre-cumple', 'individual-familiar', 'profesional']
 const GROUPED  = ['casamientos', 'quince']
 
 const PORTAFOLIO_MAP = {
-  'pre-cumple':          'estudio',
-  'cake-smash':          'estudio',
-  'maternidad':          'embarazadas',
-  'individual-familiar': 'exterior',
-  'pelotero':            'pelotero',
-  'evento-social':       'casamientos',
-  'baby-shower':         'embarazadas',
-  'revelacion-genero':   'embarazadas',
-  'casamientos':         'casamientos',
-  'quince':              'casamientos',
-  'bautismo':            'comuniones',
-  'comuniones':          'comuniones',
-  'temporada':           'temporada',
-  'combo':               'pelotero',
+  'pre-cumple':          'bebes-ninos',
+  'cake-smash':          'bebes-ninos',
+  'maternidad':          'retratos',
+  'individual-familiar': 'retratos',
+  'profesional':         'retratos',
+  'pelotero':            'eventos-celebraciones',
+  'evento-social':       'eventos-celebraciones',
+  'baby-shower':         'retratos',
+  'revelacion-genero':   'retratos',
+  'casamientos':         'eventos-celebraciones',
+  'quince':              'eventos-celebraciones',
+  'bautismo':            'eventos-celebraciones',
+  'comuniones':          'eventos-celebraciones',
+  'temporada':           'tematicas',
+  'combo':               'especiales',
   'productos':           null,
-  'profesional':         'exterior',
 }
 
 function priceValidUntil() {
@@ -156,8 +156,16 @@ export default function PaquetesPage() {
 
       {/* Header compacto */}
       <div className="bg-[#1A1A1A] pt-6 pb-5 px-5 text-center border-b border-white/[0.04]">
-        <div className="text-[9px] tracking-[0.2em] uppercase text-pink/70 mb-1 font-sans">Paquetes</div>
+        <div className="text-[13px] tracking-[0.18em] uppercase text-pink font-bold mb-1 font-sans">Paquetes</div>
         <h1 className="font-serif text-[1.6rem] italic font-light text-white">{t(cat.es, cat.en)}</h1>
+        {portafolioSlug && (
+          <button
+            onClick={() => navigate(`/portafolio/${portafolioSlug}`)}
+            className="mt-3 inline-flex items-center gap-1 text-[10px] tracking-[0.1em] uppercase text-white/35 hover:text-pink transition-colors font-sans border border-white/10 hover:border-pink/40 px-3 py-[0.3rem] rounded-[20px]"
+          >
+            {t('Ver portafolio →', 'View portfolio →')}
+          </button>
+        )}
       </div>
 
       {/* Contenido */}
@@ -186,6 +194,14 @@ export default function PaquetesPage() {
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-[11px] tracking-[0.14em] uppercase text-pink font-sans">{subcat}</span>
                   <div className="flex-1 h-px bg-black/10" />
+                  {portafolioSlug && (
+                    <button
+                      onClick={() => navigate(`/portafolio/${portafolioSlug}`)}
+                      className="text-[11px] tracking-[0.08em] uppercase text-pink hover:text-pink-dark transition-colors font-sans shrink-0"
+                    >
+                      {t('Ver portafolio →', 'View portfolio →')}
+                    </button>
+                  )}
                 </div>
                 <CardGrid paquetes={items} catLabel={cat.es} />
               </Reveal>
@@ -200,6 +216,14 @@ export default function PaquetesPage() {
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-[11px] tracking-[0.14em] uppercase text-ink/50 font-sans">{grupo}</span>
                   <div className="flex-1 h-px bg-black/10" />
+                  {portafolioSlug && grupo !== 'Servicios individuales' && (
+                    <button
+                      onClick={() => navigate(`/portafolio/${portafolioSlug}`)}
+                      className="text-[11px] tracking-[0.08em] uppercase text-pink hover:text-pink-dark transition-colors font-sans shrink-0"
+                    >
+                      {t('Ver portafolio →', 'View portfolio →')}
+                    </button>
+                  )}
                 </div>
                 {grupo === 'Servicios individuales'
                   ? <ServiciosIndividuales items={items} catLabel={cat.es} />
@@ -224,7 +248,7 @@ export default function PaquetesPage() {
                   ℹ️ {globalNota}
                 </div>
               )}
-              {!hasGrupos && <Adicionales adicionales={globalAds} t={t} lang={lang} />}
+              <Adicionales adicionales={globalAds} t={t} lang={lang} />
             </Reveal>
           )}
 
@@ -239,14 +263,6 @@ export default function PaquetesPage() {
 
           {/* CTA WhatsApp */}
           <Reveal className="text-center mt-8">
-            {portafolioSlug && (
-              <button
-                onClick={() => navigate(`/portafolio/${portafolioSlug}`)}
-                className="text-[11px] tracking-[0.08em] uppercase text-pink hover:text-pink-dark transition-colors font-sans mb-4 block mx-auto"
-              >
-                {t('Ver portafolio →', 'View portfolio →')}
-              </button>
-            )}
             <a
               href={waConsulta}
               target="_blank"

@@ -20,7 +20,7 @@ const ACCORDION = [
     sessions: [
       { cat: 'maternidad',          label: { es: 'Maternidad',           en: 'Maternity'      }, imgKey: 'srv-embarazo', fallback: '/assets/srv-embarazo.jpg' },
       { cat: 'individual-familiar', label: { es: 'Individual / Familiar', en: 'Family Session' }, imgKey: 'srv-exterior', fallback: '/assets/srv-exterior.jpg' },
-      { cat: 'profesional',         label: { es: 'Profesional',          en: 'Professional'   }, imgKey: 'srv-exterior', fallback: '/assets/srv-exterior.jpg' },
+      { cat: 'profesional',         label: { es: 'Profesional',          en: 'Professional'   }, imgKey: 'srv-profesional', fallback: '/assets/srv-exterior.jpg' },
     ],
   },
   {
