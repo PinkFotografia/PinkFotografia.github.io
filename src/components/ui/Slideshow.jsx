@@ -60,7 +60,8 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
           {index + 1} <span className="text-white/25">/</span> {total}
         </div>
         <button
-          onClick={onClose}
+          onClick={(e) => { e.stopPropagation(); onClose() }}
+          onTouchEnd={(e) => { e.stopPropagation(); e.preventDefault(); onClose() }}
           className="w-11 h-11 flex items-center justify-center rounded-full bg-white/[0.15] hover:bg-white/[0.30] text-white transition-all text-[18px] border border-white/20"
           aria-label="Cerrar"
         >
@@ -76,7 +77,8 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
         {/* Prev button */}
         {total > 1 && (
           <button
-            onClick={() => onNav(-1)}
+            onClick={(e) => { e.stopPropagation(); onNav(-1) }}
+            onTouchEnd={(e) => { e.stopPropagation(); e.preventDefault(); onNav(-1) }}
             className="absolute left-3 md:left-5 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.22] text-white/60 hover:text-white transition-all text-[24px] leading-none"
             aria-label="Anterior"
           >
@@ -97,7 +99,8 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
         {/* Next button */}
         {total > 1 && (
           <button
-            onClick={() => onNav(1)}
+            onClick={(e) => { e.stopPropagation(); onNav(1) }}
+            onTouchEnd={(e) => { e.stopPropagation(); e.preventDefault(); onNav(1) }}
             className="absolute right-3 md:right-5 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.22] text-white/60 hover:text-white transition-all text-[24px] leading-none"
             aria-label="Siguiente"
           >
