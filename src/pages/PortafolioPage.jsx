@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAlbumes } from '../hooks/useAlbumes'
 import { useLang } from '../context/LangContext'
@@ -20,6 +20,12 @@ export default function PortafolioPage() {
 
   const [openAlbum, setOpenAlbum] = useState(null)
   const [ssIndex, setSsIndex] = useState(null)
+
+  // Reset album view when category changes via tabs
+  useEffect(() => {
+    setOpenAlbum(null)
+    setSsIndex(null)
+  }, [categoria])
 
   const cat = CATEGORIES[categoria]
   if (!cat) return null

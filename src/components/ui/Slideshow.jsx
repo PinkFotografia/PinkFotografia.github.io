@@ -37,6 +37,11 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
 
   function handleTouchEnd(e) {
     if (touchStartX.current === null) return
+    // If touch ended on a button, let the button's onClick handle it
+    if (e.target.closest('button')) {
+      touchStartX.current = null
+      return
+    }
     const diff = touchStartX.current - e.changedTouches[0].clientX
     if (Math.abs(diff) > 50) onNav(diff > 0 ? 1 : -1)
     touchStartX.current = null
@@ -45,23 +50,15 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
   if (!fotos.length) return null
 
   return (
-    <div
-      className="fixed inset-0 z-[200] bg-black/96 flex flex-col"
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onClick={onClose}
-    >
-      {/* ── Top bar ── */}
-      <div
-        className="flex items-center justify-between px-4 py-3 shrink-0"
-        onClick={e => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 z-[200] bg-black/96 flex flex-col">
+
+      {/* ── Top bar — close button is OUTSIDE the swipe zone ── */}
+      <div className="flex items-center justify-between px-4 py-3 shrink-0">
         <div className="text-white/40 text-[13px] tracking-[0.12em] font-sans tabular-nums">
           {index + 1} <span className="text-white/25">/</span> {total}
         </div>
         <button
-          onClick={(e) => { e.stopPropagation(); onClose() }}
-          onTouchEnd={(e) => { e.stopPropagation(); e.preventDefault(); onClose() }}
+          onClick={onClose}
           className="w-11 h-11 flex items-center justify-center rounded-full bg-white/[0.15] hover:bg-white/[0.30] text-white transition-all text-[18px] border border-white/20"
           aria-label="Cerrar"
         >
@@ -69,16 +66,15 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
         </button>
       </div>
 
-      {/* ── Image area ── */}
+      {/* ── Image area — swipe detection only here ── */}
       <div
         className="flex-1 flex items-center justify-center relative min-h-0 px-14 md:px-20"
-        onClick={e => e.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
-        {/* Prev button */}
         {total > 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); onNav(-1) }}
-            onTouchEnd={(e) => { e.stopPropagation(); e.preventDefault(); onNav(-1) }}
             className="absolute left-3 md:left-5 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.22] text-white/60 hover:text-white transition-all text-[24px] leading-none"
             aria-label="Anterior"
           >
@@ -86,7 +82,6 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
           </button>
         )}
 
-        {/* Photo — key forces re-mount for fade-in */}
         <img
           key={index}
           src={fotos[index]}
@@ -96,11 +91,9 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
           className={`max-h-full max-w-full object-contain select-none transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         />
 
-        {/* Next button */}
         {total > 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); onNav(1) }}
-            onTouchEnd={(e) => { e.stopPropagation(); e.preventDefault(); onNav(1) }}
             className="absolute right-3 md:right-5 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/[0.08] hover:bg-white/[0.22] text-white/60 hover:text-white transition-all text-[24px] leading-none"
             aria-label="Siguiente"
           >
@@ -112,8 +105,7 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
       {/* ── Thumbnail strip ── */}
       {total > 1 && (
         <div
-          className="shrink-0 py-3 px-4 overflow-x-auto scrollbar-none"
-          onClick={e => e.stopPropagation()}
+          className="shrink-0 py-3 px-4 overflow-x-auto"
           style={{ scrollbarWidth: 'none' }}
         >
           <div ref={thumbsRef} className="flex gap-[6px] w-max mx-auto">
@@ -134,6 +126,7 @@ export default function Slideshow({ fotos, index, onClose, onNav, onJump }) {
           </div>
         </div>
       )}
+
     </div>
   )
 }
