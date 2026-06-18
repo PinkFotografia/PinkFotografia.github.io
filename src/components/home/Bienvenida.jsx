@@ -48,11 +48,11 @@ export default function Bienvenida() {
         <div className="grid grid-cols-2 gap-5">
           {STATS.map((s, i) => (
             <Reveal key={i} delay={i + 1}>
-              <div className="bg-white rounded-[12px] p-6 border border-black/[0.06] text-center hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] transition-all duration-[250ms]">
-                <div className="font-serif text-[2.6rem] italic font-normal text-pink leading-none mb-1">
+              <div className="bg-white rounded-[12px] p-4 md:p-6 border border-black/[0.06] text-center hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] transition-all duration-[250ms]">
+                <div className="font-serif text-[2rem] md:text-[2.6rem] italic font-normal text-pink leading-none mb-1">
                   {s.n}
                 </div>
-                <div className="text-[11px] tracking-[0.08em] uppercase text-ink-muted">
+                <div className="text-[10px] md:text-[11px] tracking-[0.06em] uppercase text-ink-muted">
                   {t(s.es, s.en)}
                 </div>
               </div>

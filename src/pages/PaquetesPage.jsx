@@ -152,12 +152,12 @@ export default function PaquetesPage() {
   return (
     <div className="pt-[80px]">
       {/* Tabs */}
-      <CategoryTabs basePath="/paquetes" categories={PAQUETE_CATEGORIES} />
+      <CategoryTabs basePath="/paquetes" categories={PAQUETE_CATEGORIES} scrollable />
 
       {/* Header compacto */}
-      <div className="bg-[#1A1A1A] pt-6 pb-5 px-5 text-center border-b border-white/[0.04]">
-        <div className="text-[13px] tracking-[0.18em] uppercase text-pink font-bold mb-1 font-sans">Paquetes</div>
-        <h1 className="font-serif text-[1.6rem] italic font-light text-white">{t(cat.es, cat.en)}</h1>
+      <div className="bg-[#1A1A1A] pt-4 pb-4 px-5 text-center border-b border-white/[0.04]">
+        <div className="text-[12px] tracking-[0.18em] uppercase text-pink font-bold mb-1 font-sans">Paquetes</div>
+        <h1 className="font-serif text-[1.4rem] md:text-[1.6rem] italic font-light text-white">{t(cat.es, cat.en)}</h1>
         {portafolioSlug && (
           <button
             onClick={() => navigate(`/portafolio/${portafolioSlug}`)}

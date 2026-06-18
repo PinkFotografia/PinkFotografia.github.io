@@ -15,6 +15,7 @@ const PHOTOS = [
 
 function PolaroidCard({ src, label, rot, yOff, onClick }) {
   const [hovered, setHovered] = useState(false)
+  const isMd = typeof window !== 'undefined' && window.innerWidth >= 768
 
   return (
     <div
@@ -23,8 +24,8 @@ function PolaroidCard({ src, label, rot, yOff, onClick }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         transform: hovered
-          ? 'rotate(0deg) translateY(-12px) scale(1.07)'
-          : `rotate(${rot}deg) translateY(${yOff}px)`,
+          ? (isMd ? 'rotate(0deg) translateY(-12px) scale(1.07)' : 'translateY(-4px) scale(1.03)')
+          : (isMd ? `rotate(${rot}deg) translateY(${yOff}px)` : 'none'),
         transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
         cursor: 'pointer',
         willChange: 'transform',
@@ -92,12 +93,12 @@ export default function PortfolioPreview() {
       </Reveal>
 
       <div
-        className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-5 gap-x-6 md:gap-x-8"
-        style={{ paddingBottom: '3rem' }}
+        className="max-w-[1100px] mx-auto grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-x-8 md:gap-y-0"
+        style={{ paddingBottom: '2rem' }}
       >
         {PHOTOS.map((p, i) => (
           <Reveal key={p.cat} delay={(i % 5) + 1}>
-            <div style={{ marginBottom: i < 2 ? '3.5rem' : '0' }}>
+            <div className={i < 2 ? 'md:mb-14' : ''}>
               <PolaroidCard
                 src={config[p.portKey] || config[p.srvKey] || p.fallback}
                 label={config[`port-label-${p.cat}`] || t(p.name.es, p.name.en)}

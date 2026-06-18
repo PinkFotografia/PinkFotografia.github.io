@@ -58,7 +58,7 @@ export default function Resenas() {
         style={{ opacity: fading ? 0 : 1 }}
       >
         {displayed.map((r, i) => (
-          <div key={`${offset}-${i}`} className="bg-white rounded-[12px] p-6 border border-black/[0.06] flex flex-col gap-3">
+          <div key={`${offset}-${i}`} className={`bg-white rounded-[12px] p-6 border border-black/[0.06] flex flex-col gap-3 ${i >= 3 ? 'hidden md:flex' : ''}`}>
             <div className="text-pink text-lg tracking-wider">{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</div>
             <p className="text-[14px] text-ink-muted leading-relaxed flex-1">{r.text}</p>
             <div>

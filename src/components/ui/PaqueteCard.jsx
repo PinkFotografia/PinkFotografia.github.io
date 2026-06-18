@@ -29,20 +29,20 @@ export default function PaqueteCard({ paquete, categoriaLabel }) {
       )}
 
       {/* Header */}
-      <div className={`px-5 pt-5 pb-4 border-b border-black/[0.06] ${featured ? 'pt-6' : ''}`}>
-        <div className="font-serif text-[1.35rem] italic font-normal text-ink leading-tight mb-1">
+      <div className={`px-4 pt-4 pb-3 border-b border-black/[0.06] ${featured ? 'pt-5' : ''}`}>
+        <div className="font-serif text-[1.2rem] md:text-[1.35rem] italic font-normal text-ink leading-tight mb-1">
           {nombre}
         </div>
-        <div className={`text-[1.05rem] font-sans font-semibold tracking-tight ${featured ? 'text-pink' : 'text-ink'}`}>
+        <div className={`text-[1rem] md:text-[1.05rem] font-sans font-semibold tracking-tight ${featured ? 'text-pink' : 'text-ink'}`}>
           {precio || t('A consultar', 'On request')}
         </div>
       </div>
 
       {/* Items */}
       {items.length > 0 && (
-        <div className="px-5 py-4 flex-1">
+        <div className="px-4 py-3 flex-1">
           {items.map((item, idx) => (
-            <div key={idx} className="flex items-start gap-2 text-[13px] text-ink-muted mb-2 leading-snug">
+            <div key={idx} className="flex items-start gap-2 text-[12px] md:text-[13px] text-ink-muted mb-2 leading-snug">
               <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] flex-shrink-0 mt-[1px] ${featured ? 'bg-pink/10 text-pink' : 'bg-black/[0.05] text-ink-muted'}`}>
                 ✓
               </span>
@@ -53,7 +53,7 @@ export default function PaqueteCard({ paquete, categoriaLabel }) {
       )}
 
       {/* CTA */}
-      <div className="px-5 pb-5 pt-3 border-t border-black/[0.05]">
+      <div className="px-4 pb-4 pt-3 border-t border-black/[0.05]">
         <a
           href={waLink}
           target="_blank"
