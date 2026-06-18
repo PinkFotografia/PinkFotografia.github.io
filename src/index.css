@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  background-color: #1A1A1A;
+}
+
 /* Ken Burns zoom para el hero */
 @keyframes heroZoom {
   from { transform: scale(1.06); }
