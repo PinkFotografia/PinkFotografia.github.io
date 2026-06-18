@@ -37,6 +37,15 @@ export const PAQUETE_DESCRIPTIONS = {
 }
 
 export const SESION_INFO = {
+  'maternidad': {
+    titulo: 'Sesiones de Maternidad 🤰🩷',
+    parrafos: [
+      'Un momento único e irrepetible que merece ser recordado para siempre.',
+      'Trabajamos en estudio o en exterior, y podés sumar a la sesión a tu pareja, tus hijos y todos los detalles que hacen especial esta espera: la ropita del bebé, sus zapatitos, el peluche, las ecografías...',
+      'Recomendamos realizarla entre la semana 26 y la 34, cuando la panza ya está bien marcada y mamá se mueve con comodidad. ¡Y cuanto antes la reserves, mejor! 🩷',
+    ],
+    disclaimer: 'El vestuario no está incluido en el precio del paquete.',
+  },
   'cake-smash': {
     titulo: '¿Cómo se desarrolla la sesión? 🎂🛁',
     parrafos: [
