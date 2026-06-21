@@ -11,7 +11,7 @@ export default function CategoryTabs({ basePath, categories, scrollable = false 
     <div className="sticky top-[80px] z-[100] bg-[#1A1A1A] border-b border-white/[0.05]">
       <div
         className={scrollable
-          ? 'flex gap-2 px-4 py-3 overflow-x-auto'
+          ? 'flex gap-2 px-4 py-3 overflow-x-auto md:overflow-visible md:flex-wrap md:justify-center'
           : 'flex flex-wrap gap-2 px-4 py-3 justify-center'
         }
         style={scrollable ? { WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' } : undefined}

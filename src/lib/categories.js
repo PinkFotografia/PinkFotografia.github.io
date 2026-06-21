@@ -1,6 +1,6 @@
 export const PAQUETE_CATEGORIES = {
   'pre-cumple':          { es: 'Pre Cumple',                  en: 'Pre Birthday' },
-  'cake-smash':          { es: 'Cake Smash',                  en: 'Cake Smash' },
+  'cake-smash':          { es: 'Cake Smash y Baby Bath',       en: 'Cake Smash & Baby Bath' },
   'maternidad':          { es: 'Maternidad',                  en: 'Maternity' },
   'individual-familiar': { es: 'Individual / Familiar',       en: 'Individual / Family' },
   'profesional':         { es: 'Profesional',                 en: 'Professional' },

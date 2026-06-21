@@ -11,7 +11,7 @@ const ACCORDION = [
     label:   { es: 'Bebés y niños',           en: 'Babies & Kids' },
     sessions: [
       { cat: 'pre-cumple',  label: { es: 'Pre Cumple',  en: 'Pre Birthday' }, imgKey: 'srv-estudio',    fallback: '/assets/srv-estudio.jpg'  },
-      { cat: 'cake-smash',  label: { es: 'Cake Smash',  en: 'Cake Smash'   }, imgKey: 'srv-cake-smash', fallback: '/assets/srv-estudio.jpg'  },
+      { cat: 'cake-smash',  label: { es: 'Cake Smash y Baby Bath', en: 'Cake Smash & Baby Bath' }, imgKey: 'srv-cake-smash', fallback: '/assets/srv-estudio.jpg'  },
     ],
   },
   {
