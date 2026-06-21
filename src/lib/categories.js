@@ -65,6 +65,31 @@ export const SESION_INFO = {
     ],
     disclaimer: 'La torta y el vestuario no están incluidos en el precio del paquete.',
   },
+  'comuniones': {
+    titulo: 'Cobertura de Primera Comunión ✝️🤍',
+    parrafos: [
+      'La Primera Comunión es un momento muy especial en la vida de tu hijo/a — un día lleno de fe, emoción y familia que merece quedar guardado para siempre.',
+      'Cubrimos la ceremonia en iglesia capturando cada detalle: la emoción de los papás, la familia reunida y por supuesto, cada expresión y mirada del protagonista de este día tan importante. 🩷',
+    ],
+    disclaimer: null,
+  },
+  'evento-social': {
+    titulo: 'Cobertura de Eventos Sociales 🥂🎉',
+    parrafos: [
+      'Cumpleaños de adultos, fiestas y celebraciones especiales — cada evento tiene su magia y merece ser recordado.',
+      'Me traslado al salón donde se realice el festejo para capturar cada momento: los brindis, las risas, los bailes y todos esos instantes únicos que compartís con las personas que más querés. 🩷',
+    ],
+    disclaimer: null,
+  },
+  'profesional': {
+    titulo: 'Fotografía Profesional 📸✨',
+    parrafos: [
+      'Vamos a trabajar en tu imagen y en crear ese concepto que necesitás para transmitir a tus seguidores y clientes.',
+      'Mostrarte profesional cambia el modo en que los demás te perciben — genera confianza, credibilidad y abre puertas. Es una inversión en tu futuro profesional y personal.',
+      'Trabajamos con fondos lisos en blanco o negro para un estilo limpio y atemporal. Podés realizar hasta 2 cambios de vestuario. Si necesitás una locación específica, lo coordinamos.',
+    ],
+    disclaimer: 'Estas sesiones no incluyen acompañantes. Cada persona adicional tiene un costo extra.',
+  },
 }
 
 export const CATEGORIES = {
