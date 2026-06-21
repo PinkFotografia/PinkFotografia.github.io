@@ -12,7 +12,7 @@ export const PAQUETE_CATEGORIES = {
   'quince':              { es: '15 Años',                     en: 'Quinceañera' },
   'bautismo':            { es: 'Bautismo',                    en: 'Baptism' },
   'comuniones':          { es: 'Comuniones',                  en: 'Communions' },
-  'temporada':           { es: 'Temporada',                   en: 'Seasonal' },
+  'temporada':           { es: 'Sesión de Temporada',          en: 'Seasonal Session' },
   'combo':               { es: 'Combo',                       en: 'Bundle' },
   'productos':           { es: 'Productos',                   en: 'Products' },
 }

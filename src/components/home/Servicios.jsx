@@ -43,7 +43,7 @@ const ACCORDION = [
     sessions: [
       { cat: 'combo',     label: { es: 'Combo Pre Cumple + Pelotero', en: 'Bundle'   }, imgKey: 'srv-combo',     fallback: '/assets/srv-pelotero.jpg' },
       { cat: 'productos', label: { es: 'Productos fotográficos',       en: 'Products' }, imgKey: 'srv-productos', fallback: '/assets/srv-estudio.jpg'  },
-      { cat: 'temporada', label: { es: 'Temporada',                   en: 'Seasonal' }, imgKey: 'srv-temporada', fallback: '/assets/srv-exterior.jpg' },
+      { cat: 'temporada', label: { es: 'Sesión de Temporada',          en: 'Seasonal Session' }, imgKey: 'srv-temporada', fallback: '/assets/srv-exterior.jpg' },
     ],
   },
 ]
