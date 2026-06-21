@@ -90,6 +90,65 @@ export const SESION_INFO = {
     ],
     disclaimer: 'Estas sesiones no incluyen acompañantes. Cada persona adicional tiene un costo extra.',
   },
+  'quince': {
+    titulo: 'Quinceañeras 👑🩷',
+    parrafos: [
+      'Los quince son un momento único que merece ser vivido y recordado en cada detalle.',
+      'Acompañamos a la quinceañera desde el principio hasta el final, para que no se pierda ningún momento de este día tan especial. La cobertura incluye:',
+      '✨ Book previo — una sesión de fotos antes del día del evento para capturar toda su esencia y emoción.',
+      '💄 Getting ready — así se llama el momento en que la quinceañera se prepara y transforma para su gran noche. Peinado, maquillaje, vestido... toda la magia antes de salir.',
+      '📸 Book antes del salón — fotos en locación antes de ingresar a la fiesta, cuando todo está impecable y la emoción está en su punto máximo.',
+      '🎉 Cobertura del salón — desde el ingreso hasta los momentos del baile, capturando cada abrazo, cada sonrisa y cada instante que quiera recordar para siempre.',
+    ],
+    disclaimer: null,
+  },
+  'pelotero': {
+    titulo: 'Cobertura de Cumpleaños 🎉🎂',
+    parrafos: [
+      '¡Porque cada cumple merece ser recordado con las mejores fotos!',
+      'Cubrimos todo el festejo para que no se pierda ningún momento especial: las fotos del cumpleañero/a, el momento de la torta y los recuerdos junto a la familia y amigos.',
+      'Podés elegir la cobertura completa del evento o un servicio por menos horas, según lo que mejor se adapte a tu festejo. 🩷',
+    ],
+    disclaimer: null,
+  },
+  'baby-shower': {
+    titulo: 'Baby Shower 🩷',
+    parrafos: [
+      'El baby shower es un momento lleno de amor, emoción y alegría, rodeada de las personas más queridas, festejando la llegada de ese bebé tan esperado.',
+      'Me traslado al salón o casa donde se realice el evento para capturar cada momento: las risas, los juegos, los regalos, los abrazos y toda la magia de esta celebración única. 🩷',
+    ],
+    disclaimer: null,
+  },
+  'revelacion-genero': {
+    titulo: 'Revelación de Género 💙🩷',
+    parrafos: [
+      '¡Es nena o es nene? ¡Ese momento de sorpresa merece quedar capturado para siempre!',
+      'La revelación de género es una celebración llena de emoción, risas y lágrimas de alegría. Podés elegir la opción que mejor se adapte a lo que imaginaste:',
+      '🎉 Evento en salón o exterior — me traslado a la locación donde van a realizar la revelación y capturo cada reacción, cada abrazo y ese momento único que no se repite.',
+      '🤍 Sesión privada en estudio — para quienes prefieren algo más íntimo, con fondo blanco y la idea que tengan para revelar el género de su bebé. Un momento especial solo para la familia. 🩷',
+    ],
+    disclaimer: null,
+  },
+  'casamientos': {
+    titulo: 'Cobertura de Bodas 💍🤍',
+    parrafos: [
+      'El día más especial de sus vidas merece ser recordado en cada detalle.',
+      'Podés armar la cobertura a tu medida, eligiendo los servicios por separado o todo junto:',
+      '📸 Book de novios — una sesión de fotos días antes de la boda para capturar su historia juntos, sin apuros y con toda la emoción de lo que se viene.',
+      '💄 Getting ready — el momento en que los novios se preparan y transforman para su gran día. Peinado, maquillaje, vestido, detalles... toda la magia antes de la ceremonia.',
+      '⛪ Ceremonia — ya sea en iglesia o registro civil, capturo cada momento, cada mirada y cada emoción de ese instante único.',
+      '🎉 Salón — desde el ingreso hasta el festejo, sin que se pierda ningún abrazo, ninguna sonrisa ni ningún baile.',
+      'Trabajo de manera personalizada y, dependiendo de la cantidad de invitados, se puede sumar un segundo fotógrafo para que no quede ningún momento sin capturar. 🤍',
+    ],
+    disclaimer: null,
+  },
+  'bautismo': {
+    titulo: 'Cobertura de Bautismo ✝️🤍',
+    parrafos: [
+      'Cubrimos la ceremonia en iglesia capturando cada detalle especial: la emoción de los papás, los padrinos, la familia reunida y por supuesto, cada expresión del protagonista del día. 🩷',
+    ],
+    disclaimer: null,
+  },
 }
 
 export const CATEGORIES = {
