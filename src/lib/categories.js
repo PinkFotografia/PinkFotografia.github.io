@@ -40,10 +40,10 @@ export const SESION_INFO = {
   'pre-cumple': {
     titulo: 'Sesiones Pre Cumple 🎈',
     parrafos: [
-      '¡Se viene el cumple y hay que celebrarlo como se merece!',
-      'La sesión pre cumple es uno de esos momentos que toda la familia espera con emoción — la oportunidad perfecta para capturar toda la personalidad, energía y magia única de tu pequeño/a.',
+      'La sesión pre cumple es uno de esos momentos que toda la familia espera con emoción, la oportunidad perfecta para capturar toda la personalidad, energía y magia única de tu pequeño/a. Nos encargamos de que cada detalle cuente su historia tal cual es, para que ese cumpleaños se recuerde para siempre.',
       '¿Cómo se desarrolla?',
-      'Podés elegir la ambientación de mi galería o consultarme por propuestas nuevas. El desarrollo depende del ritmo de tu pequeño/a, que es la prioridad absoluta. Con juegos y música ayudamos a que gane confianza y se relaje. Es importante que llegue descansado y bien alimentado para disfrutar al máximo la sesión. 🩷',
+      'Trabajamos en estudio o en exterior, con la temática que vos elijas: desde algo súper colorido y divertido hasta algo más clásico y elegante. Podés elegir la ambientación de mi galería o consultarme por propuestas nuevas.',
+      'El desarrollo depende del ritmo de tu pequeño/a, que es la prioridad absoluta. Con juegos y música ayudamos a que gane confianza y se relaje. Es importante que llegue descansado y bien alimentado para disfrutar al máximo la sesión. 🩷',
     ],
     disclaimer: null,
   },
