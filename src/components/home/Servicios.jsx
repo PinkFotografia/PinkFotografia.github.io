@@ -63,7 +63,7 @@ export default function Servicios() {
   const toggle = (i) => setOpenIdx(prev => prev === i ? null : i)
 
   return (
-    <section id="servicios" className="py-16 md:py-24 px-6 md:px-12" style={{ backgroundColor: '#E8879A' }}>
+    <section id="servicios" className="py-16 md:py-24 px-6 md:px-12" style={{ backgroundColor: '#F0C0B0' }}>
 
       <Reveal className="text-center mb-12 md:mb-16">
         <SectionKicker centered>{t('Servicios', 'Services')}</SectionKicker>

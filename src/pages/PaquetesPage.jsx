@@ -184,6 +184,9 @@ export default function PaquetesPage() {
                       <p key={i} className="text-[13px] text-ink/65 leading-[1.8] font-sans">{p}</p>
                     ))}
                   </div>
+                  <p className="text-[13px] text-ink font-sans font-bold mt-3">
+                    {t('Importante leer los términos y condiciones', 'Please read the terms and conditions')}
+                  </p>
                 </div>
                 {sesionInfo.disclaimer && (
                   <div className="border-t border-black/[0.06] bg-black/[0.025] px-5 py-3 flex items-start gap-2">
