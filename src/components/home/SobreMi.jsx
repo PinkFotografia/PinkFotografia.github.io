@@ -29,7 +29,7 @@ const STATS = [
   { n: '+7',     es: 'Años de experiencia',    en: 'Years of experience' },
   { n: '+500',   es: 'Familias fotografiadas', en: 'Families photographed' },
   { n: '5.0 ★', es: 'Estrellas en Google',    en: 'Stars on Google' },
-  { n: '35',     es: 'Reseñas verificadas',    en: 'Verified reviews' },
+  { n: '43',     es: 'Reseñas verificadas',    en: 'Verified reviews' },
 ]
 
 const IconWhatsApp = () => (
