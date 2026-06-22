@@ -51,6 +51,10 @@ export default function Resenas() {
         <h2 className="font-serif text-[clamp(1.8rem,2.8vw,2.6rem)] italic font-normal text-ink mt-2">
           {t('Lo que dicen las familias', 'What families say')}
         </h2>
+        <div className="mt-4 inline-flex items-center gap-2.5 bg-white/70 border border-black/[0.07] rounded-full px-5 py-2">
+          <span className="text-pink text-base tracking-wider leading-none">★★★★★</span>
+          <span className="text-[13px] font-medium text-ink">43 {t('reseñas en Google', 'reviews on Google')}</span>
+        </div>
       </Reveal>
 
       <div

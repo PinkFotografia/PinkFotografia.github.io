@@ -63,11 +63,11 @@ export default function Servicios() {
   const toggle = (i) => setOpenIdx(prev => prev === i ? null : i)
 
   return (
-    <section id="servicios" className="bg-pink-light py-16 md:py-24 px-6 md:px-12">
+    <section id="servicios" className="py-16 md:py-24 px-6 md:px-12" style={{ backgroundColor: '#E8879A' }}>
 
       <Reveal className="text-center mb-12 md:mb-16">
         <SectionKicker centered>{t('Servicios', 'Services')}</SectionKicker>
-        <h2 className="font-serif text-[clamp(1.8rem,2.8vw,2.6rem)] italic font-normal text-ink mt-2">
+        <h2 className="font-serif text-[clamp(1.8rem,2.8vw,2.6rem)] italic font-normal mt-2" style={{ color: '#3D2B1F' }}>
           {t('¿Qué sesión estás buscando?', 'What session are you looking for?')}
         </h2>
       </Reveal>
@@ -80,27 +80,33 @@ export default function Servicios() {
           return (
             <Reveal key={cat.id} delay={i + 1}>
 
-              {/* Barra — fondo liso, contenido centrado */}
+              {/* Barra — paleta nude/crema */}
               <button
                 onClick={() => toggle(i)}
-                className="relative w-full min-h-[120px] sm:h-[144px] rounded-[14px] overflow-hidden bg-black flex flex-col items-center justify-center gap-2 px-6 sm:px-14 py-5 sm:py-0 text-center group hover:bg-[#111] transition-colors duration-300"
+                className="relative w-full min-h-[120px] sm:h-[144px] rounded-[14px] overflow-hidden flex flex-col items-center justify-center gap-2 px-6 sm:px-14 py-5 sm:py-0 text-center group transition-colors duration-300"
+                style={{ backgroundColor: '#F5ECD7' }}
+                onMouseEnter={e => e.currentTarget.style.backgroundColor = '#ede4cc'}
+                onMouseLeave={e => e.currentTarget.style.backgroundColor = '#F5ECD7'}
                 aria-expanded={isOpen}
               >
                 {/* Acento lateral izquierdo */}
-                <div className="absolute left-0 top-0 bottom-0 w-[5px] bg-pink rounded-l-[14px]" />
+                <div className="absolute left-0 top-0 bottom-0 w-[5px] rounded-l-[14px]" style={{ backgroundColor: '#C9956E' }} />
 
                 {/* Título */}
-                <span className="font-serif text-[clamp(1.7rem,2.8vw,2.2rem)] italic font-normal text-white leading-[1.2]">
+                <span className="font-serif text-[clamp(1.7rem,2.8vw,2.2rem)] italic font-normal leading-[1.2]" style={{ color: '#3D2B1F' }}>
                   {t(cat.label.es, cat.label.en)}
                 </span>
 
                 {/* Sesiones incluidas */}
-                <span className="text-[13px] md:text-[14px] text-white/55 leading-relaxed tracking-wide">
+                <span className="text-[13px] md:text-[14px] leading-relaxed tracking-wide" style={{ color: '#7A5C4A' }}>
                   {sessionNames}
                 </span>
 
-                {/* Chevron — botón circular notorio */}
-                <span className={`absolute top-1/2 -translate-y-1/2 right-5 flex items-center justify-center w-9 h-9 rounded-full bg-white/10 border border-white/20 text-white transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
+                {/* Chevron — círculo terracota */}
+                <span
+                  className={`absolute top-1/2 -translate-y-1/2 right-5 flex items-center justify-center w-9 h-9 rounded-full transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+                  style={{ backgroundColor: '#C9956E', color: '#F5ECD7' }}
+                >
                   <ChevronDown />
                 </span>
               </button>
@@ -122,12 +128,14 @@ export default function Servicios() {
                           loading="lazy"
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                        {/* Línea decorativa inferior */}
+                        <div className="absolute bottom-0 left-0 right-0 h-[3px]" style={{ backgroundColor: '#C9A882' }} />
+                        <div className="absolute bottom-0 left-0 right-0 p-4 pb-5 text-left">
                           <div className="font-serif text-[1rem] italic font-normal text-white leading-[1.3] mb-1">
                             {t(s.label.es, s.label.en)}
                           </div>
-                          <div className="text-[10px] tracking-[0.08em] uppercase text-white/60 group-hover:text-pink-mid transition-colors duration-200">
+                          <div className="text-[10px] tracking-[0.08em] uppercase transition-colors duration-200" style={{ color: 'rgba(245,236,215,0.7)' }}>
                             {t('Ver paquetes →', 'View packages →')}
                           </div>
                         </div>

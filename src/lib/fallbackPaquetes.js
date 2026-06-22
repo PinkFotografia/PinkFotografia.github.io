@@ -1,33 +1,36 @@
 const i = es => ({ es })
 
 const notaFamiliar = 'Familiar adicional: +$15.000 por persona a partir del 4to'
-const adMakeup = [i('Servicio de maquilladora — consultar precio')]
+const adEscenografia = i('Segunda escenografía simple +$25.000')
+const adMakeup = [i('Servicio de maquilladora — consultar precio'), adEscenografia]
+const adProfesional = [i('Persona adicional +$20.000'), adEscenografia]
+const adEscenografiaArr = [adEscenografia]
 const adPelotero = [i('30 min extra +$20.000'), i('1hs extra +$35.000'), i('Video resumen +$30.000'), i('Reel para redes +$20.000')]
 const adEvento = [i('Video resumen +$80.000'), i('Reel para redes +$30.000')]
 const adBoda = [i('Álbum físico fotolibro 15 pág +$230.000'), i('Video resumen +$80.000'), i('Reel +$30.000'), i('2do fotógrafo — consultar')]
 
 export const FALLBACK_PAQUETES = {
   'pre-cumple': [
-    { id:'f-pc-e1', categoria:'pre-cumple', subcategoria:'estudio', nombre:'Esencial', precio:'$110.000', featured:false, orden:1, nota:notaFamiliar, adicionales:null,
+    { id:'f-pc-e1', categoria:'pre-cumple', subcategoria:'estudio', nombre:'Esencial', precio:'$110.000', featured:false, orden:1, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('1hs en estudio'),i('20 fotos editadas'),i('Galería digital'),i('Hasta 3 familiares')] },
-    { id:'f-pc-c1', categoria:'pre-cumple', subcategoria:'estudio', nombre:'Completo', precio:'$150.000', featured:true, orden:2, nota:notaFamiliar, adicionales:null,
+    { id:'f-pc-c1', categoria:'pre-cumple', subcategoria:'estudio', nombre:'Completo', precio:'$150.000', featured:true, orden:2, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('1:30hs en estudio'),i('35 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Hasta 3 familiares'),i('Foto impresa 20x30')] },
-    { id:'f-pc-p1', categoria:'pre-cumple', subcategoria:'estudio', nombre:'Premium', precio:'$200.000', featured:false, orden:3, nota:notaFamiliar, adicionales:null,
+    { id:'f-pc-p1', categoria:'pre-cumple', subcategoria:'estudio', nombre:'Premium', precio:'$200.000', featured:false, orden:3, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('2hs en estudio'),i('50 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Hasta 4 familiares'),i('Foto impresa 20x30'),i('Cuadro bastidor 20x30')] },
-    { id:'f-pc-e2', categoria:'pre-cumple', subcategoria:'exterior', nombre:'Esencial', precio:'$150.000', featured:false, orden:1, nota:notaFamiliar, adicionales:null,
+    { id:'f-pc-e2', categoria:'pre-cumple', subcategoria:'exterior', nombre:'Esencial', precio:'$150.000', featured:false, orden:1, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('1hs en exterior'),i('20 fotos editadas'),i('Galería digital'),i('Hasta 3 familiares')] },
-    { id:'f-pc-c2', categoria:'pre-cumple', subcategoria:'exterior', nombre:'Completo', precio:'$210.000', featured:true, orden:2, nota:notaFamiliar, adicionales:null,
+    { id:'f-pc-c2', categoria:'pre-cumple', subcategoria:'exterior', nombre:'Completo', precio:'$210.000', featured:true, orden:2, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('1:30hs en exterior'),i('35 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Hasta 3 familiares'),i('Foto impresa 20x30')] },
-    { id:'f-pc-p2', categoria:'pre-cumple', subcategoria:'exterior', nombre:'Premium', precio:'$270.000', featured:false, orden:3, nota:notaFamiliar, adicionales:null,
+    { id:'f-pc-p2', categoria:'pre-cumple', subcategoria:'exterior', nombre:'Premium', precio:'$270.000', featured:false, orden:3, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('2hs en exterior'),i('50 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Hasta 4 familiares'),i('Foto impresa 20x30'),i('Cuadro bastidor 20x30'),i('Doble locación')] },
   ],
 
   'cake-smash': [
-    { id:'f-cs-1', categoria:'cake-smash', subcategoria:null, nombre:'Esencial', precio:'$120.000', featured:false, orden:1, nota:'La torta corre por cuenta del cliente', adicionales:null,
+    { id:'f-cs-1', categoria:'cake-smash', subcategoria:null, nombre:'Esencial', precio:'$120.000', featured:false, orden:1, nota:'La torta corre por cuenta del cliente', adicionales:adEscenografiaArr,
       items:[i('1hs de sesión'),i('20 fotos editadas'),i('Galería digital'),i('Baby bath'),i('Hasta 3 familiares')] },
-    { id:'f-cs-2', categoria:'cake-smash', subcategoria:null, nombre:'Completo', precio:'$170.000', featured:true, orden:2, nota:'La torta corre por cuenta del cliente', adicionales:null,
+    { id:'f-cs-2', categoria:'cake-smash', subcategoria:null, nombre:'Completo', precio:'$170.000', featured:true, orden:2, nota:'La torta corre por cuenta del cliente', adicionales:adEscenografiaArr,
       items:[i('1:30hs de sesión'),i('35 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Baby bath'),i('Hasta 3 familiares'),i('Foto impresa 20x30')] },
-    { id:'f-cs-3', categoria:'cake-smash', subcategoria:null, nombre:'Premium', precio:'$220.000', featured:false, orden:3, nota:'La torta corre por cuenta del cliente', adicionales:null,
+    { id:'f-cs-3', categoria:'cake-smash', subcategoria:null, nombre:'Premium', precio:'$220.000', featured:false, orden:3, nota:'La torta corre por cuenta del cliente', adicionales:adEscenografiaArr,
       items:[i('2hs de sesión'),i('50 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Baby bath'),i('Hasta 4 familiares'),i('Foto impresa 20x30'),i('Cuadro bastidor 20x30')] },
   ],
 
@@ -41,28 +44,28 @@ export const FALLBACK_PAQUETES = {
   ],
 
   'individual-familiar': [
-    { id:'f-if-e1', categoria:'individual-familiar', subcategoria:'estudio', nombre:'Esencial', precio:'$90.000', featured:false, orden:1, nota:notaFamiliar, adicionales:null,
+    { id:'f-if-e1', categoria:'individual-familiar', subcategoria:'estudio', nombre:'Esencial', precio:'$90.000', featured:false, orden:1, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('1hs en estudio'),i('20 fotos editadas'),i('Galería digital'),i('Hasta 3 familiares')] },
-    { id:'f-if-c1', categoria:'individual-familiar', subcategoria:'estudio', nombre:'Completo', precio:'$140.000', featured:true, orden:2, nota:notaFamiliar, adicionales:null,
+    { id:'f-if-c1', categoria:'individual-familiar', subcategoria:'estudio', nombre:'Completo', precio:'$140.000', featured:true, orden:2, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('1:30hs en estudio'),i('35 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Hasta 3 familiares'),i('Foto impresa 20x30')] },
-    { id:'f-if-p1', categoria:'individual-familiar', subcategoria:'estudio', nombre:'Premium', precio:'$190.000', featured:false, orden:3, nota:notaFamiliar, adicionales:null,
+    { id:'f-if-p1', categoria:'individual-familiar', subcategoria:'estudio', nombre:'Premium', precio:'$190.000', featured:false, orden:3, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('2hs en estudio'),i('50 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Hasta 4 familiares'),i('Foto impresa 20x30'),i('Cuadro bastidor 20x30')] },
-    { id:'f-if-e2', categoria:'individual-familiar', subcategoria:'exterior', nombre:'Esencial', precio:'$150.000', featured:false, orden:1, nota:notaFamiliar, adicionales:null,
+    { id:'f-if-e2', categoria:'individual-familiar', subcategoria:'exterior', nombre:'Esencial', precio:'$150.000', featured:false, orden:1, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('1hs en exterior'),i('20 fotos editadas'),i('Galería digital'),i('Hasta 3 familiares')] },
-    { id:'f-if-c2', categoria:'individual-familiar', subcategoria:'exterior', nombre:'Completo', precio:'$210.000', featured:true, orden:2, nota:notaFamiliar, adicionales:null,
+    { id:'f-if-c2', categoria:'individual-familiar', subcategoria:'exterior', nombre:'Completo', precio:'$210.000', featured:true, orden:2, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('1:30hs en exterior'),i('35 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Hasta 3 familiares'),i('Foto impresa 20x30')] },
-    { id:'f-if-p2', categoria:'individual-familiar', subcategoria:'exterior', nombre:'Premium', precio:'$270.000', featured:false, orden:3, nota:notaFamiliar, adicionales:null,
+    { id:'f-if-p2', categoria:'individual-familiar', subcategoria:'exterior', nombre:'Premium', precio:'$270.000', featured:false, orden:3, nota:notaFamiliar, adicionales:adEscenografiaArr,
       items:[i('2hs en exterior'),i('50 fotos editadas'),i('Galería digital'),i('Cambio de vestuario'),i('Hasta 4 familiares'),i('Foto impresa 20x30'),i('Cuadro bastidor 20x30'),i('Doble locación')] },
   ],
 
   'profesional': [
-    { id:'f-pro-e1', categoria:'profesional', subcategoria:'estudio', nombre:'Esencial', precio:'$90.000', featured:false, orden:1, nota:null, adicionales:[i('Persona adicional +$20.000')],
+    { id:'f-pro-e1', categoria:'profesional', subcategoria:'estudio', nombre:'Esencial', precio:'$90.000', featured:false, orden:1, nota:null, adicionales:adProfesional,
       items:[i('1hs en estudio'),i('20 fotos editadas'),i('Galería digital')] },
-    { id:'f-pro-c1', categoria:'profesional', subcategoria:'estudio', nombre:'Completo', precio:'$140.000', featured:true, orden:2, nota:null, adicionales:[i('Persona adicional +$20.000')],
+    { id:'f-pro-c1', categoria:'profesional', subcategoria:'estudio', nombre:'Completo', precio:'$140.000', featured:true, orden:2, nota:null, adicionales:adProfesional,
       items:[i('1:30hs en estudio'),i('35 fotos editadas'),i('Galería digital'),i('Cambio de vestuario')] },
-    { id:'f-pro-e2', categoria:'profesional', subcategoria:'exterior', nombre:'Esencial', precio:'$150.000', featured:false, orden:1, nota:null, adicionales:[i('Persona adicional +$20.000')],
+    { id:'f-pro-e2', categoria:'profesional', subcategoria:'exterior', nombre:'Esencial', precio:'$150.000', featured:false, orden:1, nota:null, adicionales:adProfesional,
       items:[i('1hs en exterior'),i('20 fotos editadas'),i('Galería digital')] },
-    { id:'f-pro-c2', categoria:'profesional', subcategoria:'exterior', nombre:'Completo', precio:'$210.000', featured:true, orden:2, nota:null, adicionales:[i('Persona adicional +$20.000')],
+    { id:'f-pro-c2', categoria:'profesional', subcategoria:'exterior', nombre:'Completo', precio:'$210.000', featured:true, orden:2, nota:null, adicionales:adProfesional,
       items:[i('1:30hs en exterior'),i('35 fotos editadas'),i('Galería digital'),i('Cambio de vestuario')] },
   ],
 
