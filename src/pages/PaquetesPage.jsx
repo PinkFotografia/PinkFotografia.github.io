@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { usePaquetes } from '../hooks/usePaquetes'
 import { useLang } from '../context/LangContext'
 import { PAQUETE_CATEGORIES, SESION_INFO } from '../lib/categories'
@@ -277,8 +277,18 @@ export default function PaquetesPage() {
             </Reveal>
           )}
 
+          {/* Términos y condiciones */}
+          <Reveal className="text-center mt-6">
+            <Link
+              to="/terminos"
+              className="text-[11px] text-ink/40 hover:text-pink transition-colors font-sans underline underline-offset-2"
+            >
+              {t('Ver términos y condiciones', 'View terms and conditions')}
+            </Link>
+          </Reveal>
+
           {/* CTA WhatsApp */}
-          <Reveal className="text-center mt-8">
+          <Reveal className="text-center mt-6">
             <a
               href={waConsulta}
               target="_blank"
