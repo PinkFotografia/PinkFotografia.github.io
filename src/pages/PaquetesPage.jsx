@@ -281,9 +281,9 @@ export default function PaquetesPage() {
           <Reveal className="text-center mt-6">
             <Link
               to="/terminos"
-              className="text-[12px] text-ink/60 hover:text-pink transition-colors font-sans underline underline-offset-2 decoration-ink/30 hover:decoration-pink"
+              className="inline-flex items-center gap-2 px-7 py-[0.8rem] rounded-[25px] border border-black/15 text-ink-muted no-underline text-[12px] tracking-[0.08em] uppercase hover:border-pink hover:text-pink transition-colors font-sans"
             >
-              {t('Ver términos y condiciones', 'View terms and conditions')}
+              {t('Términos y condiciones', 'Terms and conditions')}
             </Link>
           </Reveal>
 
