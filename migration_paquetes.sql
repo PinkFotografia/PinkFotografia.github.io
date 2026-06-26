@@ -58,15 +58,15 @@ INSERT INTO paquetes (categoria, subcategoria, grupo, nombre, precio, featured, 
 -- ── MATERNIDAD ────────────────────────────────────────────────────────
 ('maternidad',NULL,NULL,'Esencial','$110.000',false,1,
  '[{"es":"1hs de sesión"},{"es":"20 fotos editadas"},{"es":"Galería digital"},{"es":"Estudio o exterior"},{"es":"Hasta 3 familiares"}]',
- NULL,'[{"es":"Servicio de maquilladora — consultar precio"}]'),
+ NULL,'[{"es":"Segunda escenografía simple +$25.000"}]'),
 
 ('maternidad',NULL,NULL,'Completo','$150.000',true,2,
  '[{"es":"1:30hs de sesión"},{"es":"35 fotos editadas"},{"es":"Galería digital"},{"es":"Cambio de vestuario"},{"es":"Estudio o exterior"},{"es":"Hasta 3 familiares"},{"es":"Foto impresa 20x30"}]',
- NULL,'[{"es":"Servicio de maquilladora — consultar precio"}]'),
+ NULL,'[{"es":"Segunda escenografía simple +$25.000"}]'),
 
 ('maternidad',NULL,NULL,'Premium','$200.000',false,3,
  '[{"es":"2hs de sesión"},{"es":"50 fotos editadas"},{"es":"Galería digital"},{"es":"Cambio de vestuario"},{"es":"Estudio o exterior"},{"es":"Hasta 4 familiares"},{"es":"Foto impresa 20x30"},{"es":"Cuadro bastidor 20x30"}]',
- NULL,'[{"es":"Servicio de maquilladora — consultar precio"}]'),
+ NULL,'[{"es":"Segunda escenografía simple +$25.000"}]'),
 
 -- ── INDIVIDUAL / FAMILIAR — ESTUDIO ───────────────────────────────────
 ('individual-familiar','estudio',NULL,'Esencial','$90.000',false,1,
