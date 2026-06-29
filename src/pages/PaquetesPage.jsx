@@ -1,7 +1,7 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { usePaquetes } from '../hooks/usePaquetes'
 import { useLang } from '../context/LangContext'
-import { PAQUETE_CATEGORIES, SESION_INFO } from '../lib/categories'
+import { PAQUETE_CATEGORIES, PAQUETE_DESCRIPTIONS, SESION_INFO } from '../lib/categories'
 import { FALLBACK_PAQUETES } from '../lib/fallbackPaquetes'
 import CategoryTabs from '../components/ui/CategoryTabs'
 import PaqueteCard from '../components/ui/PaqueteCard'
@@ -157,6 +157,11 @@ export default function PaquetesPage() {
       <div className="bg-[#1A1A1A] pt-4 pb-4 px-5 text-center border-b border-white/[0.04]">
         <div className="text-[12px] tracking-[0.18em] uppercase text-pink font-bold mb-1 font-sans">Paquetes</div>
         <h1 className="font-serif text-[1.4rem] md:text-[1.6rem] italic font-light text-white">{t(cat.es, cat.en)}</h1>
+        {PAQUETE_DESCRIPTIONS[categoria] && (
+          <p className="text-[12px] text-white/50 font-sans leading-relaxed mt-2 max-w-[480px] mx-auto">
+            {t(PAQUETE_DESCRIPTIONS[categoria].es, PAQUETE_DESCRIPTIONS[categoria].en)}
+          </p>
+        )}
         {portafolioSlug && (
           <button
             onClick={() => navigate(`/portafolio/${portafolioSlug}`)}
