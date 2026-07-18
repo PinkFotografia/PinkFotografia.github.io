@@ -88,7 +88,7 @@ export default function TabPaquetes() {
   }
 
   return (
-    <div className="p-8 max-w-[1000px]">
+    <div className="p-4 md:p-8 max-w-[1000px]">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-[1.4rem] font-serif italic text-white/80">Paquetes</h1>
         <button
@@ -123,7 +123,7 @@ export default function TabPaquetes() {
             {form.id ? 'Editar paquete' : 'Nuevo paquete'}
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Nombre *</label>
               <input type="text" value={form.nombre} onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))} required placeholder="Ej: Completo"
@@ -136,7 +136,7 @@ export default function TabPaquetes() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Subcategoría</label>
               <input type="text" value={form.subcategoria} onChange={e => setForm(f => ({ ...f, subcategoria: e.target.value }))} placeholder="estudio / exterior"
@@ -182,7 +182,7 @@ export default function TabPaquetes() {
             {form.items.map((item, i) => {
               const norm = normalizeItem(item)
               return (
-                <div key={i} className="flex gap-2 mb-2">
+                <div key={i} className="flex flex-col sm:flex-row gap-2 mb-2">
                   <input
                     type="text"
                     value={norm.es}
@@ -227,7 +227,7 @@ export default function TabPaquetes() {
       ) : paquetes.length === 0 ? (
         <div className="text-white/20 text-[13px] text-center py-16">No hay paquetes para esta categoría</div>
       ) : (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {paquetes.map(p => (
             <div
               key={p.id}

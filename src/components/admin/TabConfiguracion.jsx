@@ -216,7 +216,7 @@ function TabFotos({ config, onConfigChange }) {
         {section === 'sobremi' && 'Las 5 fotos que alternan en la sección "Sobre mí". Hacé clic para reemplazar.'}
       </p>
 
-      <div className={`grid gap-4 ${section === 'sobremi' || section === 'hero' ? 'grid-cols-5' : section === 'portfolio' ? 'grid-cols-5' : 'grid-cols-3'}`}>
+      <div className={`grid gap-3 md:gap-4 ${section === 'sobremi' || section === 'hero' ? 'grid-cols-2 md:grid-cols-5' : section === 'portfolio' ? 'grid-cols-2 md:grid-cols-5' : 'grid-cols-2 md:grid-cols-3'}`}>
         {slots.map(slot => (
           <ImageSlot
             key={slot.key}
@@ -231,7 +231,7 @@ function TabFotos({ config, onConfigChange }) {
         <div className="mt-8">
           <div className="text-[10px] tracking-[0.12em] uppercase text-white/20 mb-2 font-sans">Nombres en las tarjetas polaroid</div>
           <p className="text-[12px] text-white/25 font-sans mb-4">El texto que aparece debajo de cada foto. Si lo dejás vacío usa el nombre de categoría por defecto.</p>
-          <div className="grid grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {Object.entries(CATEGORIES).map(([key, cat]) => (
               <PortfolioNameSlot
                 key={key}
@@ -317,7 +317,7 @@ function TabTextos() {
     <form onSubmit={handleSave} className="max-w-[800px]">
       <div className="mb-8">
         <div className="text-[10px] tracking-[0.15em] uppercase text-white/20 mb-4 font-sans">Bienvenida</div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {field('Español', 'bienvenida_es', 5)}
           {field('English', 'bienvenida_en', 5)}
         </div>
@@ -325,7 +325,7 @@ function TabTextos() {
 
       <div className="mb-8">
         <div className="text-[10px] tracking-[0.15em] uppercase text-white/20 mb-4 font-sans">Sobre mí</div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {field('Español', 'sobremi_es', 6)}
           {field('English', 'sobremi_en', 6)}
         </div>
@@ -376,7 +376,7 @@ export default function TabConfiguracion() {
   ]
 
   return (
-    <div className="p-8 max-w-[1100px]">
+    <div className="p-4 md:p-8 max-w-[1100px]">
       <h1 className="text-[1.4rem] font-serif italic text-white/80 mb-6">Configuración</h1>
 
       {/* Tabs */}

@@ -442,15 +442,15 @@ export default function TabResumen() {
   ]
 
   return (
-    <div className="p-8 max-w-[1100px]">
+    <div className="p-4 md:p-8 max-w-[1100px]">
 
       {/* ── Header ── */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col md:flex-row md:items-start justify-between mb-6 gap-4">
         <h1 className="text-[1.4rem] font-serif italic text-white/80">Resumen</h1>
 
-        <div className="flex flex-col items-end gap-3">
+        <div className="flex flex-col items-start md:items-end gap-3">
           {/* Tipo de período */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {PERIODS.map(p => (
               <button
                 key={p.id}
@@ -495,7 +495,7 @@ export default function TabResumen() {
       </div>
 
       {/* ── KPIs principales ── */}
-      <div className="grid grid-cols-5 gap-4 mb-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-4">
         {kpis.map(k => (
           <div key={k.label} className="bg-[#1A1A1A] rounded-[10px] px-5 py-4 border border-white/[0.06]">
             <div className="text-[10px] tracking-[0.1em] uppercase text-white/25 mb-2 font-sans">{k.label}</div>
@@ -506,7 +506,7 @@ export default function TabResumen() {
       </div>
 
       {/* ── KPIs derivados ── */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
         <div className="bg-[#1A1A1A] rounded-[10px] px-5 py-4 border border-white/[0.06]">
           <div className="text-[10px] tracking-[0.1em] uppercase text-white/25 mb-2 font-sans">Ganancia neta</div>
           <div className={`text-[1.2rem] font-serif italic mb-1 ${stats.ganancia >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
@@ -549,7 +549,7 @@ export default function TabResumen() {
       </div>
 
       {/* ── Bottom charts row 1 ── */}
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div className="col-span-2 bg-[#1A1A1A] rounded-[10px] p-6 border border-white/[0.06]">
           <div className="text-[10px] tracking-[0.12em] uppercase text-white/25 mb-5 font-sans">
             Rentabilidad por tipo
@@ -568,7 +568,7 @@ export default function TabResumen() {
       </div>
 
       {/* ── Bottom charts row 2 ── */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-[#1A1A1A] rounded-[10px] p-6 border border-white/[0.06]">
           <div className="text-[10px] tracking-[0.12em] uppercase text-white/25 mb-5 font-sans">Sesiones por estado</div>
           {porEstado.length === 0

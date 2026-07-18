@@ -128,7 +128,7 @@ export default function TabSesiones() {
   const formPendiente = form.estado === 'pagado' ? 0 : formTotal - formSena
 
   return (
-    <div className="p-8 max-w-[1100px]">
+    <div className="p-4 md:p-8 max-w-[1100px]">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-[1.4rem] font-serif italic text-white/80">Sesiones</h1>
         <button
@@ -140,7 +140,7 @@ export default function TabSesiones() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         {[
           { label: 'Total sesiones', value: sesiones.length },
           { label: 'Por cobrar',     value: fmt(totalPendiente) },
@@ -159,7 +159,7 @@ export default function TabSesiones() {
           <div className="text-[10px] tracking-[0.12em] uppercase text-white/30 mb-5">
             {form.id ? 'Editar sesión' : 'Nueva sesión'}
           </div>
-          <div className="grid grid-cols-2 gap-4 mb-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
             <div>
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Cliente *</label>
               <input
@@ -318,7 +318,8 @@ export default function TabSesiones() {
         <div className="text-white/20 text-[13px] text-center py-16">No hay sesiones registradas</div>
       ) : (
         <div className="bg-[#1A1A1A] rounded-[10px] border border-white/[0.06] overflow-hidden">
-          <table className="w-full">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px]">
             <thead>
               <tr className="border-b border-white/[0.06]">
                 {['Cliente', 'Fecha', 'Total', 'Seña', 'Pendiente', 'Estado', ''].map(h => (
@@ -376,6 +377,7 @@ export default function TabSesiones() {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

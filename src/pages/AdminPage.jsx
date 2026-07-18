@@ -29,6 +29,7 @@ export default function AdminPage() {
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('resumen')
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -53,7 +54,61 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-[#0F0F0F] flex">
-      <aside className="w-[220px] min-h-screen bg-[#111] border-r border-white/[0.06] flex flex-col flex-shrink-0 fixed top-0 left-0 h-full">
+
+      {/* ── Mobile top bar ── */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-[#111] border-b border-white/[0.06] flex items-center justify-between px-4 h-[52px]">
+        <div>
+          <div className="font-serif italic text-[1.2rem] text-pink-mid leading-none">Pink</div>
+          <div className="text-[9px] tracking-[0.2em] uppercase text-white/25">Admin</div>
+        </div>
+        <button
+          onClick={() => setMenuOpen(v => !v)}
+          className="w-9 h-9 flex items-center justify-center text-white/50 hover:text-white transition-colors text-[20px]"
+          aria-label="Menú"
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
+      </div>
+
+      {/* ── Mobile menu overlay ── */}
+      {menuOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-40"
+          onClick={() => setMenuOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/60" />
+          <div
+            className="absolute top-[52px] left-0 right-0 bg-[#111] border-b border-white/[0.06] py-2"
+            onClick={e => e.stopPropagation()}
+          >
+            {TABS.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => { setActiveTab(tab.id); setMenuOpen(false) }}
+                className={`w-full text-left px-6 py-[0.8rem] text-[11px] tracking-[0.1em] uppercase font-sans transition-colors
+                  ${activeTab === tab.id
+                    ? 'text-pink bg-pink/[0.08]'
+                    : 'text-white/50 hover:text-white/70 hover:bg-white/[0.03]'
+                  }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+            <div className="px-6 py-4 border-t border-white/[0.06] mt-1">
+              <div className="text-[11px] text-white/20 mb-2 truncate">{session.user.email}</div>
+              <button
+                onClick={() => supabase.auth.signOut()}
+                className="text-[11px] tracking-[0.08em] uppercase text-white/35 hover:text-pink transition-colors font-sans"
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Desktop sidebar ── */}
+      <aside className="hidden md:flex w-[220px] min-h-screen bg-[#111] border-r border-white/[0.06] flex-col flex-shrink-0 fixed top-0 left-0 h-full">
         <div className="px-6 py-8 border-b border-white/[0.06]">
           <div className="font-serif italic text-[1.4rem] text-pink-mid leading-none">Pink</div>
           <div className="text-[10px] tracking-[0.2em] uppercase text-white/25 mt-1">Admin Panel</div>
@@ -86,7 +141,7 @@ export default function AdminPage() {
         </div>
       </aside>
 
-      <main className="flex-1 ml-[220px] min-h-screen overflow-y-auto">
+      <main className="flex-1 md:ml-[220px] min-h-screen overflow-y-auto pt-[52px] md:pt-0">
         <ActiveTab />
       </main>
     </div>

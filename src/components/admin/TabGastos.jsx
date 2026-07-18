@@ -76,7 +76,7 @@ export default function TabGastos() {
   const total    = gastos.reduce((a, g) => a + (g.monto || 0), 0)
 
   return (
-    <div className="p-8 max-w-[1100px]">
+    <div className="p-4 md:p-8 max-w-[1100px]">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-[1.4rem] font-serif italic text-white/80">Gastos</h1>
         <button
@@ -106,7 +106,7 @@ export default function TabGastos() {
           <div className="text-[10px] tracking-[0.12em] uppercase text-white/30 mb-5">
             {form.id ? 'Editar gasto' : 'Nuevo gasto'}
           </div>
-          <div className="grid grid-cols-2 gap-4 mb-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
             <div className="col-span-2">
               <label className="block text-[10px] tracking-[0.08em] uppercase text-white/30 mb-1">Descripción *</label>
               <input
@@ -183,7 +183,8 @@ export default function TabGastos() {
         <div className="text-white/20 text-[13px] text-center py-16">No hay gastos registrados</div>
       ) : (
         <div className="bg-[#1A1A1A] rounded-[10px] border border-white/[0.06] overflow-hidden">
-          <table className="w-full">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[520px]">
             <thead>
               <tr className="border-b border-white/[0.06]">
                 <th className="text-left px-5 py-3 text-[10px] tracking-[0.1em] uppercase text-white/25 font-normal">Descripción</th>
@@ -208,6 +209,7 @@ export default function TabGastos() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

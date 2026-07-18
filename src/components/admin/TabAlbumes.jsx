@@ -257,9 +257,9 @@ export default function TabAlbumes() {
   if (editingAlbum) {
     const fotos = Array.isArray(editingAlbum.fotos) ? editingAlbum.fotos : []
     return (
-      <div className="p-8 max-w-[1000px]">
+      <div className="p-4 md:p-8 max-w-[1000px]">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-2 flex-wrap mb-6">
           <button
             onClick={() => { setEditingAlbum(null); setAddFiles([]); setAddPreviews([]); setAddError(null) }}
             className="text-white/35 hover:text-white text-[11px] tracking-[0.08em] uppercase font-sans transition-colors flex items-center gap-1"
@@ -308,7 +308,7 @@ export default function TabAlbumes() {
             )}
           </div>
           {fotos.length > 0 ? (
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {fotos.map((url, i) => (
                 <div
                   key={url}
@@ -369,7 +369,7 @@ export default function TabAlbumes() {
             </div>
 
             {addPreviews.length > 0 && (
-              <div className="grid grid-cols-5 gap-2 mb-4">
+              <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mb-4">
                 {addPreviews.map((src, i) => (
                   <div key={i} className="relative aspect-square rounded-[6px] overflow-hidden bg-white/[0.05]">
                     <img src={src} alt="" className="w-full h-full object-cover" />
@@ -417,7 +417,7 @@ export default function TabAlbumes() {
 
   // ── Main list view ──────────────────────────────────────────────
   return (
-    <div className="p-8 max-w-[1000px]">
+    <div className="p-4 md:p-8 max-w-[1000px]">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-[1.4rem] font-serif italic text-white/80">Álbumes</h1>
         <button
@@ -518,7 +518,7 @@ export default function TabAlbumes() {
             </div>
 
             {previews.length > 0 && (
-              <div className="grid grid-cols-5 gap-2 mt-3">
+              <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mt-3">
                 {previews.map((src, i) => (
                   <div key={i} className="relative aspect-square rounded-[6px] overflow-hidden bg-white/[0.05]">
                     <img src={src} alt="" className="w-full h-full object-cover" />
@@ -593,7 +593,7 @@ export default function TabAlbumes() {
                 <div className="text-[10px] text-white/15 font-sans">· arrastrá para reordenar</div>
               )}
             </div>
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {displayFotos.map((item, i) => (
                 <div
                   key={item.url + i}
@@ -627,7 +627,7 @@ export default function TabAlbumes() {
         ) : albumes.length === 0 ? (
           <div className="text-white/20 text-[13px] text-center py-16 font-sans">No hay álbumes para esta categoría</div>
         ) : (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {albumes.map(a => {
               const fotos = Array.isArray(a.fotos) ? a.fotos : []
               return (
