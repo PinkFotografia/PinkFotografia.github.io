@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase'
 import { CATEGORIES } from '../../lib/categories'
+import { compressImage } from '../../lib/imageCompress'
 
 // ─── Config keys ─────────────────────────────────────────────────────────────
 const HERO_SLOTS = [
@@ -46,6 +47,7 @@ const PORTFOLIO_SLOTS = Object.entries(CATEGORIES).map(([key, cat]) => ({
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 async function uploadAndSave(storagePath, file, configKey, onProgress) {
+  file = await compressImage(file)
   const ext = file.name.split('.').pop().toLowerCase()
   const fullPath = `${storagePath}.${ext}`
 

@@ -6,14 +6,16 @@ import TabGastos from '../components/admin/TabGastos'
 import TabPaquetes from '../components/admin/TabPaquetes'
 import TabAlbumes from '../components/admin/TabAlbumes'
 import TabConfiguracion from '../components/admin/TabConfiguracion'
+import TabMantenimiento from '../components/admin/TabMantenimiento'
 
 const TABS = [
-  { id: 'resumen',       label: 'Resumen' },
-  { id: 'sesiones',      label: 'Sesiones' },
-  { id: 'gastos',        label: 'Gastos' },
-  { id: 'paquetes',      label: 'Paquetes' },
-  { id: 'albumes',       label: 'Álbumes' },
-  { id: 'configuracion', label: 'Configuración' },
+  { id: 'resumen',        label: 'Resumen' },
+  { id: 'sesiones',       label: 'Sesiones' },
+  { id: 'gastos',         label: 'Gastos' },
+  { id: 'paquetes',       label: 'Paquetes' },
+  { id: 'albumes',        label: 'Álbumes' },
+  { id: 'configuracion',  label: 'Configuración' },
+  { id: 'mantenimiento',  label: 'Mantenimiento' },
 ]
 
 const TAB_COMPONENTS = {
@@ -23,6 +25,7 @@ const TAB_COMPONENTS = {
   paquetes:      TabPaquetes,
   albumes:       TabAlbumes,
   configuracion: TabConfiguracion,
+  mantenimiento: TabMantenimiento,
 }
 
 export default function AdminPage() {

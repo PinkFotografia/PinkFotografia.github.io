@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase'
 import { CATEGORIES } from '../../lib/categories'
+import { compressImage } from '../../lib/imageCompress'
 
 export default function TabAlbumes() {
   const [categoria, setCategoria] = useState('estudio')
@@ -91,7 +92,7 @@ export default function TabAlbumes() {
     try {
       for (let i = 0; i < files.length; i++) {
         setProgress({ current: i + 1, total: files.length })
-        const f = files[i]
+        const f = await compressImage(files[i])
         const ext = f.name.split('.').pop().toLowerCase()
         const path = `albumes/${catSave}/${albumId}/${i + 1}.${ext}`
         const { error: upErr } = await supabase.storage
@@ -187,7 +188,7 @@ export default function TabAlbumes() {
     try {
       for (let i = 0; i < addFiles.length; i++) {
         setAddProgress({ current: i + 1, total: addFiles.length })
-        const f = addFiles[i]
+        const f = await compressImage(addFiles[i])
         const ext = f.name.split('.').pop().toLowerCase()
         const path = `albumes/${categoria}/${base}/${i + 1}.${ext}`
         const { error: upErr } = await supabase.storage
